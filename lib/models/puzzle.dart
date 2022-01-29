@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+import 'package:very_good_slide_puzzle/assets/words.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 
 // A 3x3 puzzle board visualization:
@@ -82,8 +83,24 @@ class Puzzle extends Equatable {
   /// Determines if the puzzle is completed. By determining if the words is
   /// correctly positioned
   bool isComplete() {
-    // return (tiles.length - 1) - getNumberOfCorrectTiles() == 0;
-    return getNumberOfCorrectTiles() == 5;
+    final word = validWords[0];
+    final size = getDimension();
+
+    // Horizontal check
+    for (var y = 0; y < size; y++) {
+      final row = tiles.getRange(y * size, (y * size) + size);
+
+      final rowWord =
+          row.fold<String>('', (current, tile) => current + tile.letter);
+
+      if (word == rowWord) {
+        return true;
+      }
+    }
+
+    // Vertical check
+
+    return false;
   }
 
   /// Determines if the tapped tile can move in the direction of the whitespace
@@ -94,12 +111,37 @@ class Puzzle extends Equatable {
       return false;
     }
 
-    // A tile must be in the same row or column as the whitespace to move.
-    if (whitespaceTile.currentPosition.x != tile.currentPosition.x &&
-        whitespaceTile.currentPosition.y != tile.currentPosition.y) {
-      return false;
+    // A tile must be next to a whitespace to move.
+    //
+    //  V - Can move to the whitespace
+    //  X - Can't move to the white space
+    //
+    //   ┌─────1───────2───────3────► x
+    //   │  ┌─────┐ ┌─────┐ ┌─────┐
+    //   1  │  X  │ │  V  │ │  X  │
+    //   │  └─────┘ └─────┘ └─────┘
+    //   │  ┌─────┐         ┌─────┐
+    //   2  │  V  │         │  V  │
+    //   │  └─────┘         └─────┘
+    //   │  ┌─────┐ ┌─────┐ ┌─────┐
+    //   3  │  X  │ │  V  │ │  X  │
+    //   │  └─────┘ └─────┘ └─────┘
+    //   ▼
+    //   y
+    //
+    final whitePosition = whitespaceTile.currentPosition;
+    final tilePosition = tile.currentPosition;
+    if ((whitePosition.x + 1 == tilePosition.x &&
+            whitePosition.y == tilePosition.y) ||
+        (whitePosition.x - 1 == tilePosition.x &&
+            whitePosition.y == tilePosition.y) ||
+        (whitePosition.y + 1 == tilePosition.y &&
+            whitePosition.x == tilePosition.x) ||
+        (whitePosition.y - 1 == tilePosition.y &&
+            whitePosition.x == tilePosition.x)) {
+      return true;
     }
-    return true;
+    return false;
   }
 
   /// Determines if the puzzle is solvable.

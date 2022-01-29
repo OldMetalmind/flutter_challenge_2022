@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:very_good_slide_puzzle/assets/alphabet.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
@@ -259,6 +258,8 @@ abstract class _BoardSize {
 /// Display the board of the puzzle in a [size]x[size] layout
 /// filled with [tiles]. Each tile is spaced with [spacing].
 /// {@endtemplate}
+///
+//https://stackoverflow.com/questions/54745362/how-to-make-switch-animation-of-two-gridview-elements-in-flutter
 @visibleForTesting
 class SimplePuzzleBoard extends StatelessWidget {
   /// {@macro simple_puzzle_board}
@@ -280,6 +281,32 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = (MediaQuery.of(context).size.width / size) / (size - 1);
+
+    final squares = <Widget>[];
+
+    var count = 0;
+    final ite = tiles.iterator;
+
+    for (var x = 0; x < size; x++) {
+      for (var y = 0; y < size; y++) {
+        squares.add(tileSquare(count, x, y, ite.current, width));
+
+        if (ite.moveNext()) {
+          count++;
+        } else {
+          break;
+        }
+      }
+    }
+
+    // return Container(
+    //   color: Colors.red,
+    //   child: Stack(
+    //     // children: tiles.map<Widget>((tile) => tileSquare(0, 0, 0, tile)).toList(),
+    //     children: squares,
+    //   ),
+    // );
     return GridView.count(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
@@ -288,6 +315,17 @@ class SimplePuzzleBoard extends StatelessWidget {
       mainAxisSpacing: spacing,
       crossAxisSpacing: spacing,
       children: tiles,
+    );
+  }
+
+  /// Shows the tile drawn on the screen
+  Widget tileSquare(int index, int y, int x, Widget tile, double width) {
+    return Positioned(
+      top: y * width,
+      left: x * width,
+      height: width,
+      width: width,
+      child: tile,
     );
   }
 }
@@ -359,7 +397,7 @@ class SimplePuzzleTile extends StatelessWidget {
           tile.letter,
           tile.currentPosition.x.toString(),
           tile.currentPosition.y.toString(),
-        ),
+        ) as String,
       ),
     );
   }
@@ -388,7 +426,7 @@ class SimplePuzzleShuffleButton extends StatelessWidget {
             height: 17,
           ),
           const Gap(10),
-          Text(context.l10n.puzzleShuffle),
+          Text(context.l10n.puzzleShuffle as String),
         ],
       ),
     );
