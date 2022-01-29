@@ -54,6 +54,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
 
   @override
   Widget backgroundBuilder(PuzzleState state) {
+    return const SizedBox();
     return Positioned(
       right: 0,
       bottom: 0,
@@ -189,32 +190,32 @@ class SimpleStartSection extends StatelessWidget {
           medium: 83,
           large: 151,
         ),
-        PuzzleName(
-          key: puzzleNameKey,
-        ),
+        // PuzzleName(
+        //   key: puzzleNameKey,
+        // ),
         const ResponsiveGap(large: 16),
-        SimplePuzzleTitle(
-          status: state.puzzleStatus,
-        ),
+        // SimplePuzzleTitle(
+        //   status: state.puzzleStatus,
+        // ),
         const ResponsiveGap(
           small: 12,
           medium: 16,
           large: 32,
         ),
-        NumberOfMovesAndTilesLeft(
-          key: numberOfMovesAndTilesLeftKey,
-          numberOfMoves: state.numberOfMoves,
-          numberOfTilesLeft: state.numberOfTilesLeft,
-        ),
+        // NumberOfMovesAndTilesLeft(
+        //   key: numberOfMovesAndTilesLeftKey,
+        //   numberOfMoves: state.numberOfMoves,
+        //   numberOfTilesLeft: state.numberOfTilesLeft,
+        // ),
         const ResponsiveGap(
           large: 32,
           small: 16,
         ),
-        ResponsiveLayoutBuilder(
-          small: (_, __) => const SizedBox(),
-          medium: (_, __) => const SizedBox(),
-          large: (_, __) => const SimplePuzzleShuffleButton(),
-        ),
+        // ResponsiveLayoutBuilder(
+        //   small: (_, __) => const SizedBox(),
+        //   medium: (_, __) => const SizedBox(),
+        //   large: (_, __) => const SimplePuzzleShuffleButton(),
+        // ),
       ],
     );
   }
@@ -287,6 +288,7 @@ class SimplePuzzleBoard extends StatelessWidget {
 
     var count = 0;
     final ite = tiles.iterator;
+    final next = ite.moveNext(); // If I remove this will cause NPE
 
     for (var x = 0; x < size; x++) {
       for (var y = 0; y < size; y++) {

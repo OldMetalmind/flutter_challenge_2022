@@ -133,7 +133,7 @@ class _Puzzle extends StatelessWidget {
                 ),
                 child: Column(
                   children: const [
-                    PuzzleHeader(),
+                    // PuzzleHeader(),
                     PuzzleSections(),
                   ],
                 ),
@@ -163,16 +163,16 @@ class PuzzleHeader extends StatelessWidget {
       child: ResponsiveLayoutBuilder(
         small: (context, child) => Stack(
           children: [
-            const Align(
-              child: PuzzleLogo(),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 34),
-                child: AudioControl(key: audioControlKey),
-              ),
-            ),
+            // const Align(
+            //   child: PuzzleLogo(),
+            // ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(right: 34),
+            //     child: AudioControl(key: audioControlKey),
+            //   ),
+            // ),
           ],
         ),
         medium: (context, child) => Padding(
@@ -181,10 +181,10 @@ class PuzzleHeader extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              PuzzleLogo(),
-              PuzzleMenu(),
-            ],
+            // children: [
+            // PuzzleLogo(),
+            // PuzzleMenu(),
+            // ],
           ),
         ),
         large: (context, child) => Padding(
@@ -193,10 +193,10 @@ class PuzzleHeader extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              PuzzleLogo(),
-              PuzzleMenu(),
-            ],
+            // children: const [
+            // PuzzleLogo(),
+            // PuzzleMenu(),
+            // ],
           ),
         ),
       ),
@@ -239,7 +239,7 @@ class PuzzleSections extends StatelessWidget {
       small: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          const PuzzleMenu(),
+          // const PuzzleMenu(),
           const PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
