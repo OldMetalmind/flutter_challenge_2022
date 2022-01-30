@@ -282,42 +282,47 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = (MediaQuery.of(context).size.width / size) / (size - 1);
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final parentWidth = constraints.maxWidth;
 
-    final squares = <Widget>[];
+        final squares = <Widget>[];
 
-    var count = 0;
-    final ite = tiles.iterator;
-    final next = ite.moveNext(); // If I remove this will cause NPE
+        var count = 0;
+        final ite = tiles.iterator;
+        final next = ite.moveNext(); // If I remove this will cause NPE
 
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        squares.add(tileSquare(count, x, y, ite.current, width));
+        for (var x = 0; x < size; x++) {
+          for (var y = 0; y < size; y++) {
+            squares.add(
+              tileSquare(count, x, y, ite.current, parentWidth / size),
+            );
 
-        if (ite.moveNext()) {
-          count++;
-        } else {
-          break;
+            if (ite.moveNext()) {
+              count++;
+            } else {
+              break;
+            }
+          }
         }
-      }
-    }
-
-    // return Container(
-    //   color: Colors.red,
-    //   child: Stack(
-    //     // children: tiles.map<Widget>((tile) => tileSquare(0, 0, 0, tile)).toList(),
-    //     children: squares,
-    //   ),
-    // );
-    return GridView.count(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: size,
-      mainAxisSpacing: spacing,
-      crossAxisSpacing: spacing,
-      children: tiles,
+        return Container(
+          color: Colors.red,
+          child: Stack(
+            // children: tiles.map<Widget>((tile) => tileSquare(0, 0, 0, tile)).toList(),
+            children: squares,
+          ),
+        );
+      },
     );
+    // return GridView.count(
+    //   padding: EdgeInsets.zero,
+    //   shrinkWrap: true,
+    //   physics: const NeverScrollableScrollPhysics(),
+    //   crossAxisCount: size,
+    //   mainAxisSpacing: spacing,
+    //   crossAxisSpacing: spacing,
+    //   children: tiles,
+    // );
   }
 
   /// Shows the tile drawn on the screen
