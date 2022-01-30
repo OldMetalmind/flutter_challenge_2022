@@ -284,23 +284,25 @@ class PuzzleBoard extends StatelessWidget {
     if (size == 0) return const CircularProgressIndicator();
 
     return PuzzleKeyboardHandler(
-      child: BlocListener<PuzzleBloc, PuzzleState>(
+      child: BlocConsumer<PuzzleBloc, PuzzleState>(
         listener: (context, state) {
           if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.complete) {
             context.read<TimerBloc>().add(const TimerStopped());
           }
         },
-        child: theme.layoutDelegate.boardBuilder(
-          size,
-          puzzle.tiles
-              .map(
-                (tile) => _PuzzleTile(
-                  key: Key('puzzle_tile_${tile.value.toString()}'),
-                  tile: tile,
-                ),
-              )
-              .toList(),
-        ),
+        builder: (context, state) {
+          return theme.layoutDelegate.boardBuilder(
+            size,
+            state.puzzle.tiles
+                .map(
+                  (tile) => _PuzzleTile(
+                    key: Key('puzzle_tile_${tile.value.toString()}'),
+                    tile: tile,
+                  ),
+                )
+                .toList(),
+          );
+        },
       ),
     );
   }
