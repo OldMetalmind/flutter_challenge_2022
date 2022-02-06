@@ -419,14 +419,23 @@ class SimplePuzzleTile extends StatelessWidget {
       onPressed: state.puzzleStatus == PuzzleStatus.incomplete
           ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
           : null,
-      child: Text(
-        tile.letter,
-        semanticsLabel: context.l10n.puzzleTileLabelText(
-          tile.letter,
-          tile.currentPosition.x.toString(),
-          tile.currentPosition.y.toString(),
+      child:
+      // TODO(FB) Use Lottie
+      Lottie.asset(
+      'assets/animations/tile.json',
+        animate: false,
+        delegates: LottieDelegates(
+          text: (initialText) => 'C',
         ),
-      ),
+    ),
+      // Text(
+      //   tile.letter,
+      //   semanticsLabel: context.l10n.puzzleTileLabelText(
+      //     tile.letter,
+      //     tile.currentPosition.x.toString(),
+      //     tile.currentPosition.y.toString(),
+      //   ),
+      // ),
     );
   }
 }

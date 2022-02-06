@@ -46,6 +46,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
   late final AnimationController _controller;
   late final AnimationController _controllerLottie;
 
+  //final animationDuration  = const Duration(milliseconds: 180);
   final animationDuration  = const Duration(milliseconds: 300);
 
   @override
@@ -80,8 +81,6 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     final spaceTile =
         widget.spaceTile?.currentPosition ?? const Position(x: 0, y: 0);
 
-    log('Position: ${widget.position} | space: $spaceTile ');
-
     _controller..reset()..forward();
     _controllerLottie..reset()..forward();
 
@@ -89,6 +88,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
       builder: (BuildContext context, BoxConstraints constraints) {
         final biggest = constraints.biggest;
         return Stack(
+          clipBehavior: Clip.none,
           children: <Widget>[
             PositionedTransition(
               rect: RelativeRectTween(
@@ -108,7 +108,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                     widget.squareSize,
                     widget.squareSize,
                   ),
-                  biggest,
+                  biggest ,
                 ),
               ).animate(
                 CurvedAnimation(
@@ -116,10 +116,12 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                   curve: Curves.linear,
                 ),
               ),
-              child: Lottie.asset(
-                widget.lottieAnimation,
-                controller: _controllerLottie,
-                fit: BoxFit.cover,
+              child: Container(
+                color: Colors.red.withOpacity(0.2),
+                child: Lottie.asset(
+                  widget.lottieAnimation,
+                  controller: _controllerLottie,
+                ),
               ),
             ),
           ],
