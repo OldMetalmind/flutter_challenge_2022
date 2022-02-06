@@ -267,7 +267,7 @@ abstract class _BoardSize {
 /// filled with [tiles]. Each tile is spaced with [spacing].
 /// {@endtemplate}
 @visibleForTesting
-class SimplePuzzleBoard extends StatelessWidget {
+class SimplePuzzleBoard extends StatefulWidget {
   /// {@macro simple_puzzle_board}
   const SimplePuzzleBoard({
     Key? key,
@@ -286,6 +286,11 @@ class SimplePuzzleBoard extends StatelessWidget {
   final double spacing;
 
   @override
+  State<SimplePuzzleBoard> createState() => _SimplePuzzleBoardState();
+}
+
+class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
+  @override
   Widget build(BuildContext context) {
     final lastTappedTile = context.read<PuzzleBloc>().state.lastTappedTile;
     final spaceTile = context.read<PuzzleBloc>().state.previousSpace;
@@ -297,17 +302,23 @@ class SimplePuzzleBoard extends StatelessWidget {
         final squares = <Widget>[];
 
         var count = 0;
-        final ite = tiles.iterator;
+        final ite = widget.tiles.iterator;
         final next = ite.moveNext(); // If I remove this will cause NPE
 
-        for (var x = 0; x < size; x++) {
-          for (var y = 0; y < size; y++) {
-            squares.add(
-              tileSquare(count, x, y, ite.current, parentWidth / size),
-            );
+        final whiteSpacePosition = spaceTile?.currentPosition ?? const Position(x: -2, y: -2);
+        log('tapped(${whiteSpacePosition.x},${whiteSpacePosition.y})');
+        for (var x = 0; x < widget.size; x++) {
+          for (var y = 0; y < widget.size; y++) {
+             if(x == whiteSpacePosition.y-1 && y == whiteSpacePosition.x-1){
+               log('hide this');
+             }
+             else {
+               squares.add(
+                 tileSquare(count, x, y, ite.current, parentWidth / widget.size),
+               );
+             }
 
-            //if (ite.moveNext()) {
-            if(next){
+            if (next) {
               ite.moveNext();
               count++;
             } else {
@@ -316,23 +327,20 @@ class SimplePuzzleBoard extends StatelessWidget {
           }
         }
 
-        return Container(
-          color: Colors.yellow,
-          child: Stack(
-            children: [
-              ...squares,
-              if (lastTappedTile != null)
-                AnimateTappedTile(
-                  position: lastTappedTile.currentPosition,
-                  squareSize: constraints.biggest.width / size,
-                  spaceTile: spaceTile,
-                  lottieAnimation: 'assets/animations/tile.json',
-                  animationListener: () {
-                    log('Animation finished: ${lastTappedTile.value}');
-                  },
-                ),
-            ],
-          ),
+        return Stack(
+          children: [
+            ...squares,
+            if (lastTappedTile != null)
+              AnimateTappedTile(
+                position: lastTappedTile.currentPosition,
+                squareSize: constraints.biggest.width / widget.size,
+                spaceTile: spaceTile,
+                lottieAnimation: 'assets/animations/tile.json',
+                animationListener: () {
+                  log('Animation finished: ${lastTappedTile.value}');
+                },
+              ),
+          ],
         );
       },
     );
