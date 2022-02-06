@@ -60,8 +60,10 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     _controllerLottie = AnimationController(
       duration: animationDuration,
       vsync: this,
-      lowerBound: 3.74 / animationGoldenNumber,
-      upperBound: 3.92 / animationGoldenNumber,
+      lowerBound: 3.46 / animationGoldenNumber,
+      upperBound: 3.75 / animationGoldenNumber,
+      //lowerBound: 3.46 / animationGoldenNumber,
+      //upperBound: 3.64 / animationGoldenNumber,
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           widget.animationListener.call();
@@ -118,9 +120,12 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
               ),
               child: Container(
                 color: Colors.red.withOpacity(0.2),
-                child: Lottie.asset(
-                  widget.lottieAnimation,
-                  controller: _controllerLottie,
+                child: Transform.scale(
+                  scale: 2,
+                  child: Lottie.asset(
+                    widget.lottieAnimation,
+                    controller: _controllerLottie,
+                  ),
                 ),
               ),
             ),
