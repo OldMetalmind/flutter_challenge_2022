@@ -60,6 +60,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
               numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
               numberOfMoves: state.numberOfMoves + 1,
               lastTappedTile: tappedTile,
+              previousSpace: state.puzzle.getWhitespaceTile(),
             ),
           );
         }
@@ -105,8 +106,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     //   }
     // }
 
-    // Fills the first row with the only correct postions, since it will be the word
-    // we want to accomplish
+    // Fills the first row with the only correct positions, since it will be the
+    // word we want to accomplish
     // We disregard any other correct position, since they are irrelevant.
     for (var y = 1; y <= size; y++) {
       for (var x = 1; x <= size; x++) {
@@ -126,7 +127,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     }
 
     if (shuffle) {
-      // Randomize only the current tile posistions.
+      // Randomize only the current tile positions.
       currentPositions.shuffle(random);
     }
 

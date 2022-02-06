@@ -7,13 +7,14 @@ enum PuzzleStatus { incomplete, complete }
 enum TileMovementStatus { nothingTapped, cannotBeMoved, moved }
 
 class PuzzleState extends Equatable {
-  const PuzzleState({
+  const PuzzleState( {
     this.puzzle = const Puzzle(tiles: []),
     this.puzzleStatus = PuzzleStatus.incomplete,
     this.tileMovementStatus = TileMovementStatus.nothingTapped,
     this.numberOfCorrectTiles = 0,
     this.numberOfMoves = 0,
     this.lastTappedTile,
+    this.previousSpace,
   });
 
   /// [Puzzle] containing the current tile arrangement.
@@ -44,6 +45,10 @@ class PuzzleState extends Equatable {
   /// added.
   final int numberOfMoves;
 
+
+  /// Previous location of the whiteSpace tile.
+  final Tile? previousSpace;
+
   PuzzleState copyWith({
     Puzzle? puzzle,
     PuzzleStatus? puzzleStatus,
@@ -51,6 +56,7 @@ class PuzzleState extends Equatable {
     int? numberOfCorrectTiles,
     int? numberOfMoves,
     Tile? lastTappedTile,
+    Tile? previousSpace,
   }) {
     return PuzzleState(
       puzzle: puzzle ?? this.puzzle,
@@ -59,6 +65,7 @@ class PuzzleState extends Equatable {
       numberOfCorrectTiles: numberOfCorrectTiles ?? this.numberOfCorrectTiles,
       numberOfMoves: numberOfMoves ?? this.numberOfMoves,
       lastTappedTile: lastTappedTile ?? this.lastTappedTile,
+      previousSpace: previousSpace ?? this.previousSpace,
     );
   }
 
@@ -70,5 +77,6 @@ class PuzzleState extends Equatable {
         numberOfCorrectTiles,
         numberOfMoves,
         lastTappedTile,
+    previousSpace,
       ];
 }

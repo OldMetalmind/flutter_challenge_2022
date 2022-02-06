@@ -1,14 +1,21 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
+import 'package:very_good_slide_puzzle/simple/widgets/animation_positioned_tile.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
+
+import 'widgets/animation_positioned_tile.dart';
 
 /// {@template simple_puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI
@@ -259,8 +266,6 @@ abstract class _BoardSize {
 /// Display the board of the puzzle in a [size]x[size] layout
 /// filled with [tiles]. Each tile is spaced with [spacing].
 /// {@endtemplate}
-///
-//https://stackoverflow.com/questions/54745362/how-to-make-switch-animation-of-two-gridview-elements-in-flutter
 @visibleForTesting
 class SimplePuzzleBoard extends StatelessWidget {
   /// {@macro simple_puzzle_board}
@@ -282,6 +287,9 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lastTappedTile = context.read<PuzzleBloc>().state.lastTappedTile;
+    final spaceTile = context.read<PuzzleBloc>().state.previousSpace;
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final parentWidth = constraints.maxWidth;
@@ -298,31 +306,36 @@ class SimplePuzzleBoard extends StatelessWidget {
               tileSquare(count, x, y, ite.current, parentWidth / size),
             );
 
-            if (ite.moveNext()) {
+            //if (ite.moveNext()) {
+            if(next){
+              ite.moveNext();
               count++;
             } else {
               break;
             }
           }
         }
+
         return Container(
-          color: Colors.red,
+          color: Colors.yellow,
           child: Stack(
-            // children: tiles.map<Widget>((tile) => tileSquare(0, 0, 0, tile)).toList(),
-            children: squares,
+            children: [
+              ...squares,
+              if (lastTappedTile != null)
+                AnimateTappedTile(
+                  position: lastTappedTile.currentPosition,
+                  squareSize: constraints.biggest.width / size,
+                  spaceTile: spaceTile,
+                  lottieAnimation: 'assets/animations/tile.json',
+                  animationListener: () {
+                    log('Animation finished: ${lastTappedTile.value}');
+                  },
+                ),
+            ],
           ),
         );
       },
     );
-    // return GridView.count(
-    //   padding: EdgeInsets.zero,
-    //   shrinkWrap: true,
-    //   physics: const NeverScrollableScrollPhysics(),
-    //   crossAxisCount: size,
-    //   mainAxisSpacing: spacing,
-    //   crossAxisSpacing: spacing,
-    //   children: tiles,
-    // );
   }
 
   /// Shows the tile drawn on the screen
@@ -404,7 +417,7 @@ class SimplePuzzleTile extends StatelessWidget {
           tile.letter,
           tile.currentPosition.x.toString(),
           tile.currentPosition.y.toString(),
-        ) as String,
+        ),
       ),
     );
   }
@@ -433,7 +446,7 @@ class SimplePuzzleShuffleButton extends StatelessWidget {
             height: 17,
           ),
           const Gap(10),
-          Text(context.l10n.puzzleShuffle as String),
+          Text(context.l10n.puzzleShuffle),
         ],
       ),
     );

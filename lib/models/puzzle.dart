@@ -208,6 +208,8 @@ class Puzzle extends Equatable {
   ///
   // Recursively stores a list of all tiles that need to be moved and passes the
   // list to _swapTiles to individually swap them.
+  //
+  // Filipe: Now it only moves if the tile is next to the whitespace.
   Puzzle moveTiles(Tile tile, List<Tile> tilesToSwap) {
     final whitespaceTile = getWhitespaceTile();
     final deltaX = whitespaceTile.currentPosition.x - tile.currentPosition.x;

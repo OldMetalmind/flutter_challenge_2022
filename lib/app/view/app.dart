@@ -40,6 +40,7 @@ class _AppState extends State<App> {
     'assets/images/audio_control/yellow_dashatar_off.png',
   ];
 
+
   static final audioAssets = [
     'assets/audio/shuffle.mp3',
     'assets/audio/click.mp3',
@@ -49,6 +50,10 @@ class _AppState extends State<App> {
     'assets/audio/success.mp3',
     'assets/audio/tile_move.mp3',
   ];
+  static final animationAssets = [
+    'assets/animations/tile_z.json',
+  ];
+
 
   late final PlatformHelper _platformHelper;
   late final Timer _timer;
@@ -144,6 +149,13 @@ class _AppState extends State<App> {
 
       for (final audioAsset in audioAssets) {
         prefetchToMemory(audioAsset);
+      }
+
+      for(final animation in animationAssets) {
+        precacheImage(
+          Image.asset(animation).image,
+          context,
+        );
       }
     });
   }
