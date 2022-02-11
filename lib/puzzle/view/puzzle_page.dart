@@ -80,7 +80,7 @@ class PuzzleView extends StatelessWidget {
     return Scaffold(
       body: AnimatedContainer(
         duration: PuzzleThemeAnimationDuration.backgroundColorChange,
-        decoration: BoxDecoration(color: theme.backgroundColor),
+        //decoration: BoxDecoration(color: theme.backgroundColor),
         child: BlocListener<DashatarThemeBloc, DashatarThemeState>(
           listener: (context, state) {
             final dashatarTheme = context.read<DashatarThemeBloc>().state.theme;
@@ -132,9 +132,19 @@ class _Puzzle extends StatelessWidget {
                   minHeight: constraints.maxHeight,
                 ),
                 child: Column(
-                  children: const [
-                    // PuzzleHeader(),
-                    PuzzleSections(),
+                  children: [
+
+                    const Text(
+                      'Find the word',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 30,
+                        color: Color(0xFF949494),
+                      ),
+                    ),
+                    /// TODO(FB) The word to be found
+                    Row(children: const [Text('A')],),
+                    const PuzzleSections(),
                   ],
                 ),
               ),
@@ -144,62 +154,6 @@ class _Puzzle extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-/// {@template puzzle_header}
-/// Displays the header of the puzzle.
-/// {@endtemplate}
-@visibleForTesting
-class PuzzleHeader extends StatelessWidget {
-  /// {@macro puzzle_header}
-  const PuzzleHeader({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 96,
-      child: ResponsiveLayoutBuilder(
-        small: (context, child) => Stack(
-          children: [
-            // const Align(
-            //   child: PuzzleLogo(),
-            // ),
-            // Align(
-            //   alignment: Alignment.centerRight,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(right: 34),
-            //     child: AudioControl(key: audioControlKey),
-            //   ),
-            // ),
-          ],
-        ),
-        medium: (context, child) => Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 50,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // children: [
-            // PuzzleLogo(),
-            // PuzzleMenu(),
-            // ],
-          ),
-        ),
-        large: (context, child) => Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 50,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // children: const [
-            // PuzzleLogo(),
-            // PuzzleMenu(),
-            // ],
-          ),
-        ),
-      ),
     );
   }
 }

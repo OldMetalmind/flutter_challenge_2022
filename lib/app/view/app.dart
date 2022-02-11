@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatefulWidget {
   const App({Key? key, ValueGetter<PlatformHelper>? platformHelperFactory})
@@ -40,7 +41,6 @@ class _AppState extends State<App> {
     'assets/images/audio_control/yellow_dashatar_off.png',
   ];
 
-
   static final audioAssets = [
     'assets/audio/shuffle.mp3',
     'assets/audio/click.mp3',
@@ -53,7 +53,6 @@ class _AppState extends State<App> {
   static final animationAssets = [
     'assets/animations/tile_z.json',
   ];
-
 
   late final PlatformHelper _platformHelper;
   late final Timer _timer;
@@ -151,7 +150,7 @@ class _AppState extends State<App> {
         prefetchToMemory(audioAsset);
       }
 
-      for(final animation in animationAssets) {
+      for (final animation in animationAssets) {
         precacheImage(
           Image.asset(animation).image,
           context,
@@ -184,9 +183,14 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+        textTheme: GoogleFonts.rubikTextTheme(
+          Theme.of(context).textTheme,
+        ),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xff49D737),
+        ),
         colorScheme: ColorScheme.fromSwatch(
-          accentColor: const Color(0xFF13B9FF),
+          accentColor: const Color(0xff49D737),
         ),
       ),
       localizationsDelegates: const [

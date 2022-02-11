@@ -5,17 +5,18 @@ import 'package:lottie/lottie.dart';
 import 'package:very_good_slide_puzzle/assets/constants.dart';
 import 'package:very_good_slide_puzzle/models/position.dart';
 import 'package:very_good_slide_puzzle/models/tile.dart';
+import 'package:very_good_slide_puzzle/models/tile_animation.dart';
 
-/// ABC
+/// Used to animate the tile when tapped
 class AnimateTappedTile extends StatefulWidget {
-  /// ABC
+  /// Main const constructor
   const AnimateTappedTile({
     Key? key,
     required this.position,
     required this.squareSize,
     required this.spaceTile,
-    required this.lottieAnimation,
-    required this.animationListener,
+    required this.tile,
+    required this.animationListener, required this.tileAnimation,
   }) : super(key: key);
 
   /// Position of the clicked tile
@@ -27,11 +28,14 @@ class AnimateTappedTile extends StatefulWidget {
   /// The whitespace tile information
   final Tile? spaceTile;
 
-  /// Asset used in the Lottie animation
-  final String lottieAnimation;
+  /// The tile information
+  final Tile? tile;
 
   /// Animation listener to handle outside of this widget
   final VoidCallback animationListener;
+
+  /// Model for this animation tile
+  final TileAnimation tileAnimation;
 
   @override
   State<AnimateTappedTile> createState() => _AnimateTappedTileState();
@@ -46,7 +50,6 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
   late final AnimationController _controller;
   late final AnimationController _controllerLottie;
 
-  //final animationDuration  = const Duration(milliseconds: 180);
   final animationDuration  = const Duration(milliseconds: 300);
 
   @override
@@ -60,10 +63,8 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     _controllerLottie = AnimationController(
       duration: animationDuration,
       vsync: this,
-      lowerBound: 3.46 / animationGoldenNumber,
-      upperBound: 3.75 / animationGoldenNumber,
-      //lowerBound: 3.46 / animationGoldenNumber,
-      //upperBound: 3.64 / animationGoldenNumber,
+      lowerBound: widget.tileAnimation.animation.bounds().first,
+      upperBound: widget.tileAnimation.animation.bounds().last,
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           widget.animationListener.call();
@@ -118,13 +119,13 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                   curve: Curves.linear,
                 ),
               ),
-              child: Container(
-                color: Colors.red.withOpacity(0.2),
-                child: Transform.scale(
-                  scale: 2,
-                  child: Lottie.asset(
-                    widget.lottieAnimation,
-                    controller: _controllerLottie,
+              child: Transform.scale(
+                scale: 2,
+                child: Lottie.asset(
+                  widget.tileAnimation.animationFile,
+                  controller: _controllerLottie,
+                  delegates: LottieDelegates(
+                    text: (initialText) => widget.tile?.letter ?? '',
                   ),
                 ),
               ),

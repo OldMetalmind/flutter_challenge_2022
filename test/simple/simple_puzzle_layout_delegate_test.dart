@@ -110,53 +110,53 @@ void main() {
       });
     });
 
-    group('endSectionBuilder', () {
-      testWidgets(
-          'renders an empty widget '
-          'on a large display', (tester) async {
-        tester.setLargeDisplaySize();
-
-        await tester.pumpApp(
-          SingleChildScrollView(
-            child: layoutDelegate.endSectionBuilder(state),
-          ),
-          themeBloc: themeBloc,
-        );
-
-        expect(find.byType(SizedBox), findsOneWidget);
-        expect(find.byType(SimplePuzzleShuffleButton), findsNothing);
-      });
-
-      testWidgets(
-          'renders SimplePuzzleShuffleButton '
-          'on a medium display', (tester) async {
-        tester.setMediumDisplaySize();
-
-        await tester.pumpApp(
-          SingleChildScrollView(
-            child: layoutDelegate.endSectionBuilder(state),
-          ),
-          themeBloc: themeBloc,
-        );
-
-        expect(find.byType(SimplePuzzleShuffleButton), findsOneWidget);
-      });
-
-      testWidgets(
-          'renders SimplePuzzleShuffleButton '
-          'on a small display', (tester) async {
-        tester.setSmallDisplaySize();
-
-        await tester.pumpApp(
-          SingleChildScrollView(
-            child: layoutDelegate.endSectionBuilder(state),
-          ),
-          themeBloc: themeBloc,
-        );
-
-        expect(find.byType(SimplePuzzleShuffleButton), findsOneWidget);
-      });
-    });
+    // group('endSectionBuilder', () {
+    //   testWidgets(
+    //       'renders an empty widget '
+    //       'on a large display', (tester) async {
+    //     tester.setLargeDisplaySize();
+    //
+    //     await tester.pumpApp(
+    //       SingleChildScrollView(
+    //         child: layoutDelegate.endSectionBuilder(state),
+    //       ),
+    //       themeBloc: themeBloc,
+    //     );
+    //
+    //     expect(find.byType(SizedBox), findsOneWidget);
+    //     expect(find.byType(SimplePuzzleShuffleButton), findsNothing);
+    //   });
+    //
+    //   testWidgets(
+    //       'renders SimplePuzzleShuffleButton '
+    //       'on a medium display', (tester) async {
+    //     tester.setMediumDisplaySize();
+    //
+    //     await tester.pumpApp(
+    //       SingleChildScrollView(
+    //         child: layoutDelegate.endSectionBuilder(state),
+    //       ),
+    //       themeBloc: themeBloc,
+    //     );
+    //
+    //     expect(find.byType(SimplePuzzleShuffleButton), findsOneWidget);
+    //   });
+    //
+    //   testWidgets(
+    //       'renders SimplePuzzleShuffleButton '
+    //       'on a small display', (tester) async {
+    //     tester.setSmallDisplaySize();
+    //
+    //     await tester.pumpApp(
+    //       SingleChildScrollView(
+    //         child: layoutDelegate.endSectionBuilder(state),
+    //       ),
+    //       themeBloc: themeBloc,
+    //     );
+    //
+    //     expect(find.byType(SimplePuzzleShuffleButton), findsOneWidget);
+    //   });
+    // });
 
     group('backgroundBuilder', () {
       testWidgets(
@@ -406,23 +406,23 @@ void main() {
         );
       });
 
-      testWidgets(
-          'renders SimplePuzzleShuffleButton '
-          'on a large display', (tester) async {
-        tester.setLargeDisplaySize();
-
-        await tester.pumpApp(
-          SingleChildScrollView(
-            child: SimpleStartSection(state: state),
-          ),
-          themeBloc: themeBloc,
-        );
-
-        expect(
-          find.byType(SimplePuzzleShuffleButton),
-          findsOneWidget,
-        );
-      });
+      // testWidgets(
+      //     'renders SimplePuzzleShuffleButton '
+      //     'on a large display', (tester) async {
+      //   tester.setLargeDisplaySize();
+      //
+      //   await tester.pumpApp(
+      //     SingleChildScrollView(
+      //       child: SimpleStartSection(state: state),
+      //     ),
+      //     themeBloc: themeBloc,
+      //   );
+      //
+      //   expect(
+      //     find.byType(SimplePuzzleShuffleButton),
+      //     findsOneWidget,
+      //   );
+      // });
     });
 
     group('SimplePuzzleTile', () {
@@ -548,23 +548,23 @@ void main() {
       });
     });
 
-    group('SimplePuzzleShuffleButton', () {
-      testWidgets(
-          'adds PuzzleReset to PuzzleBloc '
-          'on tapped', (tester) async {
-        final puzzleBloc = MockPuzzleBloc();
-
-        await tester.pumpApp(
-          SimplePuzzleShuffleButton(),
-          themeBloc: themeBloc,
-          puzzleBloc: puzzleBloc,
-        );
-
-        await tester.tap(find.byType(SimplePuzzleShuffleButton));
-
-        verify(() => puzzleBloc.add(PuzzleReset())).called(1);
-      });
-    });
+    // group('SimplePuzzleShuffleButton', () {
+    //   testWidgets(
+    //       'adds PuzzleReset to PuzzleBloc '
+    //       'on tapped', (tester) async {
+    //     final puzzleBloc = MockPuzzleBloc();
+    //
+    //     await tester.pumpApp(
+    //       SimplePuzzleShuffleButton(),
+    //       themeBloc: themeBloc,
+    //       puzzleBloc: puzzleBloc,
+    //     );
+    //
+    //     await tester.tap(find.byType(SimplePuzzleShuffleButton));
+    //
+    //     verify(() => puzzleBloc.add(PuzzleReset())).called(1);
+    //   });
+    // });
 
     test('supports value comparisons', () {
       expect(

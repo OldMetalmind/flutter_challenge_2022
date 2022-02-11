@@ -262,16 +262,16 @@ void main() {
       expect(find.byKey(Key('puzzle_view_puzzle')), findsOneWidget);
     });
 
-    testWidgets('renders PuzzleHeader', (tester) async {
-      await tester.pumpApp(
-        PuzzleView(),
-        themeBloc: themeBloc,
-        dashatarThemeBloc: dashatarThemeBloc,
-        audioControlBloc: audioControlBloc,
-      );
-
-      expect(find.byType(PuzzleHeader), findsOneWidget);
-    });
+    // testWidgets('renders PuzzleHeader', (tester) async {
+    //   await tester.pumpApp(
+    //     PuzzleView(),
+    //     themeBloc: themeBloc,
+    //     dashatarThemeBloc: dashatarThemeBloc,
+    //     audioControlBloc: audioControlBloc,
+    //   );
+    //
+    //   expect(find.byType(PuzzleHeader), findsOneWidget);
+    // });
 
     testWidgets('renders puzzle sections', (tester) async {
       await tester.pumpApp(
@@ -381,53 +381,53 @@ void main() {
       await tester.tap(find.byKey(Key('__start_timer__')));
     });
 
-    group('PuzzleHeader', () {
-      testWidgets(
-          'renders PuzzleLogo and PuzzleMenu '
-          'on a large display', (tester) async {
-        tester.setLargeDisplaySize();
-
-        await tester.pumpApp(
-          PuzzleHeader(),
-          themeBloc: themeBloc,
-          audioControlBloc: audioControlBloc,
-        );
-
-        expect(find.byType(PuzzleLogo), findsOneWidget);
-        expect(find.byType(PuzzleMenu), findsOneWidget);
-      });
-
-      testWidgets(
-          'renders PuzzleLogo and PuzzleMenu '
-          'on a medium display', (tester) async {
-        tester.setMediumDisplaySize();
-
-        await tester.pumpApp(
-          PuzzleHeader(),
-          themeBloc: themeBloc,
-          audioControlBloc: audioControlBloc,
-        );
-
-        expect(find.byType(PuzzleLogo), findsOneWidget);
-        expect(find.byType(PuzzleMenu), findsOneWidget);
-      });
-
-      testWidgets(
-          'renders PuzzleLogo and AudioControl '
-          'on a small display', (tester) async {
-        tester.setSmallDisplaySize();
-
-        await tester.pumpApp(
-          PuzzleHeader(),
-          themeBloc: themeBloc,
-          audioControlBloc: audioControlBloc,
-        );
-
-        expect(find.byType(PuzzleLogo), findsOneWidget);
-        expect(find.byType(PuzzleMenu), findsNothing);
-        expect(find.byType(AudioControl), findsOneWidget);
-      });
-    });
+    // group('PuzzleHeader', () {
+    //   testWidgets(
+    //       'renders PuzzleLogo and PuzzleMenu '
+    //       'on a large display', (tester) async {
+    //     tester.setLargeDisplaySize();
+    //
+    //     await tester.pumpApp(
+    //       PuzzleHeader(),
+    //       themeBloc: themeBloc,
+    //       audioControlBloc: audioControlBloc,
+    //     );
+    //
+    //     expect(find.byType(PuzzleLogo), findsOneWidget);
+    //     expect(find.byType(PuzzleMenu), findsOneWidget);
+    //   });
+    //
+    //   testWidgets(
+    //       'renders PuzzleLogo and PuzzleMenu '
+    //       'on a medium display', (tester) async {
+    //     tester.setMediumDisplaySize();
+    //
+    //     await tester.pumpApp(
+    //       PuzzleHeader(),
+    //       themeBloc: themeBloc,
+    //       audioControlBloc: audioControlBloc,
+    //     );
+    //
+    //     expect(find.byType(PuzzleLogo), findsOneWidget);
+    //     expect(find.byType(PuzzleMenu), findsOneWidget);
+    //   });
+    //
+    //   testWidgets(
+    //       'renders PuzzleLogo and AudioControl '
+    //       'on a small display', (tester) async {
+    //     tester.setSmallDisplaySize();
+    //
+    //     await tester.pumpApp(
+    //       PuzzleHeader(),
+    //       themeBloc: themeBloc,
+    //       audioControlBloc: audioControlBloc,
+    //     );
+    //
+    //     expect(find.byType(PuzzleLogo), findsOneWidget);
+    //     expect(find.byType(PuzzleMenu), findsNothing);
+    //     expect(find.byType(AudioControl), findsOneWidget);
+    //   });
+    // });
 
     group('PuzzleSections', () {
       late PuzzleBloc puzzleBloc;

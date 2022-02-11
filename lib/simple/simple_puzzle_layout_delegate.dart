@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
+import 'package:very_good_slide_puzzle/assets/constants.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:very_good_slide_puzzle/models/tile_animation.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/simple/widgets/animation_positioned_tile.dart';
@@ -41,17 +43,17 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
   @override
   Widget endSectionBuilder(PuzzleState state) {
     return Column(
-      children: [
-        const ResponsiveGap(
+      children: const [
+        ResponsiveGap(
           small: 32,
           medium: 48,
         ),
-        ResponsiveLayoutBuilder(
-          small: (_, child) => const SimplePuzzleShuffleButton(),
-          medium: (_, child) => const SimplePuzzleShuffleButton(),
-          large: (_, __) => const SizedBox(),
-        ),
-        const ResponsiveGap(
+        // ResponsiveLayoutBuilder(
+        //   small: (_, child) => const SimplePuzzleShuffleButton(),
+        //   medium: (_, child) => const SimplePuzzleShuffleButton(),
+        //   large: (_, __) => const SizedBox(),
+        // ),
+         ResponsiveGap(
           small: 32,
           medium: 48,
         ),
@@ -332,13 +334,14 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
             ...squares,
             if (lastTappedTile != null)
               AnimateTappedTile(
+                tile: lastTappedTile,
                 position: lastTappedTile.currentPosition,
                 squareSize: constraints.biggest.width / widget.size,
                 spaceTile: spaceTile,
-                lottieAnimation: 'assets/animations/tile.json',
                 animationListener: () {
                   log('Animation finished: ${lastTappedTile.value}');
                 },
+                tileAnimation: TileAnimation.fromTiles(lastTappedTile, spaceTile,),
               ),
           ],
         );
@@ -369,7 +372,7 @@ abstract class _TileFontSize {
 /// the font size of [tileFontSize] based on the puzzle [state].
 /// {@endtemplate}
 @visibleForTesting
-class SimplePuzzleTile extends StatelessWidget {
+class SimplePuzzleTile extends StatefulWidget {
   /// {@macro simple_puzzle_tile}
   const SimplePuzzleTile({
     Key? key,
@@ -388,6 +391,30 @@ class SimplePuzzleTile extends StatelessWidget {
   final PuzzleState state;
 
   @override
+  State<SimplePuzzleTile> createState() => _SimplePuzzleTileState();
+}
+
+class _SimplePuzzleTileState extends State<SimplePuzzleTile>
+    with TickerProviderStateMixin {
+  @override
+
+  late final AnimationController _controllerLottie;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controllerLottie = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+      lowerBound: TileAnimationEnum.idle.bounds().first,
+      upperBound: TileAnimationEnum.idle.bounds().last,
+    );
+    _controllerLottie.forward();
+  }
+
+
+
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
@@ -395,7 +422,7 @@ class SimplePuzzleTile extends StatelessWidget {
       style: TextButton.styleFrom(
         primary: PuzzleColors.white,
         textStyle: PuzzleTextStyle.headline2.copyWith(
-          fontSize: tileFontSize,
+          fontSize: widget.tileFontSize,
         ),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -404,38 +431,33 @@ class SimplePuzzleTile extends StatelessWidget {
         ),
       ).copyWith(
         foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-          (states) {
-            if (tile.value == state.lastTappedTile?.value) {
-              return theme.pressedColor;
-            } else if (states.contains(MaterialState.hovered)) {
-              return theme.hoverColor;
-            } else {
-              return theme.defaultColor;
-            }
-          },
-        ),
+        // backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+        //   (states) {
+        //     if (widget.tile.value == widget.state.lastTappedTile?.value) {
+        //       return theme.pressedColor;
+        //     } else if (states.contains(MaterialState.hovered)) {
+        //       return theme.hoverColor;
+        //     } else {
+        //       return theme.defaultColor;
+        //     }
+        //   },
+        // ),
       ),
-      onPressed: state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
+      onPressed: widget.state.puzzleStatus == PuzzleStatus.incomplete
+          ? () => context.read<PuzzleBloc>().add(TileTapped(widget.tile))
           : null,
       child:
-      // TODO(FB) Use Lottie
-      Lottie.asset(
-      'assets/animations/tile.json',
-        animate: false,
-        delegates: LottieDelegates(
-          text: (initialText) => 'C',
-        ),
+      Transform.scale(
+        scale: 2,
+        child: Lottie.asset(
+          lottieTileAnimationFile,
+          animate: false,
+          controller: _controllerLottie,
+          delegates: LottieDelegates(
+            text: (initialText) => widget.tile.letter,
+          ),
     ),
-      // Text(
-      //   tile.letter,
-      //   semanticsLabel: context.l10n.puzzleTileLabelText(
-      //     tile.letter,
-      //     tile.currentPosition.x.toString(),
-      //     tile.currentPosition.y.toString(),
-      //   ),
-      // ),
+      ),
     );
   }
 }
@@ -443,29 +465,28 @@ class SimplePuzzleTile extends StatelessWidget {
 /// {@template puzzle_shuffle_button}
 /// Displays the button to shuffle the puzzle.
 /// {@endtemplate}
-@visibleForTesting
-class SimplePuzzleShuffleButton extends StatelessWidget {
-  /// {@macro puzzle_shuffle_button}
-  const SimplePuzzleShuffleButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return PuzzleButton(
-      textColor: PuzzleColors.primary0,
-      backgroundColor: PuzzleColors.primary6,
-      onPressed: () => context.read<PuzzleBloc>().add(const PuzzleReset()),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/shuffle_icon.png',
-            width: 17,
-            height: 17,
-          ),
-          const Gap(10),
-          Text(context.l10n.puzzleShuffle),
-        ],
-      ),
-    );
-  }
-}
+// @visibleForTesting
+// class SimplePuzzleShuffleButton extends StatelessWidget {
+//   /// {@macro puzzle_shuffle_button}
+//   const SimplePuzzleShuffleButton({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return PuzzleButton(
+//       textColor: PuzzleColors.primary0,
+//       onPressed: () => context.read<PuzzleBloc>().add(const PuzzleReset()),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Image.asset(
+//             'assets/images/shuffle_icon.png',
+//             width: 17,
+//             height: 17,
+//           ),
+//           const Gap(10),
+//           Text(context.l10n.puzzleShuffle),
+//         ],
+//       ),
+//     );
+//   }
+// }
