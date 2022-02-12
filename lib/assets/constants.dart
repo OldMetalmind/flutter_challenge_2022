@@ -1,13 +1,23 @@
+/// Duration of All animations (in Seconds)
+const globalAnimationSpeed = 0.300;
 
+/// Duration of All animations (in Milliseconds)
+const globalAnimationDuration = Duration(milliseconds: 300);
 
-/// This value is the different between real upper level of animation and
-/// 300 milliseconds
-const animationGoldenNumber = 15.46667;
+/// Maximum Lottie Animation the Lottie file (in Seconds)
+const globalLottieMaxLength = 4.64;
 
-const lottieAnimationZLength = 4.64;
-
-
+/// File with all animations in sequence
 const lottieTileAnimationFile = 'assets/animations/tile.json';
+
+/// Parsers seconds duration given global constants to Milliseconds,
+/// used in animation bounds
+double animationSecondsToMilliseconds(
+  double seconds, {
+  double maxSeconds = globalLottieMaxLength,
+  double maxMilliseconds = globalAnimationSpeed,
+}) =>
+    seconds * maxMilliseconds / maxSeconds;
 
 /// Times for lottie animation tile.json
 /// 0 — 0.34: Scale in -> Idle
@@ -17,10 +27,39 @@ const lottieTileAnimationFile = 'assets/animations/tile.json';
 /// 3.74 — 3.92: Slide Vertical
 /// 4.32 — 4.64: Normal Scale Out
 class AnimationBounds {
-  static const idle = <double>[0, 0.34];
-  static const correct = <double>[1.51, 2.42];
-  static const correctScaleOut = <double>[2.42, 2.58];
-  static const slideHorizontal = <double>[3.46, 3.64];
-  static const slideVertical = <double>[3.74, 3.92];
-  static const normalScaleOut = <double>[4.32, 4.64];
+  /// Idle animation
+  static final idle = <double>[
+    0,
+    animationSecondsToMilliseconds(0.34),
+  ];
+
+  /// Correct Animation
+  static final correct = <double>[
+    animationSecondsToMilliseconds(1.51),
+    animationSecondsToMilliseconds(2.42),
+  ];
+
+  /// Correct Scale Out animation
+  static final correctScaleOut = <double>[
+    animationSecondsToMilliseconds(2.42),
+    animationSecondsToMilliseconds(2.58),
+  ];
+
+  /// Slide Horizontal animation
+  static final slideHorizontal = <double>[
+    animationSecondsToMilliseconds(2.58),
+    animationSecondsToMilliseconds(3.64),
+  ];
+
+  /// Slide Vertical animation
+  static final slideVertical = <double>[
+    animationSecondsToMilliseconds(3.64),
+    animationSecondsToMilliseconds(3.92),
+  ];
+
+  /// Slide Normal Scale Out animation
+  static final normalScaleOut = <double>[
+    animationSecondsToMilliseconds(3.92),
+    animationSecondsToMilliseconds(4.64)
+  ];
 }

@@ -8,6 +8,7 @@ import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
+import 'package:very_good_slide_puzzle/simple/widgets/demoAnimations.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
@@ -195,6 +196,7 @@ class PuzzleSections extends StatelessWidget {
           theme.layoutDelegate.startSectionBuilder(state),
           // const PuzzleMenu(),
           const PuzzleBoard(),
+          const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
@@ -202,6 +204,7 @@ class PuzzleSections extends StatelessWidget {
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
           const PuzzleBoard(),
+          const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
@@ -212,6 +215,7 @@ class PuzzleSections extends StatelessWidget {
             child: theme.layoutDelegate.startSectionBuilder(state),
           ),
           const PuzzleBoard(),
+          const DemoAnimations(),
           Expanded(
             child: theme.layoutDelegate.endSectionBuilder(state),
           ),

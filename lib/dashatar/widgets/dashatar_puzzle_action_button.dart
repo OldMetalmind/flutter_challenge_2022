@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:very_good_slide_puzzle/assets/constants.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
 import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
@@ -63,7 +64,7 @@ class _DashatarPuzzleActionButtonState
     return AudioControlListener(
       audioPlayer: _audioPlayer,
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
+        duration: globalAnimationDuration,
         child: Tooltip(
           key: ValueKey(status),
           message: isStarted ? context.l10n.puzzleRestartTooltip : '',

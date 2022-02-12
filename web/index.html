@@ -102,6 +102,26 @@
       loadMainDartJs();
     }
   </script>
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCYSYWd7C-I8U_KwWhCEk1Hq6YhCtW4Cq0",
+    authDomain: "flutterchallenge2022.firebaseapp.com",
+    projectId: "flutterchallenge2022",
+    storageBucket: "flutterchallenge2022.appspot.com",
+    messagingSenderId: "958095862625",
+    appId: "1:958095862625:web:2aa4afcc01d61cfacfb320"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </body>
 
 </html>

@@ -56,7 +56,7 @@ extension TileAnimationEnumExtension on TileAnimationEnum {
         break;
     }
 
-    return bounds.map((e) => e / animationGoldenNumber).toList();
+    return bounds.map((e) => e).toList();
   }
 }
 

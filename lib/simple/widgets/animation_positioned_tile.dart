@@ -50,18 +50,16 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
   late final AnimationController _controller;
   late final AnimationController _controllerLottie;
 
-  final animationDuration  = const Duration(milliseconds: 300);
-
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: animationDuration,
+      duration: globalAnimationDuration,
       vsync: this,
     );
 
     _controllerLottie = AnimationController(
-      duration: animationDuration,
+      duration: globalAnimationDuration,
       vsync: this,
       lowerBound: widget.tileAnimation.animation.bounds().first,
       upperBound: widget.tileAnimation.animation.bounds().last,

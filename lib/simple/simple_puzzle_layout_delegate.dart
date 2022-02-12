@@ -341,6 +341,7 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 animationListener: () {
                   log('Animation finished: ${lastTappedTile.value}');
                 },
+                //tileAnimation: const TileAnimation(TileAnimationEnum.slideHorizontal,),
                 tileAnimation: TileAnimation.fromTiles(lastTappedTile, spaceTile,),
               ),
           ],
@@ -406,7 +407,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     super.initState();
     _controllerLottie = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: globalAnimationDuration,
       lowerBound: TileAnimationEnum.idle.bounds().first,
       upperBound: TileAnimationEnum.idle.bounds().last,
     );
