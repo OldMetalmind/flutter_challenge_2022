@@ -134,9 +134,8 @@ class _Puzzle extends StatelessWidget {
                   minHeight: constraints.maxHeight,
                 ),
                 child: Column(
-                  children: [
-
-                    const Text(
+                  children:const [
+                    Text(
                       'Find the word',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -144,9 +143,7 @@ class _Puzzle extends StatelessWidget {
                         color: Color(0xFF949494),
                       ),
                     ),
-                    /// TODO(FB) The word to be found
-                    Row(children: const [Text('A')],),
-                    const PuzzleSections(),
+                    PuzzleSections(),
                   ],
                 ),
               ),
@@ -198,7 +195,7 @@ class PuzzleSections extends StatelessWidget {
           // const PuzzleMenu(),
           //const Stars(),
           const PuzzleBoard(),
-          //const DemoAnimations(),
+          const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
@@ -207,11 +204,11 @@ class PuzzleSections extends StatelessWidget {
           theme.layoutDelegate.startSectionBuilder(state),
           //const Stars(),
           const PuzzleBoard(),
-          //const DemoAnimations(),
+          const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
-      large: (context, child) => Column(
+      large: (context, child) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -219,7 +216,7 @@ class PuzzleSections extends StatelessWidget {
           ),
           //const Stars(),
           const PuzzleBoard(),
-          //const DemoAnimations(),
+          const DemoAnimations(),
           Expanded(
             child: theme.layoutDelegate.endSectionBuilder(state),
           ),

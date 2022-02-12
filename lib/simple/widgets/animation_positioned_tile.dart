@@ -123,6 +123,13 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                   widget.tileAnimation.animationFile,
                   controller: _controllerLottie,
                   delegates: LottieDelegates(
+                    textStyle: (lottie){
+                      return const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Rubik',
+                      );
+
+                    },
                     text: (initialText) => widget.tile?.letter ?? '',
                   ),
                 ),

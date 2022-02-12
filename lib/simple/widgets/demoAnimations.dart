@@ -39,9 +39,7 @@ class __DemoAnimationState extends State<_DemoAnimation> with SingleTickerProvid
       upperBound: widget.animation.bounds().last,
     );
 
-
     _controller.addStatusListener((status) {
-
       if(status == AnimationStatus.completed){
         _controller.reset();
       }
