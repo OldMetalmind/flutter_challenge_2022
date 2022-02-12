@@ -134,18 +134,26 @@ class _Puzzle extends StatelessWidget {
                 constraints: BoxConstraints(
                   minHeight: constraints.maxHeight,
                 ),
-                child: Column(
-                  children: const [
-                    Text(
-                      'Find the word',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 30,
-                        color: Color(0xFF949494),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 48),
+                  child: Column(
+                    children: const [
+                      Text(
+                        'Find the word',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 30,
+                          color: Color(0xFF949494),
+                        ),
                       ),
-                    ),
-                    PuzzleSections(),
-                  ],
+                      SizedBox(height: 16),
+                      WordTip(),
+                      SizedBox(height: 24),
+                      Stars(),
+                      PuzzleSections(),
+                      DemoAnimations(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -194,20 +202,14 @@ class PuzzleSections extends StatelessWidget {
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
           // const PuzzleMenu(),
-          const WordTip(),
-          const Stars(),
           const PuzzleBoard(),
-          const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
       medium: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          const WordTip(),
-          const Stars(),
           const PuzzleBoard(),
-          const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
@@ -217,10 +219,7 @@ class PuzzleSections extends StatelessWidget {
           Expanded(
             child: theme.layoutDelegate.startSectionBuilder(state),
           ),
-          const WordTip(),
-          const Stars(),
           const PuzzleBoard(),
-          const DemoAnimations(),
           Expanded(
             child: theme.layoutDelegate.endSectionBuilder(state),
           ),

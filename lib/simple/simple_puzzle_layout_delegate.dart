@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:very_good_slide_puzzle/assets/constants.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
@@ -458,6 +457,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
               return const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontFamily: 'Rubik',
+                color: Color(0xff6B6B6B),
               );
             },
           ),

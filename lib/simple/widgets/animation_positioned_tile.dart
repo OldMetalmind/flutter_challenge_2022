@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:very_good_slide_puzzle/assets/constants.dart';
@@ -90,7 +88,6 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     final spaceTile =
         widget.spaceTile?.currentPosition ?? const Position(x: 0, y: 0);
 
-
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final biggest = constraints.biggest;
@@ -133,6 +130,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                       return const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: 'Rubik',
+                        color: Color(0xff6B6B6B),
                       );
                     },
                     text: (initialText) => widget.tile?.letter ?? '',

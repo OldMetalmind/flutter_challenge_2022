@@ -33,19 +33,22 @@ class Star extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const size = 100.0;
     if (active) {
       return Stack(
         children: const [
           Positioned(
-            top: 2,
+            top: 10,
             child: Icon(
               Icons.star,
               color: Color(0xffE3A300),
+              size: size,
             ),
           ),
           Icon(
             Icons.star,
             color: Color(0xffFFB906),
+            size: size,
           ),
         ],
       );
@@ -54,6 +57,7 @@ class Star extends StatelessWidget {
     return const Icon(
       Icons.star_border_outlined,
       color: Color(0xffD1D1D1),
+      size: size,
     );
   }
 }

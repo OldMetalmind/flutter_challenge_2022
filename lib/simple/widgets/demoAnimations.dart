@@ -74,6 +74,7 @@ class __DemoAnimationState extends State<_DemoAnimation>
                   return const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontFamily: 'Rubik',
+                    color: Color(0xff6B6B6B),
                   );
                 },
               ),
