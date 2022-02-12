@@ -3,14 +3,14 @@ import 'package:just_audio/just_audio.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
-import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
-import 'package:very_good_slide_puzzle/helpers/helpers.dart';
-import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
-import 'package:very_good_slide_puzzle/timer/timer.dart';
+import 'package:selector/audio_control/audio_control.dart';
+import 'package:selector/dashatar/dashatar.dart';
+import 'package:selector/helpers/helpers.dart';
+import 'package:selector/layout/layout.dart';
+import 'package:selector/models/models.dart';
+import 'package:selector/puzzle/puzzle.dart';
+import 'package:selector/theme/theme.dart';
+import 'package:selector/timer/timer.dart';
 
 class MockPuzzleTheme extends Mock implements PuzzleTheme {}
 

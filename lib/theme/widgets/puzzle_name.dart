@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
-import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:selector/layout/layout.dart';
+import 'package:selector/theme/theme.dart';
+import 'package:selector/typography/typography.dart';
 
 /// {@template puzzle_name}
 /// Displays the name of the current puzzle theme.

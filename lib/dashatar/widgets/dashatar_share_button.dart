@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/helpers/helpers.dart';
-import 'package:very_good_slide_puzzle/l10n/l10n.dart';
-import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:selector/audio_control/audio_control.dart';
+import 'package:selector/helpers/helpers.dart';
+import 'package:selector/l10n/l10n.dart';
+import 'package:selector/typography/typography.dart';
 
 /// The url to share for this Flutter Puzzle challenge.
 const _shareUrl = 'https://flutterhack.devpost.com/';

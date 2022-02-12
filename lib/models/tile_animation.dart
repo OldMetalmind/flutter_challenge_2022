@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:very_good_slide_puzzle/assets/constants.dart';
-import 'package:very_good_slide_puzzle/models/tile.dart';
+import 'package:selector/assets/constants.dart';
+import 'package:selector/models/tile.dart';
 
 /// Animation enum supporting the times
 enum TileAnimationEnum {

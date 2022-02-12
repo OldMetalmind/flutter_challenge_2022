@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_slide_puzzle/colors/colors.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
-import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:selector/colors/colors.dart';
+import 'package:selector/theme/theme.dart';
+import 'package:selector/typography/typography.dart';
 
 /// {@template puzzle_button}
 /// Displays the puzzle action button.

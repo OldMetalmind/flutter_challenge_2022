@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
-import 'package:very_good_slide_puzzle/l10n/l10n.dart';
-import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-import 'package:very_good_slide_puzzle/simple/simple.dart';
-import 'package:very_good_slide_puzzle/simple/widgets/demoAnimations.dart';
-import 'package:very_good_slide_puzzle/simple/widgets/stars.dart';
-import 'package:very_good_slide_puzzle/simple/widgets/word_tip.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
-import 'package:very_good_slide_puzzle/timer/timer.dart';
-import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:selector/audio_control/audio_control.dart';
+import 'package:selector/dashatar/dashatar.dart';
+import 'package:selector/l10n/l10n.dart';
+import 'package:selector/layout/layout.dart';
+import 'package:selector/models/models.dart';
+import 'package:selector/puzzle/puzzle.dart';
+import 'package:selector/simple/simple.dart';
+import 'package:selector/simple/widgets/demoAnimations.dart';
+import 'package:selector/simple/widgets/stars.dart';
+import 'package:selector/simple/widgets/word_tip.dart';
+import 'package:selector/theme/theme.dart';
+import 'package:selector/timer/timer.dart';
+import 'package:selector/typography/typography.dart';
 
 /// {@template puzzle_page}
 /// The root page of the puzzle UI.

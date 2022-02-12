@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:very_good_slide_puzzle/assets/words.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:selector/assets/words.dart';
+import 'package:selector/models/models.dart';
 
 // A 3x3 puzzle board visualization:
 //

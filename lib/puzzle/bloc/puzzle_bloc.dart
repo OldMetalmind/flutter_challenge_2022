@@ -4,9 +4,9 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:very_good_slide_puzzle/assets/alphabet.dart';
-import 'package:very_good_slide_puzzle/assets/words.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:selector/assets/alphabet.dart';
+import 'package:selector/assets/words.dart';
+import 'package:selector/models/models.dart';
 
 part 'puzzle_event.dart';
 part 'puzzle_state.dart';

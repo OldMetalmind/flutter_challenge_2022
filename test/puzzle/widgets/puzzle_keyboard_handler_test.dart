@@ -6,12 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-import 'package:very_good_slide_puzzle/simple/simple.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
+import 'package:selector/audio_control/audio_control.dart';
+import 'package:selector/dashatar/dashatar.dart';
+import 'package:selector/models/models.dart';
+import 'package:selector/puzzle/puzzle.dart';
+import 'package:selector/simple/simple.dart';
+import 'package:selector/theme/theme.dart';
 
 import '../../helpers/helpers.dart';
 

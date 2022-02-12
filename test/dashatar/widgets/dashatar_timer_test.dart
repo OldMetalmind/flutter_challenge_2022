@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
-import 'package:very_good_slide_puzzle/timer/timer.dart';
+import 'package:selector/dashatar/dashatar.dart';
+import 'package:selector/timer/timer.dart';
 
 import '../../helpers/helpers.dart';
 

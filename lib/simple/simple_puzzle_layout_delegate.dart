@@ -4,17 +4,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:very_good_slide_puzzle/assets/constants.dart';
-import 'package:very_good_slide_puzzle/colors/colors.dart';
-import 'package:very_good_slide_puzzle/l10n/l10n.dart';
-import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/models/tile_animation.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-import 'package:very_good_slide_puzzle/simple/simple.dart';
-import 'package:very_good_slide_puzzle/simple/widgets/animation_positioned_tile.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
-import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:selector/assets/constants.dart';
+import 'package:selector/colors/colors.dart';
+import 'package:selector/l10n/l10n.dart';
+import 'package:selector/layout/layout.dart';
+import 'package:selector/models/models.dart';
+import 'package:selector/models/tile_animation.dart';
+import 'package:selector/puzzle/puzzle.dart';
+import 'package:selector/simple/simple.dart';
+import 'package:selector/simple/widgets/animation_positioned_tile.dart';
+import 'package:selector/theme/theme.dart';
+import 'package:selector/typography/typography.dart';
 
 import 'widgets/animation_positioned_tile.dart';
 

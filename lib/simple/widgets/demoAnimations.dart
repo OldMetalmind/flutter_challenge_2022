@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:very_good_slide_puzzle/assets/constants.dart';
-import 'package:very_good_slide_puzzle/models/tile_animation.dart';
+import 'package:selector/assets/constants.dart';
+import 'package:selector/models/tile_animation.dart';
 
 class DemoAnimations extends StatelessWidget {
   const DemoAnimations({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:very_good_slide_puzzle/assets/constants.dart';
-import 'package:very_good_slide_puzzle/models/position.dart';
-import 'package:very_good_slide_puzzle/models/tile.dart';
-import 'package:very_good_slide_puzzle/models/tile_animation.dart';
+import 'package:selector/assets/constants.dart';
+import 'package:selector/models/position.dart';
+import 'package:selector/models/tile.dart';
+import 'package:selector/models/tile_animation.dart';
 
 /// Used to animate the tile when tapped
 class AnimateTappedTile extends StatefulWidget {

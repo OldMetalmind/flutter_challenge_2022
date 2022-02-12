@@ -1,6 +1,6 @@
-name: very_good_slide_puzzle
-description: A Very Good Project created by Very Good CLI.
-version: 1.0.0+1
+name: selector
+description: A Slide Word Puzzle created by FFrutuoso and ABarroso
+version: 1.0.0+2
 publish_to: none
 
 environment:
@@ -17,7 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   gap: ^2.0.0
-  google_fonts: ^2.1.0
+  google_fonts: 2.2.0
   intl: ^0.17.0
   just_audio: ^0.9.18
   lottie: ^1.2.1
