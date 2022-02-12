@@ -69,9 +69,9 @@ class TileAnimation {
   TileAnimation.fromTiles(
     Tile? tapped,
     Tile? space,
-  ) :  this(
+  ) : this(
           _determineAnimation(tapped, space),
-  );
+        );
 
   /// What is the state of this tile
   TileAnimationEnum animation;
@@ -85,13 +85,12 @@ class TileAnimation {
   static TileAnimationEnum _determineAnimation(Tile? tapped, Tile? space) {
     assert(space?.isWhitespace ?? false, 'Space should be the whitespace Tile');
 
-    if(tapped != null && space != null){
-
-      if(tapped.currentPosition.x < space.currentPosition.x){
+    if (tapped != null && space != null) {
+      if (tapped.currentPosition.x < space.currentPosition.x) {
         return TileAnimationEnum.slideHorizontal;
       }
 
-      if(tapped.currentPosition.y < space.currentPosition.y){
+      if (tapped.currentPosition.y < space.currentPosition.y) {
         return TileAnimationEnum.slideVertical;
       }
     }

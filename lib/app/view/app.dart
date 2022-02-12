@@ -191,6 +191,7 @@ class _AppState extends State<App> {
         ),
         colorScheme: ColorScheme.fromSwatch(
           accentColor: const Color(0xff49D737),
+          backgroundColor: const Color(0xffEFEFEF),
         ),
       ),
       localizationsDelegates: const [

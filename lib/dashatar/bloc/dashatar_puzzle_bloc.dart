@@ -16,7 +16,7 @@ class DashatarPuzzleBloc
   DashatarPuzzleBloc({
     required this.secondsToBegin,
     required Ticker ticker,
-  })  : _ticker = ticker,
+  })   : _ticker = ticker,
         super(DashatarPuzzleState(secondsToBegin: secondsToBegin)) {
     on<DashatarCountdownStarted>(_onCountdownStarted);
     on<DashatarCountdownTicked>(_onCountdownTicked);

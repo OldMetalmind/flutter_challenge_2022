@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:very_good_slide_puzzle/assets/constants.dart';
@@ -10,12 +8,13 @@ class DemoAnimations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      ...TileAnimationEnum.values.map((e) => _DemoAnimation(e)).toList(),
-    ],);
+    return Column(
+      children: [
+        ...TileAnimationEnum.values.map((e) => _DemoAnimation(e)).toList(),
+      ],
+    );
   }
 }
-
 
 class _DemoAnimation extends StatefulWidget {
   const _DemoAnimation(this.animation, {Key? key}) : super(key: key);
@@ -26,7 +25,8 @@ class _DemoAnimation extends StatefulWidget {
   __DemoAnimationState createState() => __DemoAnimationState();
 }
 
-class __DemoAnimationState extends State<_DemoAnimation> with SingleTickerProviderStateMixin {
+class __DemoAnimationState extends State<_DemoAnimation>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -40,11 +40,10 @@ class __DemoAnimationState extends State<_DemoAnimation> with SingleTickerProvid
     );
 
     _controller.addStatusListener((status) {
-      if(status == AnimationStatus.completed){
+      if (status == AnimationStatus.completed) {
         _controller.reset();
       }
     });
-
   }
 
   @override

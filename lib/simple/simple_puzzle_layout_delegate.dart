@@ -53,7 +53,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         //   medium: (_, child) => const SimplePuzzleShuffleButton(),
         //   large: (_, __) => const SizedBox(),
         // ),
-         ResponsiveGap(
+        ResponsiveGap(
           small: 32,
           medium: 48,
         ),
@@ -307,18 +307,19 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
         final ite = widget.tiles.iterator;
         final next = ite.moveNext(); // If I remove this will cause NPE
 
-        final whiteSpacePosition = spaceTile?.currentPosition ?? const Position(x: -2, y: -2);
+        final whiteSpacePosition =
+            spaceTile?.currentPosition ?? const Position(x: -2, y: -2);
         log('tapped(${whiteSpacePosition.x},${whiteSpacePosition.y})');
         for (var x = 0; x < widget.size; x++) {
           for (var y = 0; y < widget.size; y++) {
-             if(x == whiteSpacePosition.y-1 && y == whiteSpacePosition.x-1){
-               log('hide this');
-             }
-             else {
-               squares.add(
-                 tileSquare(count, x, y, ite.current, parentWidth / widget.size),
-               );
-             }
+            if (x == whiteSpacePosition.y - 1 &&
+                y == whiteSpacePosition.x - 1) {
+              log('hide this');
+            } else {
+              squares.add(
+                tileSquare(count, x, y, ite.current, parentWidth / widget.size),
+              );
+            }
 
             if (next) {
               ite.moveNext();
@@ -341,8 +342,10 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 animationListener: () {
                   log('Animation finished: ${lastTappedTile.value}');
                 },
-                //tileAnimation: const TileAnimation(TileAnimationEnum.slideHorizontal,),
-                tileAnimation: TileAnimation.fromTiles(lastTappedTile, spaceTile,),
+                tileAnimation: TileAnimation.fromTiles(
+                  lastTappedTile,
+                  spaceTile,
+                ),
               ),
           ],
         );
@@ -398,9 +401,7 @@ class SimplePuzzleTile extends StatefulWidget {
 class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     with TickerProviderStateMixin {
   @override
-
   late final AnimationController _controllerLottie;
-
 
   @override
   void initState() {
@@ -413,8 +414,6 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     );
     _controllerLottie.forward();
   }
-
-
 
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
@@ -447,8 +446,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
       onPressed: widget.state.puzzleStatus == PuzzleStatus.incomplete
           ? () => context.read<PuzzleBloc>().add(TileTapped(widget.tile))
           : null,
-      child:
-      Transform.scale(
+      child: Transform.scale(
         scale: 2,
         child: Lottie.asset(
           lottieTileAnimationFile,
@@ -457,7 +455,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
           delegates: LottieDelegates(
             text: (initialText) => widget.tile.letter,
           ),
-    ),
+        ),
       ),
     );
   }

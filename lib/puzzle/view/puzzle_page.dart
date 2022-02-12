@@ -134,7 +134,7 @@ class _Puzzle extends StatelessWidget {
                   minHeight: constraints.maxHeight,
                 ),
                 child: Column(
-                  children:const [
+                  children: const [
                     Text(
                       'Find the word',
                       style: TextStyle(
@@ -193,7 +193,7 @@ class PuzzleSections extends StatelessWidget {
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
           // const PuzzleMenu(),
-          //const Stars(),
+          const Stars(),
           const PuzzleBoard(),
           const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
@@ -202,7 +202,7 @@ class PuzzleSections extends StatelessWidget {
       medium: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          //const Stars(),
+          const Stars(),
           const PuzzleBoard(),
           const DemoAnimations(),
           theme.layoutDelegate.endSectionBuilder(state),
@@ -214,7 +214,7 @@ class PuzzleSections extends StatelessWidget {
           Expanded(
             child: theme.layoutDelegate.startSectionBuilder(state),
           ),
-          //const Stars(),
+          const Stars(),
           const PuzzleBoard(),
           const DemoAnimations(),
           Expanded(

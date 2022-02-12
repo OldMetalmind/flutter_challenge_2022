@@ -16,7 +16,8 @@ class AnimateTappedTile extends StatefulWidget {
     required this.squareSize,
     required this.spaceTile,
     required this.tile,
-    required this.animationListener, required this.tileAnimation,
+    required this.animationListener,
+    required this.tileAnimation,
   }) : super(key: key);
 
   /// Position of the clicked tile
@@ -82,8 +83,12 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     final spaceTile =
         widget.spaceTile?.currentPosition ?? const Position(x: 0, y: 0);
 
-    _controller..reset()..forward();
-    _controllerLottie..reset()..forward();
+    _controller
+      ..reset()
+      ..forward();
+    _controllerLottie
+      ..reset()
+      ..forward();
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -109,7 +114,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                     widget.squareSize,
                     widget.squareSize,
                   ),
-                  biggest ,
+                  biggest,
                 ),
               ).animate(
                 CurvedAnimation(
@@ -123,12 +128,11 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                   widget.tileAnimation.animationFile,
                   controller: _controllerLottie,
                   delegates: LottieDelegates(
-                    textStyle: (lottie){
+                    textStyle: (lottie) {
                       return const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: 'Rubik',
                       );
-
                     },
                     text: (initialText) => widget.tile?.letter ?? '',
                   ),
