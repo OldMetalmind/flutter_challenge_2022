@@ -63,13 +63,19 @@ class __DemoAnimationState extends State<_DemoAnimation>
         children: [
           Text(widget.animation.name),
           Transform.scale(
-            scale: 2,
+            scale: 2.5,
             child: Lottie.asset(
               lottieTileAnimationFile,
               animate: false,
               controller: _controller,
               delegates: LottieDelegates(
                 text: (initialText) => 'Z',
+                textStyle: (lottie) {
+                  return const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Rubik',
+                  );
+                },
               ),
             ),
           ),

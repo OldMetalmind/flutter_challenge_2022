@@ -69,6 +69,13 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
           widget.animationListener.call();
         }
       });
+
+    _controller
+      ..reset()
+      ..forward();
+    _controllerLottie
+      ..reset()
+      ..forward();
   }
 
   @override
@@ -83,12 +90,6 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     final spaceTile =
         widget.spaceTile?.currentPosition ?? const Position(x: 0, y: 0);
 
-    _controller
-      ..reset()
-      ..forward();
-    _controllerLottie
-      ..reset()
-      ..forward();
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -123,7 +124,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                 ),
               ),
               child: Transform.scale(
-                scale: 2,
+                scale: 2.5,
                 child: Lottie.asset(
                   widget.tileAnimation.animationFile,
                   controller: _controllerLottie,

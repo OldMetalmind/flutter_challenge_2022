@@ -447,13 +447,19 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
           ? () => context.read<PuzzleBloc>().add(TileTapped(widget.tile))
           : null,
       child: Transform.scale(
-        scale: 2,
+        scale: 2.5,
         child: Lottie.asset(
           lottieTileAnimationFile,
           animate: false,
           controller: _controllerLottie,
           delegates: LottieDelegates(
             text: (initialText) => widget.tile.letter,
+            textStyle: (lottie) {
+              return const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Rubik',
+              );
+            },
           ),
         ),
       ),
