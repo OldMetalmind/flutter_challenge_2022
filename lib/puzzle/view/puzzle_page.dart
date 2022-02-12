@@ -10,6 +10,7 @@ import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/simple/widgets/demoAnimations.dart';
 import 'package:very_good_slide_puzzle/simple/widgets/stars.dart';
+import 'package:very_good_slide_puzzle/simple/widgets/word_tip.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
@@ -193,6 +194,7 @@ class PuzzleSections extends StatelessWidget {
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
           // const PuzzleMenu(),
+          const WordTip(),
           const Stars(),
           const PuzzleBoard(),
           const DemoAnimations(),
@@ -202,6 +204,7 @@ class PuzzleSections extends StatelessWidget {
       medium: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
+          const WordTip(),
           const Stars(),
           const PuzzleBoard(),
           const DemoAnimations(),
@@ -214,6 +217,7 @@ class PuzzleSections extends StatelessWidget {
           Expanded(
             child: theme.layoutDelegate.startSectionBuilder(state),
           ),
+          const WordTip(),
           const Stars(),
           const PuzzleBoard(),
           const DemoAnimations(),
