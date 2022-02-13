@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -308,12 +306,10 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
 
         final whiteSpacePosition =
             spaceTile?.currentPosition ?? const Position(x: -2, y: -2);
-        log('tapped(${whiteSpacePosition.x},${whiteSpacePosition.y})');
         for (var x = 0; x < widget.size; x++) {
           for (var y = 0; y < widget.size; y++) {
             if (x == whiteSpacePosition.y - 1 &&
                 y == whiteSpacePosition.x - 1) {
-              log('hide this');
             } else {
               squares.add(
                 tileSquare(count, x, y, ite.current, parentWidth / widget.size),
@@ -338,13 +334,11 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 position: lastTappedTile.currentPosition,
                 squareSize: constraints.biggest.width / widget.size,
                 spaceTile: spaceTile,
-                animationListener: () {
-                  log('Animation finished: ${lastTappedTile.value}');
-                },
                 tileAnimation: TileAnimation.fromTiles(
                   lastTappedTile,
                   spaceTile,
                 ),
+                animationListener: () {},
               ),
           ],
         );

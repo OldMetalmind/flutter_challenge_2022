@@ -98,7 +98,7 @@ class Puzzle extends Equatable {
       }
     }
 
-    // Vertical check
+    // TODO(FB) Vertical check
 
     return false;
   }

@@ -5,8 +5,11 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:logger/logger.dart';
 import 'package:selector/app/app.dart';
 import 'package:selector/bootstrap.dart';
+
+var logger = Logger();
 
 void main() {
   bootstrap(() => const App());

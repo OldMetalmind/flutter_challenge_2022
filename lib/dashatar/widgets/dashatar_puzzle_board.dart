@@ -43,34 +43,38 @@ class _DashatarPuzzleBoardState extends State<DashatarPuzzleBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PuzzleBloc, PuzzleState>(
-      listener: (context, state) async {
-        if (state.puzzleStatus == PuzzleStatus.complete) {
-          _completePuzzleTimer =
-              Timer(const Duration(milliseconds: 370), () async {
-            await showAppDialog<void>(
-              context: context,
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider.value(
-                    value: context.read<DashatarThemeBloc>(),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PuzzleBloc, PuzzleState>(
+          listener: (context, state) async {
+            if (state.puzzleStatus == PuzzleStatus.complete) {
+              _completePuzzleTimer =
+                  Timer(const Duration(milliseconds: 370), () async {
+                await showAppDialog<void>(
+                  context: context,
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: context.read<DashatarThemeBloc>(),
+                      ),
+                      BlocProvider.value(
+                        value: context.read<PuzzleBloc>(),
+                      ),
+                      BlocProvider.value(
+                        value: context.read<TimerBloc>(),
+                      ),
+                      BlocProvider.value(
+                        value: context.read<AudioControlBloc>(),
+                      ),
+                    ],
+                    child: const DashatarShareDialog(),
                   ),
-                  BlocProvider.value(
-                    value: context.read<PuzzleBloc>(),
-                  ),
-                  BlocProvider.value(
-                    value: context.read<TimerBloc>(),
-                  ),
-                  BlocProvider.value(
-                    value: context.read<AudioControlBloc>(),
-                  ),
-                ],
-                child: const DashatarShareDialog(),
-              ),
-            );
-          });
-        }
-      },
+                );
+              });
+            }
+          },
+        ),
+      ],
       child: ResponsiveLayoutBuilder(
         small: (_, child) => SizedBox.square(
           key: const Key('dashatar_puzzle_board_small'),

@@ -9,6 +9,7 @@ abstract class GameState extends Equatable {
     this.numberOfStages = 3,
     this.currentStage = 3,
     this.stageWords = const [],
+    this.complete = false,
   });
 
   /// If the player is in easy mode, aka shows the word to be found;
@@ -36,6 +37,37 @@ abstract class GameState extends Equatable {
 
   /// What are the words the player needs to find to solve the puzzle
   final List<String> stageWords;
+
+  /// Determines if player completed the final level
+  final bool complete;
+
+  /// Copy the current stage to a new object
+  StageGameState copyWith({int? current, String? word, bool? isComplete}) {
+    return StageGameState(
+      current ?? currentStage,
+      word ?? getStageWord(current),
+      isCompleted: isComplete ?? complete,
+    );
+  }
+
+  /// Get the current word for the puzzle
+  String getStageWord(int? current) {
+    if (current != null && current < initialStage + numberOfStages) {
+      return stageWords[current];
+    } else {
+      return '';
+    }
+  }
+
+  @override
+  List<Object?> get props => [
+        easyMode,
+        initialStage,
+        numberOfStages,
+        currentStage,
+        stageWords,
+        complete,
+      ];
 }
 
 /// Initial State of the game
@@ -46,9 +78,6 @@ class GameInitial extends GameState {
           stageWords: randomizeStageWords(), // Grabs the
         );
 
-  @override
-  List<Object> get props => [currentStage, stageWords];
-
   /// Randomize what will be the words that the player needs to find
   static List<String> randomizeStageWords() {
     return validWords.entries.fold(<String>[], (previousValue, words) {
@@ -56,6 +85,11 @@ class GameInitial extends GameState {
       return previousValue;
     });
   }
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+      ];
 }
 
 /// Current Stage Game State.
@@ -63,14 +97,19 @@ class StageGameState extends GameState {
   ///
   const StageGameState(
     int currentStage,
-    this.word,
-  ) : super(
+    this.word, {
+    bool isCompleted = false,
+  }) : super(
           currentStage: currentStage,
+          complete: isCompleted,
         );
 
   /// Word that solves the current puzzle
   final String word;
 
   @override
-  List<Object?> get props => [word];
+  List<Object?> get props => [
+        ...super.props,
+        word,
+      ];
 }

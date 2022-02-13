@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -88,7 +90,10 @@ class PuzzleView extends StatelessWidget {
       body: AnimatedContainer(
         duration: PuzzleThemeAnimationDuration.backgroundColorChange,
         //decoration: BoxDecoration(color: theme.backgroundColor),
-        child: BlocBuilder<GameBloc, GameState>(
+        child: BlocConsumer<GameBloc, GameState>(
+          listener: (context, state) {
+            log('Current Stage: ${state.currentStage}');
+          },
           builder: (context, gameState) {
             return BlocListener<DashatarThemeBloc, DashatarThemeState>(
               listener: (context, state) {
@@ -259,6 +264,9 @@ class PuzzleBoard extends StatelessWidget {
     return PuzzleKeyboardHandler(
       child: BlocConsumer<PuzzleBloc, PuzzleState>(
         listener: (context, state) {
+          if (state.puzzleStatus == PuzzleStatus.complete) {
+            context.read<GameBloc>().add(NextStageGameEvent());
+          }
           if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.complete) {
             context.read<TimerBloc>().add(const TimerStopped());
           }

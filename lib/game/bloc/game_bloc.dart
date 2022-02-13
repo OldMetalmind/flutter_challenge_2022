@@ -13,16 +13,29 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       final currentStage = state.initialStage;
       final currentWord = state.stageWords[currentStage];
 
+      emit(
+        state.copyWith(
+          current: currentStage,
+          word: currentWord,
+        ),
+      );
+
       emit.call(
         StageGameState(currentStage, currentWord),
       );
     });
+
     on<NextStageGameEvent>((event, emit) {
       final currentStage = state.currentStage + 1;
       final currentWord = state.stageWords[currentStage];
-
-      emit.call(
-        StageGameState(currentStage, currentWord),
+      final isCompleted =
+          currentStage == state.initialStage + state.numberOfStages;
+      emit(
+        state.copyWith(
+          current: currentStage,
+          word: currentWord,
+          isComplete: isCompleted,
+        ),
       );
     });
   }
