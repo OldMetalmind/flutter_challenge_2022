@@ -98,7 +98,20 @@ class Puzzle extends Equatable {
       }
     }
 
-    // TODO(FB) Vertical check
+    // Vertical Check
+    for (var x = 0; x < size; x++) {
+      final column = <String>[];
+      for (var i = x; i < tiles.length; i += size) {
+        column.add(tiles[i].letter);
+      }
+
+      final columnWord =
+          column.fold<String>('', (current, letter) => '$current$letter');
+
+      if (word == columnWord) {
+        return true;
+      }
+    }
 
     return false;
   }
