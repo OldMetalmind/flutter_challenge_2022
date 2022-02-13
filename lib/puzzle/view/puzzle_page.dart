@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:selector/audio_control/audio_control.dart';
 import 'package:selector/dashatar/dashatar.dart';
+import 'package:selector/game/bloc/game_bloc.dart';
 import 'package:selector/l10n/l10n.dart';
 import 'package:selector/layout/layout.dart';
 import 'package:selector/models/models.dart';
@@ -60,6 +61,9 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (_) => AudioControlBloc(),
         ),
+        BlocProvider(
+          create: (_) => GameBloc(),
+        )
       ],
       child: const PuzzleView(),
     );
@@ -84,31 +88,38 @@ class PuzzleView extends StatelessWidget {
       body: AnimatedContainer(
         duration: PuzzleThemeAnimationDuration.backgroundColorChange,
         //decoration: BoxDecoration(color: theme.backgroundColor),
-        child: BlocListener<DashatarThemeBloc, DashatarThemeState>(
-          listener: (context, state) {
-            final dashatarTheme = context.read<DashatarThemeBloc>().state.theme;
-            context.read<ThemeBloc>().add(ThemeUpdated(theme: dashatarTheme));
-          },
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => TimerBloc(
-                  ticker: const Ticker(),
-                ),
-              ),
-              BlocProvider(
-                create: (context) => PuzzleBloc(4)
-                  ..add(
-                    PuzzleInitialized(
-                      shufflePuzzle: shufflePuzzle,
+        child: BlocBuilder<GameBloc, GameState>(
+          builder: (context, gameState) {
+            return BlocListener<DashatarThemeBloc, DashatarThemeState>(
+              listener: (context, state) {
+                final dashatarTheme =
+                    context.read<DashatarThemeBloc>().state.theme;
+                context
+                    .read<ThemeBloc>()
+                    .add(ThemeUpdated(theme: dashatarTheme));
+              },
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => TimerBloc(
+                      ticker: const Ticker(),
                     ),
                   ),
+                  BlocProvider(
+                    create: (context) => PuzzleBloc(gameState.currentStage)
+                      ..add(
+                        PuzzleInitialized(
+                          shufflePuzzle: shufflePuzzle,
+                        ),
+                      ),
+                  ),
+                ],
+                child: const _Puzzle(
+                  key: Key('puzzle_view_puzzle'),
+                ),
               ),
-            ],
-            child: const _Puzzle(
-              key: Key('puzzle_view_puzzle'),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

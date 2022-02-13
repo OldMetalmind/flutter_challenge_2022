@@ -112,7 +112,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     for (var y = 1; y <= size; y++) {
       for (var x = 1; x <= size; x++) {
         if (x == size && y == size) {
-          // correctPositions.add(whitespacePosition);
           currentPositions.add(whitespacePosition);
         } else {
           final position = Position(x: x, y: y);
@@ -165,21 +164,24 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   ) {
     final tiles = <Tile>[];
     for (var i = 1; i <= size * size; i++) {
+      // If whitespace
       if (i == size * size) {
-        final tile = Tile(
+        final whitespace = Tile(
           value: i,
           currentPosition: currentPositions[i - 1],
           isWhitespace: true,
           letter: '',
         );
-        tiles.add(tile);
+        tiles.add(whitespace);
       } else {
         if (i < size + 1) {
+          assert(validWords[size] != null, 'Valid word cannot be "null"');
           final tile = Tile(
             value: i,
             correctPosition: correctPositions[i - 1],
             currentPosition: currentPositions[i - 1],
-            letter: validWords[0][i - 1],
+            letter: validWords[size]?.first[i - 1] ??
+                '-', //TODO(FB) Randomize properly
           );
           tiles.add(tile);
         } else {

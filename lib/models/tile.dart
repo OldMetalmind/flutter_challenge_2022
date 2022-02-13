@@ -53,6 +53,7 @@ class Tile extends Equatable {
   @override
   String toString() {
     return '''
-correctPosition: $correctPosition,|currentPosition:$currentPosition|isWhitespace:$isWhitespace|letter:$letter''';
+        correctPosition: $correctPosition,|currentPosition:$currentPosition|isWhitespace:$isWhitespace|letter:$letter
+        ''';
   }
 }

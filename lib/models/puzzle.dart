@@ -83,8 +83,8 @@ class Puzzle extends Equatable {
   /// Determines if the puzzle is completed. By determining if the words is
   /// correctly positioned
   bool isComplete() {
-    final word = validWords[0];
     final size = getDimension();
+    final word = validWords[size]?.first; //TODO(FB) - Proper Random word
 
     // Horizontal check
     for (var y = 0; y < size; y++) {
