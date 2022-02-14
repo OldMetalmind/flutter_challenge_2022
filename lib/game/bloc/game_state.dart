@@ -4,7 +4,7 @@ part of 'game_bloc.dart';
 abstract class GameState extends Equatable {
   /// Simple Constructor
   const GameState({
-    this.easyMode = false,
+    this.easyMode = true,
     this.initialStage = 3,
     this.numberOfStages = 3,
     this.currentStage = 3,
@@ -13,6 +13,9 @@ abstract class GameState extends Equatable {
   });
 
   /// If the player is in easy mode, aka shows the word to be found;
+  ///
+  /// Defaults to true
+  ///
   final bool easyMode;
 
   /// In what stage does the player starts
@@ -41,10 +44,6 @@ abstract class GameState extends Equatable {
   /// Determines if player completed the final level
   final bool complete;
 
-  GameInitial copyInitial() {
-    return GameInitial();
-  }
-
   /// Copy the current stage to a new object
   StageGameState copyWith({
     int current = 0,
@@ -53,13 +52,21 @@ abstract class GameState extends Equatable {
   }) {
     return StageGameState(
       current,
-      word ?? getStageWord(current),
+      word ?? _getStageWord(current),
       isCompleted: isComplete ?? complete,
+      stageWords: stageWords,
     );
   }
 
   /// Get the current word for the puzzle
-  String getStageWord(int current) => stageWords[current] ?? '';
+  String _getStageWord(int current) => stageWords[current] ?? '';
+
+  /// Returns the word that is the goal for the current puzzle
+  String getCurrentWord() {
+    logger.wtf('StageWords: $stageWords | currentStage: $currentStage');
+    assert(stageWords[currentStage] != null, 'Should always exist a word');
+    return stageWords[currentStage] ?? '';
+  }
 
   @override
   List<Object?> get props => [
@@ -103,9 +110,11 @@ class StageGameState extends GameState {
     int currentStage,
     this.word, {
     bool isCompleted = false,
+    required Map<int, String> stageWords,
   }) : super(
           currentStage: currentStage,
           complete: isCompleted,
+          stageWords: stageWords,
         );
 
   /// Word that solves the current puzzle

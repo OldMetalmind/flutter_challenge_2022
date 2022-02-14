@@ -138,7 +138,11 @@ class _Puzzle extends StatelessWidget {
         return previous.currentStage != current.currentStage;
       },
       listener: (context, state) {
-        context.read<PuzzleBloc>().add(PuzzleNextStage(state.currentStage));
+        context.read<PuzzleBloc>().add(
+              PuzzleNextStage(
+                state.currentStage,
+              ),
+            );
       },
       buildWhen: (previous, current) =>
           previous.currentStage != current.currentStage,
@@ -157,8 +161,8 @@ class _Puzzle extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 48),
                       child: Column(
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             'Find the word',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -166,12 +170,12 @@ class _Puzzle extends StatelessWidget {
                               color: Color(0xFF949494),
                             ),
                           ),
-                          SizedBox(height: 16),
-                          WordTip(),
-                          SizedBox(height: 24),
-                          Stars(),
-                          PuzzleSections(),
-                          DemoAnimations(),
+                          const SizedBox(height: 16),
+                          if (gameState.easyMode) const WordTip(),
+                          const SizedBox(height: 24),
+                          const Stars(),
+                          const PuzzleSections(),
+                          const DemoAnimations(),
                         ],
                       ),
                     ),

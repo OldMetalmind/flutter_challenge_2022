@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/src/provider.dart';
+import 'package:selector/game/bloc/game_bloc.dart';
 
+/// Shows the Word that the player needs to find
 class WordTip extends StatelessWidget {
+  /// Constructor
   const WordTip({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        WordLetter(
-          letter: 'G',
-        ),
-        WordLetter(
-          letter: 'E',
-        ),
-        WordLetter(
-          letter: 'T',
-        ),
-      ],
+    return BlocBuilder<GameBloc, GameState>(
+      buildWhen: (previous, current) =>
+          previous.currentStage != current.currentStage,
+      builder: (context, state) {
+        final word = context.watch<GameBloc>().state.getCurrentWord();
+        final tip =
+            word.split('').map((letter) => WordLetter(letter: letter)).toList();
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ...tip,
+          ],
+        );
+      },
     );
   }
 }
 
+/// A Letter of the word that the player needs to find
 class WordLetter extends StatelessWidget {
   const WordLetter({Key? key, required this.letter}) : super(key: key);
 
