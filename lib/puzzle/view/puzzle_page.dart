@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -75,10 +73,15 @@ class PuzzlePage extends StatelessWidget {
 /// {@template puzzle_view}
 /// Displays the content for the [PuzzlePage].
 /// {@endtemplate}
-class PuzzleView extends StatelessWidget {
+class PuzzleView extends StatefulWidget {
   /// {@macro puzzle_view}
   const PuzzleView({Key? key}) : super(key: key);
 
+  @override
+  State<PuzzleView> createState() => _PuzzleViewState();
+}
+
+class _PuzzleViewState extends State<PuzzleView> {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
@@ -90,41 +93,32 @@ class PuzzleView extends StatelessWidget {
       body: AnimatedContainer(
         duration: PuzzleThemeAnimationDuration.backgroundColorChange,
         //decoration: BoxDecoration(color: theme.backgroundColor),
-        child: BlocConsumer<GameBloc, GameState>(
+        child: BlocListener<DashatarThemeBloc, DashatarThemeState>(
           listener: (context, state) {
-            log('Current Stage: ${state.currentStage}');
+            final dashatarTheme = context.read<DashatarThemeBloc>().state.theme;
+            context.read<ThemeBloc>().add(ThemeUpdated(theme: dashatarTheme));
           },
-          builder: (context, gameState) {
-            return BlocListener<DashatarThemeBloc, DashatarThemeState>(
-              listener: (context, state) {
-                final dashatarTheme =
-                    context.read<DashatarThemeBloc>().state.theme;
-                context
-                    .read<ThemeBloc>()
-                    .add(ThemeUpdated(theme: dashatarTheme));
-              },
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => TimerBloc(
-                      ticker: const Ticker(),
-                    ),
-                  ),
-                  BlocProvider(
-                    create: (context) => PuzzleBloc(gameState.currentStage)
-                      ..add(
-                        PuzzleInitialized(
-                          shufflePuzzle: shufflePuzzle,
-                        ),
-                      ),
-                  ),
-                ],
-                child: const _Puzzle(
-                  key: Key('puzzle_view_puzzle'),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => TimerBloc(
+                  ticker: const Ticker(),
                 ),
               ),
-            );
-          },
+              BlocProvider(
+                lazy: false,
+                create: (context) => PuzzleBloc(3)
+                  ..add(
+                    PuzzleInitialized(
+                      shufflePuzzle: shufflePuzzle,
+                    ),
+                  ),
+              ),
+            ],
+            child: const _Puzzle(
+              key: Key('puzzle_view_puzzle'),
+            ),
+          ),
         ),
       ),
     );
@@ -139,43 +133,55 @@ class _Puzzle extends StatelessWidget {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Stack(
-          children: [
-            if (theme is SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
-            SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 48),
-                  child: Column(
-                    children: const [
-                      Text(
-                        'Find the word',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 30,
-                          color: Color(0xFF949494),
-                        ),
+    return BlocConsumer<GameBloc, GameState>(
+      listenWhen: (previous, current) {
+        return previous.currentStage != current.currentStage;
+      },
+      listener: (context, state) {
+        context.read<PuzzleBloc>().add(PuzzleNextStage(state.currentStage));
+      },
+      buildWhen: (previous, current) =>
+          previous.currentStage != current.currentStage,
+      builder: (context, gameState) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              children: [
+                if (theme is SimpleTheme)
+                  theme.layoutDelegate.backgroundBuilder(state),
+                SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 48),
+                      child: Column(
+                        children: const [
+                          Text(
+                            'Find the word',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30,
+                              color: Color(0xFF949494),
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          WordTip(),
+                          SizedBox(height: 24),
+                          Stars(),
+                          PuzzleSections(),
+                          DemoAnimations(),
+                        ],
                       ),
-                      SizedBox(height: 16),
-                      WordTip(),
-                      SizedBox(height: 24),
-                      Stars(),
-                      PuzzleSections(),
-                      DemoAnimations(),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            if (theme is! SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
-          ],
+                if (theme is! SimpleTheme)
+                  theme.layoutDelegate.backgroundBuilder(state),
+              ],
+            );
+          },
         );
       },
     );

@@ -9,34 +9,53 @@ part 'game_state.dart';
 class GameBloc extends Bloc<GameEvent, GameState> {
   /// Constructor with the initial set defined so the game can begin
   GameBloc() : super(GameInitial()) {
-    on<GameEvent>((event, emit) {
-      final currentStage = state.initialStage;
-      final currentWord = state.stageWords[currentStage];
-
-      emit(
-        state.copyWith(
-          current: currentStage,
-          word: currentWord,
-        ),
-      );
-
-      emit.call(
-        StageGameState(currentStage, currentWord),
-      );
-    });
+    // on<GameEvent>((event, emit) {
+    //   final currentStage = state.initialStage;
+    //   final currentWord = state.stageWords[currentStage];
+    //
+    //   emit(
+    //     state.copyWith(
+    //       current: currentStage,
+    //       word: currentWord,
+    //       isComplete: false,
+    //     ),
+    //   );
+    //
+    //   emit.call(
+    //     StageGameState(currentStage, currentWord ?? '-'),
+    //   );
+    // });
 
     on<NextStageGameEvent>((event, emit) {
       final currentStage = state.currentStage + 1;
-      final currentWord = state.stageWords[currentStage];
-      final isCompleted =
-          currentStage == state.initialStage + state.numberOfStages;
       emit(
         state.copyWith(
           current: currentStage,
-          word: currentWord,
-          isComplete: isCompleted,
+          word: 'ABC',
+          isComplete: false,
         ),
       );
+
+      // final isCompleted =
+      //     currentStage - state.initialStage == state.stageWords.length;
+
+      // if (isCompleted) {
+      //   emit(
+      //     state.copyWith(
+      //       isComplete: true,
+      //       current: currentStage,
+      //     ),
+      //   );
+      // } else {
+      //   final currentWord = state.stageWords[currentStage];
+      //   emit(
+      //     state.copyWith(
+      //       current: currentStage,
+      //       word: currentWord,
+      //       isComplete: false,
+      //     ),
+      //   );
+      // }
     });
   }
 }

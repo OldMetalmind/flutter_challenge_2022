@@ -16,11 +16,25 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<PuzzleInitialized>(_onPuzzleInitialized);
     on<TileTapped>(_onTileTapped);
     on<PuzzleReset>(_onPuzzleReset);
+    on<PuzzleNextStage>(_onPuzzleNextStage);
   }
 
   final int _size;
 
   final Random? random;
+
+  void _onPuzzleNextStage(
+    PuzzleNextStage event,
+    Emitter<PuzzleState> emit,
+  ) {
+    final puzzle = _generatePuzzle(event.size);
+    emit(
+      PuzzleState(
+        puzzle: puzzle.sort(),
+        numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
+      ),
+    );
+  }
 
   void _onPuzzleInitialized(
     PuzzleInitialized event,
@@ -91,20 +105,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     final correctPositions = <Position>[];
     final currentPositions = <Position>[];
     final whitespacePosition = Position(x: size, y: size);
-
-    // Create all possible board positions.
-    // for (var y = 1; y <= size; y++) {
-    //   for (var x = 1; x <= size; x++) {
-    //     if (x == size && y == size) {
-    //       correctPositions.add(whitespacePosition);
-    //       currentPositions.add(whitespacePosition);
-    //     } else {
-    //       final position = Position(x: x, y: y);
-    //       correctPositions.add(position);
-    //       currentPositions.add(position);
-    //     }
-    //   }
-    // }
 
     // Fills the first row with the only correct positions, since it will be the
     // word we want to accomplish

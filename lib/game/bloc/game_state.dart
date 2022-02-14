@@ -8,7 +8,7 @@ abstract class GameState extends Equatable {
     this.initialStage = 3,
     this.numberOfStages = 3,
     this.currentStage = 3,
-    this.stageWords = const [],
+    this.stageWords = const <int, String>{},
     this.complete = false,
   });
 
@@ -36,28 +36,30 @@ abstract class GameState extends Equatable {
   final int currentStage;
 
   /// What are the words the player needs to find to solve the puzzle
-  final List<String> stageWords;
+  final Map<int, String> stageWords;
 
   /// Determines if player completed the final level
   final bool complete;
 
+  GameInitial copyInitial() {
+    return GameInitial();
+  }
+
   /// Copy the current stage to a new object
-  StageGameState copyWith({int? current, String? word, bool? isComplete}) {
+  StageGameState copyWith({
+    int current = 0,
+    String? word,
+    bool? isComplete,
+  }) {
     return StageGameState(
-      current ?? currentStage,
+      current,
       word ?? getStageWord(current),
       isCompleted: isComplete ?? complete,
     );
   }
 
   /// Get the current word for the puzzle
-  String getStageWord(int? current) {
-    if (current != null && current < initialStage + numberOfStages) {
-      return stageWords[current];
-    } else {
-      return '';
-    }
-  }
+  String getStageWord(int current) => stageWords[current] ?? '';
 
   @override
   List<Object?> get props => [
@@ -79,9 +81,11 @@ class GameInitial extends GameState {
         );
 
   /// Randomize what will be the words that the player needs to find
-  static List<String> randomizeStageWords() {
-    return validWords.entries.fold(<String>[], (previousValue, words) {
-      previousValue.add(words.value.first); //TODO(FB) Randomize properly
+  static Map<int, String> randomizeStageWords() {
+    return validWords.entries.fold(<int, String>{}, (previousValue, words) {
+      previousValue[words.key] =
+          words.value.first; //TODO(FB) Randomize properly
+      //previousValue.add(words.value.first);
       return previousValue;
     });
   }
