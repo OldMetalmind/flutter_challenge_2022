@@ -9,7 +9,6 @@ import 'package:selector/layout/layout.dart';
 import 'package:selector/models/models.dart';
 import 'package:selector/puzzle/puzzle.dart';
 import 'package:selector/simple/simple.dart';
-import 'package:selector/simple/widgets/demoAnimations.dart';
 import 'package:selector/simple/widgets/stars.dart';
 import 'package:selector/simple/widgets/word_tip.dart';
 import 'package:selector/theme/theme.dart';
@@ -175,7 +174,7 @@ class _Puzzle extends StatelessWidget {
                           const SizedBox(height: 24),
                           const Stars(),
                           const PuzzleSections(),
-                          const DemoAnimations(),
+                          //const DemoAnimations(),
                         ],
                       ),
                     ),

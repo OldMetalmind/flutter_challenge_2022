@@ -77,6 +77,12 @@ abstract class GameState extends Equatable {
         stageWords,
         complete,
       ];
+
+  /// Returns the current stage the user is at
+  ///
+  /// Corresponds to stage the player is current at versus ao many are left
+  ///
+  int getCurrentStage() => currentStage - initialStage;
 }
 
 /// Initial State of the game
