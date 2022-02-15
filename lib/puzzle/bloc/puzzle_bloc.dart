@@ -12,7 +12,8 @@ part 'puzzle_event.dart';
 part 'puzzle_state.dart';
 
 class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
-  PuzzleBloc(this._size, {this.random}) : super(const PuzzleState()) {
+  PuzzleBloc(this._size, this._gameWords, {this.random})
+      : super(const PuzzleState()) {
     on<PuzzleInitialized>(_onPuzzleInitialized);
     on<TileTapped>(_onTileTapped);
     on<PuzzleReset>(_onPuzzleReset);
@@ -20,6 +21,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   final int _size;
+
+  final Map<int, String> _gameWords;
 
   final Random? random;
 
@@ -55,7 +58,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       if (state.puzzle.isTileMovable(tappedTile)) {
         final mutablePuzzle = Puzzle(tiles: [...state.puzzle.tiles]);
         final puzzle = mutablePuzzle.moveTiles(tappedTile, []);
-        if (puzzle.isComplete()) {
+        if (puzzle.isComplete(_gameWords)) {
           emit(
             state.copyWith(
               puzzle: puzzle.sort(),
@@ -176,12 +179,12 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       } else {
         if (i < size + 1) {
           assert(validWords[size] != null, 'Valid word cannot be "null"');
+          assert(_gameWords[size] != null, 'There is always a word');
           final tile = Tile(
             value: i,
             correctPosition: correctPositions[i - 1],
             currentPosition: currentPositions[i - 1],
-            letter: validWords[size]?.first[i - 1] ??
-                '-', //TODO(FB) Randomize properly
+            letter: _gameWords[size]?[i - 1] ?? '',
           );
           tiles.add(tile);
         } else {

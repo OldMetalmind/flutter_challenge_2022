@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:selector/assets/words.dart';
 import 'package:selector/models/models.dart';
 
 // A 3x3 puzzle board visualization:
@@ -82,9 +81,9 @@ class Puzzle extends Equatable {
 
   /// Determines if the puzzle is completed. By determining if the words is
   /// correctly positioned
-  bool isComplete() {
+  bool isComplete(Map<int, String> stageWords) {
     final size = getDimension();
-    final word = validWords[size]?.first; //TODO(FB) - Proper Random word
+    final word = stageWords[size];
 
     // Horizontal check
     for (var y = 0; y < size; y++) {

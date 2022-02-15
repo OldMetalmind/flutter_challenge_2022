@@ -437,7 +437,9 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
         // ),
       ),
       onPressed: widget.state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(TileTapped(widget.tile))
+          ? () => context.read<PuzzleBloc>().add(
+                TileTapped(widget.tile),
+              )
           : null,
       child: Transform.scale(
         scale: 2.5,

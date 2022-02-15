@@ -13,3 +13,15 @@ class NextStageGameEvent extends GameEvent {
   @override
   List<Object?> get props => [];
 }
+
+/// When the current stage is finished and ready for next stage
+class StageCompleteGameEvent extends GameEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+/// When the came is complete and completely finished, ready for sharing data
+class FinishedGameEvent extends GameEvent {
+  @override
+  List<Object?> get props => [];
+}

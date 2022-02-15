@@ -88,10 +88,11 @@ class _PuzzleViewState extends State<PuzzleView> {
     /// Shuffle only if the current theme is Simple.
     final shufflePuzzle = theme is SimpleTheme;
 
+    final gameStage = context.read<GameBloc>().state;
+
     return Scaffold(
       body: AnimatedContainer(
         duration: PuzzleThemeAnimationDuration.backgroundColorChange,
-        //decoration: BoxDecoration(color: theme.backgroundColor),
         child: BlocListener<DashatarThemeBloc, DashatarThemeState>(
           listener: (context, state) {
             final dashatarTheme = context.read<DashatarThemeBloc>().state.theme;
@@ -106,8 +107,10 @@ class _PuzzleViewState extends State<PuzzleView> {
               ),
               BlocProvider(
                 lazy: false,
-                create: (context) => PuzzleBloc(3)
-                  ..add(
+                create: (context) => PuzzleBloc(
+                  gameStage.currentStage,
+                  gameStage.gameWords,
+                )..add(
                     PuzzleInitialized(
                       shufflePuzzle: shufflePuzzle,
                     ),
@@ -124,8 +127,21 @@ class _PuzzleViewState extends State<PuzzleView> {
   }
 }
 
-class _Puzzle extends StatelessWidget {
+class _Puzzle extends StatefulWidget {
   const _Puzzle({Key? key}) : super(key: key);
+
+  @override
+  State<_Puzzle> createState() => _PuzzleState();
+}
+
+class _PuzzleState extends State<_Puzzle> {
+  late bool showNextStageButton;
+
+  @override
+  void initState() {
+    super.initState();
+    showNextStageButton = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,11 +153,13 @@ class _Puzzle extends StatelessWidget {
         return previous.currentStage != current.currentStage;
       },
       listener: (context, state) {
-        context.read<PuzzleBloc>().add(
-              PuzzleNextStage(
-                state.currentStage,
-              ),
-            );
+        /// TODO(FB) Remove !
+        showNextStageButton = !state.stageComplete;
+        // context.read<PuzzleBloc>().add(
+        //       PuzzleNextStage(
+        //         state.currentStage,
+        //       ),
+        //     );
       },
       buildWhen: (previous, current) =>
           previous.currentStage != current.currentStage,
@@ -174,6 +192,18 @@ class _Puzzle extends StatelessWidget {
                           const SizedBox(height: 24),
                           const Stars(),
                           const PuzzleSections(),
+                          if (showNextStageButton)
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  showNextStageButton = !showNextStageButton;
+                                  context
+                                      .read<GameBloc>()
+                                      .add(NextStageGameEvent());
+                                });
+                              },
+                              child: const Text('Next Stage'),
+                            ),
                           //const DemoAnimations(),
                         ],
                       ),
@@ -273,8 +303,12 @@ class PuzzleBoard extends StatelessWidget {
     return PuzzleKeyboardHandler(
       child: BlocConsumer<PuzzleBloc, PuzzleState>(
         listener: (context, state) {
-          if (state.puzzleStatus == PuzzleStatus.complete) {
-            context.read<GameBloc>().add(NextStageGameEvent());
+          final gameFinished = context.read<GameBloc>().state.isGameFinished();
+          if (gameFinished) {
+            context.read<GameBloc>().add(FinishedGameEvent());
+          } else if (state.puzzleStatus == PuzzleStatus.complete &&
+              !gameFinished) {
+            context.read<GameBloc>().add(StageCompleteGameEvent());
           }
           if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.complete) {
             context.read<TimerBloc>().add(const TimerStopped());

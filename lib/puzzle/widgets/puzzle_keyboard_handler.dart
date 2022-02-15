@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:selector/audio_control/audio_control.dart';
 import 'package:selector/dashatar/dashatar.dart';
+import 'package:selector/game/bloc/game_bloc.dart';
 import 'package:selector/helpers/helpers.dart';
 import 'package:selector/models/models.dart';
 import 'package:selector/puzzle/puzzle.dart';
@@ -80,6 +81,7 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
       }
 
       if (tile != null) {
+        final stageWords = context.read<GameBloc>().state.gameWords;
         context.read<PuzzleBloc>().add(TileTapped(tile));
         unawaited(_audioPlayer.replay());
       }

@@ -8,8 +8,9 @@ abstract class GameState extends Equatable {
     this.initialStage = 3,
     this.numberOfStages = 3,
     this.currentStage = 3,
-    this.stageWords = const <int, String>{},
+    required this.gameWords,
     this.complete = false,
+    this.stageComplete = false,
   });
 
   /// If the player is in easy mode, aka shows the word to be found;
@@ -39,10 +40,13 @@ abstract class GameState extends Equatable {
   final int currentStage;
 
   /// What are the words the player needs to find to solve the puzzle
-  final Map<int, String> stageWords;
+  final Map<int, String> gameWords;
 
   /// Determines if player completed the final level
   final bool complete;
+
+  /// When the current stage is complete and ready for next stage
+  final bool stageComplete;
 
   /// Copy the current stage to a new object
   StageGameState copyWith({
@@ -54,19 +58,27 @@ abstract class GameState extends Equatable {
       current,
       word ?? _getStageWord(current),
       isCompleted: isComplete ?? complete,
-      stageWords: stageWords,
+      words: gameWords,
     );
   }
 
+  /// Copy the current finished stage
+  StageCompleteState copyStageCompleteState() {
+    return StageCompleteState(gameWords);
+  }
+
   /// Get the current word for the puzzle
-  String _getStageWord(int current) => stageWords[current] ?? '';
+  String _getStageWord(int current) => gameWords[current] ?? '';
 
   /// Returns the word that is the goal for the current puzzle
   String getCurrentWord() {
-    logger.wtf('StageWords: $stageWords | currentStage: $currentStage');
-    assert(stageWords[currentStage] != null, 'Should always exist a word');
-    return stageWords[currentStage] ?? '';
+    logger.wtf('StageWords: $gameWords | currentStage: $currentStage');
+    assert(gameWords[currentStage] != null, 'Should always exist a word');
+    return gameWords[currentStage] ?? '';
   }
+
+  /// Determines if the user has reach the final level
+  bool isGameFinished() => currentStage - initialStage == numberOfStages;
 
   @override
   List<Object?> get props => [
@@ -74,7 +86,7 @@ abstract class GameState extends Equatable {
         initialStage,
         numberOfStages,
         currentStage,
-        stageWords,
+        gameWords,
         complete,
       ];
 
@@ -90,23 +102,37 @@ class GameInitial extends GameState {
   /// Initial state of the game
   GameInitial()
       : super(
-          stageWords: randomizeStageWords(), // Grabs the
+          gameWords: randomizeStageWords(), // Grabs the
+          stageComplete: false,
         );
 
   /// Randomize what will be the words that the player needs to find
   static Map<int, String> randomizeStageWords() {
-    return validWords.entries.fold(<int, String>{}, (previousValue, words) {
-      previousValue[words.key] =
-          words.value.first; //TODO(FB) Randomize properly
-      //previousValue.add(words.value.first);
-      return previousValue;
-    });
+    return validWords.entries.fold(
+      <int, String>{},
+      (previousValue, words) {
+        previousValue[words.key] =
+            words.value[Random().nextInt(words.value.length)];
+        return previousValue;
+      },
+    );
   }
 
   @override
   List<Object?> get props => [
         ...super.props,
       ];
+}
+
+/// When the stage is complete and next to next stage
+class StageCompleteState extends GameState {
+  ///
+  const StageCompleteState(
+    Map<int, String> words,
+  ) : super(
+          stageComplete: true,
+          gameWords: words,
+        );
 }
 
 /// Current Stage Game State.
@@ -116,11 +142,12 @@ class StageGameState extends GameState {
     int currentStage,
     this.word, {
     bool isCompleted = false,
-    required Map<int, String> stageWords,
+    required Map<int, String> words,
   }) : super(
           currentStage: currentStage,
           complete: isCompleted,
-          stageWords: stageWords,
+          stageComplete: false,
+          gameWords: words,
         );
 
   /// Word that solves the current puzzle

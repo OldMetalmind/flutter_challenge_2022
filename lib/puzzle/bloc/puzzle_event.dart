@@ -19,12 +19,16 @@ class PuzzleInitialized extends PuzzleEvent {
 }
 
 class TileTapped extends PuzzleEvent {
-  const TileTapped(this.tile);
+  const TileTapped(
+    this.tile,
+  );
 
   final Tile tile;
 
   @override
-  List<Object> get props => [tile];
+  List<Object> get props => [
+        tile,
+      ];
 }
 
 class PuzzleNextStage extends PuzzleEvent {
