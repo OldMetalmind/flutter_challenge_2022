@@ -63,7 +63,7 @@ class __DemoAnimationState extends State<_DemoAnimation>
         children: [
           Text(widget.animation.name),
           Transform.scale(
-            scale: 2.5,
+            scale: 1,
             child: Lottie.asset(
               lottieTileAnimationFile,
               animate: false,

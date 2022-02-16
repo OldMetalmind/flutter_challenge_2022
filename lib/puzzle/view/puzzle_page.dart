@@ -154,7 +154,9 @@ class _PuzzleState extends State<_Puzzle> {
             previous.stageComplete != current.stageComplete;
       },
       listener: (context, state) {
-        showNextStageButton = state.stageComplete;
+        if (!state.complete) {
+          showNextStageButton = state.stageComplete;
+        }
       },
       buildWhen: (previous, current) =>
           previous.currentStage != current.currentStage,

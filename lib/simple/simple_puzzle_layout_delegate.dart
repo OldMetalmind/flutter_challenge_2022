@@ -441,7 +441,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
               )
           : null,
       child: Transform.scale(
-        scale: 2.5,
+        scale: 1,
         child: Lottie.asset(
           lottieTileAnimationFile,
           animate: false,
