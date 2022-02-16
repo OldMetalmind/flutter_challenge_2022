@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:selector/assets/words.dart';
-import 'package:selector/main.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
@@ -23,13 +22,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     on<StageCompleteGameEvent>((event, emit) {
       emit(
-        state.copyStageCompleteState(),
+        state.copyStageCompleteState(state.currentStage),
       );
     });
 
     on<FinishedGameEvent>((event, emit) {
       emit(
         state.copyWith(
+          current: state.currentStage,
           isComplete: true,
         ),
       );

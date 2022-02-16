@@ -190,8 +190,8 @@ class SimpleStartSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const ResponsiveGap(
+      children: const [
+        ResponsiveGap(
           small: 20,
           medium: 83,
           large: 151,
@@ -199,11 +199,11 @@ class SimpleStartSection extends StatelessWidget {
         // PuzzleName(
         //   key: puzzleNameKey,
         // ),
-        const ResponsiveGap(large: 16),
+        ResponsiveGap(large: 16),
         // SimplePuzzleTitle(
         //   status: state.puzzleStatus,
         // ),
-        const ResponsiveGap(
+        ResponsiveGap(
           small: 12,
           medium: 16,
           large: 32,
@@ -213,7 +213,7 @@ class SimpleStartSection extends StatelessWidget {
         //   numberOfMoves: state.numberOfMoves,
         //   numberOfTilesLeft: state.numberOfTilesLeft,
         // ),
-        const ResponsiveGap(
+        ResponsiveGap(
           large: 32,
           small: 16,
         ),
@@ -393,7 +393,6 @@ class SimplePuzzleTile extends StatefulWidget {
 
 class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     with TickerProviderStateMixin {
-  @override
   late final AnimationController _controllerLottie;
 
   @override

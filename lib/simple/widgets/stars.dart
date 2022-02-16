@@ -10,8 +10,11 @@ class Stars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
+      buildWhen: (previous, current) =>
+          previous.currentStage != current.currentStage ||
+          previous.stageComplete != current.stageComplete,
       builder: (context, state) {
-        final stage = state.getCurrentStage();
+        final stage = state.currentStage;
         final numberOfStages = state.numberOfStages;
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +22,7 @@ class Stars extends StatelessWidget {
             ...List.generate(
               numberOfStages,
               (index) => Star(
-                active: index <= stage,
+                active: index <= (stage - state.initialStage),
               ),
             )
           ],

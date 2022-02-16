@@ -17,7 +17,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<PuzzleInitialized>(_onPuzzleInitialized);
     on<TileTapped>(_onTileTapped);
     on<PuzzleReset>(_onPuzzleReset);
-    on<PuzzleNextStage>(_onPuzzleNextStage);
+    on<PuzzleNextStageEvent>(_onPuzzleNextStage);
   }
 
   final int _size;
@@ -27,10 +27,10 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   final Random? random;
 
   void _onPuzzleNextStage(
-    PuzzleNextStage event,
+    PuzzleNextStageEvent event,
     Emitter<PuzzleState> emit,
   ) {
-    final puzzle = _generatePuzzle(event.size);
+    final puzzle = _generatePuzzle(event.currentSize + 1);
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),

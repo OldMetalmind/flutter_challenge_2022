@@ -150,16 +150,11 @@ class _PuzzleState extends State<_Puzzle> {
 
     return BlocConsumer<GameBloc, GameState>(
       listenWhen: (previous, current) {
-        return previous.currentStage != current.currentStage;
+        return previous.currentStage != current.currentStage ||
+            previous.stageComplete != current.stageComplete;
       },
       listener: (context, state) {
-        /// TODO(FB) Remove !
-        showNextStageButton = !state.stageComplete;
-        // context.read<PuzzleBloc>().add(
-        //       PuzzleNextStage(
-        //         state.currentStage,
-        //       ),
-        //     );
+        showNextStageButton = state.stageComplete;
       },
       buildWhen: (previous, current) =>
           previous.currentStage != current.currentStage,
@@ -191,19 +186,27 @@ class _PuzzleState extends State<_Puzzle> {
                           if (gameState.easyMode) const WordTip(),
                           const SizedBox(height: 24),
                           const Stars(),
-                          const PuzzleSections(),
+
                           if (showNextStageButton)
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {
                                   showNextStageButton = !showNextStageButton;
-                                  context
-                                      .read<GameBloc>()
-                                      .add(NextStageGameEvent());
                                 });
+
+                                context.read<GameBloc>().add(
+                                      NextStageGameEvent(),
+                                    );
+
+                                context.read<PuzzleBloc>().add(
+                                      PuzzleNextStageEvent(
+                                        gameState.currentStage,
+                                      ),
+                                    );
                               },
                               child: const Text('Next Stage'),
                             ),
+                          const PuzzleSections(),
                           //const DemoAnimations(),
                         ],
                       ),

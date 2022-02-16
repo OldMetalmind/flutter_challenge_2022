@@ -50,7 +50,7 @@ abstract class GameState extends Equatable {
 
   /// Copy the current stage to a new object
   StageGameState copyWith({
-    int current = 0,
+    required int current,
     String? word,
     bool? isComplete,
   }) {
@@ -63,8 +63,8 @@ abstract class GameState extends Equatable {
   }
 
   /// Copy the current finished stage
-  StageCompleteState copyStageCompleteState() {
-    return StageCompleteState(gameWords);
+  StageCompleteState copyStageCompleteState(int current) {
+    return StageCompleteState(gameWords, current);
   }
 
   /// Get the current word for the puzzle
@@ -72,7 +72,6 @@ abstract class GameState extends Equatable {
 
   /// Returns the word that is the goal for the current puzzle
   String getCurrentWord() {
-    logger.wtf('StageWords: $gameWords | currentStage: $currentStage');
     assert(gameWords[currentStage] != null, 'Should always exist a word');
     return gameWords[currentStage] ?? '';
   }
@@ -89,12 +88,6 @@ abstract class GameState extends Equatable {
         gameWords,
         complete,
       ];
-
-  /// Returns the current stage the user is at
-  ///
-  /// Corresponds to stage the player is current at versus ao many are left
-  ///
-  int getCurrentStage() => currentStage - initialStage;
 }
 
 /// Initial State of the game
@@ -129,9 +122,11 @@ class StageCompleteState extends GameState {
   ///
   const StageCompleteState(
     Map<int, String> words,
+    int current,
   ) : super(
           stageComplete: true,
           gameWords: words,
+          currentStage: current,
         );
 }
 
