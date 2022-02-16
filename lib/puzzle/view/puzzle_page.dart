@@ -9,6 +9,7 @@ import 'package:selector/layout/layout.dart';
 import 'package:selector/models/models.dart';
 import 'package:selector/puzzle/puzzle.dart';
 import 'package:selector/simple/simple.dart';
+import 'package:selector/simple/widgets/puzzle_button_primary.dart';
 import 'package:selector/simple/widgets/stars.dart';
 import 'package:selector/simple/widgets/word_tip.dart';
 import 'package:selector/theme/theme.dart';
@@ -190,8 +191,9 @@ class _PuzzleState extends State<_Puzzle> {
                           const Stars(),
 
                           if (showNextStageButton)
-                            ElevatedButton(
-                              onPressed: () {
+                            PuzzleButtonPrimary(
+                              text: 'Next Stage',
+                              onTap: () {
                                 setState(() {
                                   showNextStageButton = !showNextStageButton;
                                 });
@@ -206,7 +208,6 @@ class _PuzzleState extends State<_Puzzle> {
                                       ),
                                     );
                               },
-                              child: const Text('Next Stage'),
                             ),
                           const PuzzleSections(),
                           //const DemoAnimations(),

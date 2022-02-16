@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selector/game/bloc/game_bloc.dart';
+import 'package:selector/simple/widgets/puzzle_hint.dart';
 
 /// Shows the Word that the player needs to find
 class WordTip extends StatelessWidget {
@@ -38,6 +39,7 @@ class WordLetter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return PuzzleHint(letter: letter);
     return Container(
       height: 100,
       width: 100,
