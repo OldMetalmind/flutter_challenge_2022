@@ -50,40 +50,48 @@ class MainLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PhysicalModel(
-      color: Theme.of(context).colorScheme.background,
-      shadowColor: Theme.of(context).colorScheme.background,
-      elevation: 10,
-      borderRadius: BorderRadius.circular(24),
-      child: SizedBox(
-        height: 500,
-        width: 500,
-        child: GridView.count(
-          crossAxisCount: 3,
-          children: [
-            ...name.split('').asMap().entries.map<Widget>(
-              (entry) {
-                Widget tile;
-                if (entry.value == '_') {
-                  return const PuzzleEmptyTile();
-                } else if (entry.key > 2) {
-                  tile = PuzzleLetterTile(
-                    entry.value,
-                    initialAnimation: LottieAnimationType.correct,
-                  );
-                } else {
-                  tile = PuzzleLetterTile(entry.value);
-                }
-
-                return Transform.scale(
-                  scale: 2,
-                  child: tile,
-                );
-              },
-            ).toList()
-          ],
+    return Stack(
+      children: [
+        PhysicalModel(
+          color: Theme.of(context).colorScheme.background,
+          shadowColor: Theme.of(context).colorScheme.background,
+          elevation: 10,
+          borderRadius: BorderRadius.circular(24),
+          child: const SizedBox(
+            height: 500,
+            width: 500,
+          ),
         ),
-      ),
+        SizedBox(
+          height: 500,
+          width: 500,
+          child: GridView.count(
+            crossAxisCount: 3,
+            children: [
+              ...name.split('').asMap().entries.map<Widget>(
+                (entry) {
+                  Widget tile;
+                  if (entry.value == '_') {
+                    return const PuzzleEmptyTile();
+                  } else if (entry.key > 2) {
+                    tile = PuzzleLetterTile(
+                      entry.value,
+                      initialAnimation: LottieAnimationType.correct,
+                    );
+                  } else {
+                    tile = PuzzleLetterTile(entry.value);
+                  }
+
+                  return Transform.scale(
+                    scale: 2,
+                    child: tile,
+                  );
+                },
+              ).toList()
+            ],
+          ),
+        )
+      ],
     );
   }
 }
