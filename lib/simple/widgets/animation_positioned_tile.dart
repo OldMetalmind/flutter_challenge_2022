@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:selector/assets/constants.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 import 'package:selector/models/position.dart';
 import 'package:selector/models/tile.dart';
-import 'package:selector/models/tile_animation.dart';
 
 /// Used to animate the tile when tapped
 class AnimateTappedTile extends StatefulWidget {
@@ -15,7 +15,8 @@ class AnimateTappedTile extends StatefulWidget {
     required this.spaceTile,
     required this.tile,
     required this.animationListener,
-    required this.tileAnimation,
+    this.animation = LottieAnimations.tilePuzzle,
+    this.initialAnimation = LottieAnimationType.iin,
   }) : super(key: key);
 
   /// Position of the clicked tile
@@ -33,8 +34,11 @@ class AnimateTappedTile extends StatefulWidget {
   /// Animation listener to handle outside of this widget
   final VoidCallback animationListener;
 
-  /// Model for this animation tile
-  final TileAnimation tileAnimation;
+  /// Animation used with this tile
+  final LottieTilePuzzleAnimation animation;
+
+  /// Initial Animation ran
+  final LottieAnimationType initialAnimation;
 
   @override
   State<AnimateTappedTile> createState() => _AnimateTappedTileState();
@@ -49,27 +53,34 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
   late final AnimationController _controller;
   late final AnimationController _controllerLottie;
 
+  late LottieAnimationType _currentAnimation;
+
   @override
   void initState() {
     super.initState();
+    _currentAnimation = widget.initialAnimation;
+
     _controller = AnimationController(
       duration: globalAnimationDuration,
+      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
+      upperBound: widget.animation.upperBoundByType(_currentAnimation),
       vsync: this,
     );
 
     _controllerLottie = AnimationController(
-      duration: globalAnimationDuration,
+      duration: globalTileAnimationDuration,
       vsync: this,
-      //TODO(FB) Add Bounds
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          widget.animationListener.call();
-        }
-      });
+      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
+      upperBound: widget.animation.upperBoundByType(_currentAnimation),
+    )..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            widget.animationListener.call();
+          }
+        },
+      );
 
-    _controller
-      ..reset()
-      ..forward();
+    _controller.forward();
     _controllerLottie
       ..reset()
       ..forward();
@@ -122,7 +133,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
               child: Transform.scale(
                 scale: 2.5,
                 child: Lottie.asset(
-                  widget.tileAnimation.animationFile,
+                  widget.animation.lottieFile,
                   controller: _controllerLottie,
                   delegates: LottieDelegates(
                     textStyle: (lottie) {

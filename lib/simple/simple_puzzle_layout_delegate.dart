@@ -1,20 +1,17 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:selector/assets/constants.dart';
 import 'package:selector/colors/colors.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 import 'package:selector/l10n/l10n.dart';
 import 'package:selector/layout/layout.dart';
 import 'package:selector/models/models.dart';
-import 'package:selector/models/tile_animation.dart';
 import 'package:selector/puzzle/puzzle.dart';
 import 'package:selector/simple/simple.dart';
 import 'package:selector/simple/widgets/animation_positioned_tile.dart';
 import 'package:selector/theme/theme.dart';
 import 'package:selector/typography/typography.dart';
-
-import 'widgets/animation_positioned_tile.dart';
 
 /// {@template simple_puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI
@@ -334,10 +331,6 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 position: lastTappedTile.currentPosition,
                 squareSize: constraints.biggest.width / widget.size,
                 spaceTile: spaceTile,
-                tileAnimation: TileAnimation.fromTiles(
-                  lastTappedTile,
-                  spaceTile,
-                ),
                 animationListener: () {},
               ),
           ],
@@ -376,6 +369,8 @@ class SimplePuzzleTile extends StatefulWidget {
     required this.tile,
     required this.tileFontSize,
     required this.state,
+    this.animation = LottieAnimations.tilePuzzle,
+    this.initialAnimation = LottieAnimationType.iin,
   }) : super(key: key);
 
   /// The tile to be displayed.
@@ -387,6 +382,12 @@ class SimplePuzzleTile extends StatefulWidget {
   /// The state of the puzzle.
   final PuzzleState state;
 
+  /// Animation used with this tile
+  final LottieTilePuzzleAnimation animation;
+
+  /// Initial Animation ran
+  final LottieAnimationType initialAnimation;
+
   @override
   State<SimplePuzzleTile> createState() => _SimplePuzzleTileState();
 }
@@ -395,12 +396,17 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     with TickerProviderStateMixin {
   late final AnimationController _controllerLottie;
 
+  late LottieAnimationType _currentAnimation;
+
   @override
   void initState() {
     super.initState();
+    _currentAnimation = widget.initialAnimation;
     _controllerLottie = AnimationController(
       vsync: this,
       duration: globalAnimationDuration,
+      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
+      upperBound: widget.animation.upperBoundByType(_currentAnimation),
     );
     _controllerLottie.forward();
   }
@@ -411,6 +417,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
@@ -447,9 +454,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
       child: Transform.scale(
         scale: 2.5,
         child: Lottie.asset(
-          lottieTileAnimationFile,
-
-          //TODO(FB) Add Bounds
+          widget.animation.lottieFile,
           animate: false,
           controller: _controllerLottie,
           delegates: LottieDelegates(
