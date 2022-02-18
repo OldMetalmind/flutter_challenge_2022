@@ -401,8 +401,6 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     _controllerLottie = AnimationController(
       vsync: this,
       duration: globalAnimationDuration,
-      lowerBound: TileAnimationEnum.inAnimation.bounds().first,
-      upperBound: TileAnimationEnum.inAnimation.bounds().last,
     );
     _controllerLottie.forward();
   }
@@ -450,6 +448,8 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
         scale: 2.5,
         child: Lottie.asset(
           lottieTileAnimationFile,
+
+          //TODO(FB) Add Bounds
           animate: false,
           controller: _controllerLottie,
           delegates: LottieDelegates(

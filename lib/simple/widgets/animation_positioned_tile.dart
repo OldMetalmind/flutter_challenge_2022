@@ -60,8 +60,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     _controllerLottie = AnimationController(
       duration: globalAnimationDuration,
       vsync: this,
-      lowerBound: widget.tileAnimation.animation.bounds().first,
-      upperBound: widget.tileAnimation.animation.bounds().last,
+      //TODO(FB) Add Bounds
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           widget.animationListener.call();

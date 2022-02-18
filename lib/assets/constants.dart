@@ -23,3 +23,11 @@ const lottieStarAnimationFile = 'assets/animations/star_small.json';
 
 /// File with all Tile Hint animations in sequence
 const lottieTileHintAnimationFile = 'assets/animations/tile_hint.json';
+
+/// Files with all animations for each kind of result
+const lottieResultAnimations = [
+  'assets/animations/result_0.json',
+  'assets/animations/result_1.json',
+  'assets/animations/result_2.json',
+  'assets/animations/result_3.json',
+];
