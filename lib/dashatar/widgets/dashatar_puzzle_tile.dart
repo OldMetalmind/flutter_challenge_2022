@@ -83,6 +83,7 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
   void dispose() {
     _timer.cancel();
     _audioPlayer?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 

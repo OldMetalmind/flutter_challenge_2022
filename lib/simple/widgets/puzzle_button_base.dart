@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-/// ABC
+/// Base Button.
 class PuzzleButtonBase extends StatefulWidget {
   /// ABC
   const PuzzleButtonBase({
@@ -37,6 +37,12 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
       upperBound: 0.20,
     );
     _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

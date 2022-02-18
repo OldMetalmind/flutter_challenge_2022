@@ -31,6 +31,12 @@ class _PuzzleHintState extends State<PuzzleHint> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: Lottie.asset(

@@ -1,16 +1,17 @@
 import 'package:selector/assets/constants.dart';
+import 'package:selector/helpers/animation_helper.dart';
 import 'package:selector/models/tile.dart';
 
 /// Animation enum supporting the times
 enum TileAnimationEnum {
   /// when the tile is idle and has not action
-  idle,
+  inAnimation,
 
   /// Triggered when the tile is in the correct position
   correct,
 
   /// Scales the animation out
-  correctScaleOut,
+  correctOut,
 
   /// For when sliding the piece horizontally
   slideHorizontal,
@@ -19,10 +20,10 @@ enum TileAnimationEnum {
   slideVertical,
 
   /// Scale out the piece in place
-  normalScaleOut,
+  outAnimation,
 }
 
-/// Times for lottie animation tile.json
+/// Times for lottie animation tile_puzzle.json
 /// 0 — 0.34: Scale in -> Idle
 /// 1.51 — 2.42: Idle -> Correct
 /// 2.42 — 2.58: Correct -> Correct scale out
@@ -34,13 +35,13 @@ extension TileAnimationEnumExtension on TileAnimationEnum {
   List<double> bounds() {
     List<double> bounds;
     switch (this) {
-      case TileAnimationEnum.idle:
+      case TileAnimationEnum.inAnimation:
         bounds = AnimationBounds.idle;
         break;
       case TileAnimationEnum.correct:
         bounds = AnimationBounds.correct;
         break;
-      case TileAnimationEnum.correctScaleOut:
+      case TileAnimationEnum.correctOut:
         bounds = AnimationBounds.correctScaleOut;
         break;
       case TileAnimationEnum.slideHorizontal:
@@ -49,7 +50,7 @@ extension TileAnimationEnumExtension on TileAnimationEnum {
       case TileAnimationEnum.slideVertical:
         bounds = AnimationBounds.slideVertical;
         break;
-      case TileAnimationEnum.normalScaleOut:
+      case TileAnimationEnum.outAnimation:
         bounds = AnimationBounds.normalScaleOut;
         break;
     }
@@ -93,6 +94,6 @@ class TileAnimation {
       }
     }
 
-    return TileAnimationEnum.idle;
+    return TileAnimationEnum.inAnimation;
   }
 }

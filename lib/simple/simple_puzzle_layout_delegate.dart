@@ -401,10 +401,16 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     _controllerLottie = AnimationController(
       vsync: this,
       duration: globalAnimationDuration,
-      lowerBound: TileAnimationEnum.idle.bounds().first,
-      upperBound: TileAnimationEnum.idle.bounds().last,
+      lowerBound: TileAnimationEnum.inAnimation.bounds().first,
+      upperBound: TileAnimationEnum.inAnimation.bounds().last,
     );
     _controllerLottie.forward();
+  }
+
+  @override
+  void dispose() {
+    _controllerLottie.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -441,7 +447,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
               )
           : null,
       child: Transform.scale(
-        scale: 1,
+        scale: 2.5,
         child: Lottie.asset(
           lottieTileAnimationFile,
           animate: false,

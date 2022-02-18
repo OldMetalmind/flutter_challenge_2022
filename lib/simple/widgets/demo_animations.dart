@@ -62,21 +62,25 @@ class __DemoAnimationState extends State<_DemoAnimation>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(widget.animation.name),
-          Transform.scale(
-            scale: 1,
-            child: Lottie.asset(
-              lottieTileAnimationFile,
-              animate: false,
-              controller: _controller,
-              delegates: LottieDelegates(
-                text: (initialText) => 'Z',
-                textStyle: (lottie) {
-                  return const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Rubik',
-                    color: Color(0xff6B6B6B),
-                  );
-                },
+          SizedBox(
+            height: 100,
+            width: 100,
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: Lottie.asset(
+                lottieTileAnimationFile,
+                animate: false,
+                controller: _controller,
+                delegates: LottieDelegates(
+                  text: (initialText) => 'Z',
+                  textStyle: (lottie) {
+                    return const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Rubik',
+                      color: Color(0xff6B6B6B),
+                    );
+                  },
+                ),
               ),
             ),
           ),

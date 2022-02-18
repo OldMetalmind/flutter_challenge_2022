@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:selector/helpers/helpers.dart';
 import 'package:selector/l10n/l10n.dart';
 import 'package:selector/puzzle/puzzle.dart';
+import 'package:selector/ui/home/home_page.dart';
 
 class App extends StatefulWidget {
   const App({Key? key, ValueGetter<PlatformHelper>? platformHelperFactory})
@@ -50,8 +51,13 @@ class _AppState extends State<App> {
     'assets/audio/success.mp3',
     'assets/audio/tile_move.mp3',
   ];
+
   static final animationAssets = [
-    'assets/animations/tile_z.json',
+    'assets/animations/tile_puzzle.json',
+    'assets/animations/button_primary.json',
+    'assets/animations/button_secondary.json',
+    'assets/animations/star_small.json',
+    'assets/animations/tile_hint.json',
   ];
 
   late final PlatformHelper _platformHelper;
@@ -199,7 +205,11 @@ class _AppState extends State<App> {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const PuzzlePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/game': (context) => const PuzzlePage(),
+      },
     );
   }
 }
