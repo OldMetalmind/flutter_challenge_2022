@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:selector/assets/constants.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 
 /// Base Button.
 class PuzzleButtonBase extends StatefulWidget {
@@ -9,6 +11,7 @@ class PuzzleButtonBase extends StatefulWidget {
     required this.text,
     required this.onTap,
     required this.animation,
+    required this.initialAnimation,
   }) : super(key: key);
 
   /// Text that is shown
@@ -18,7 +21,10 @@ class PuzzleButtonBase extends StatefulWidget {
   final VoidCallback onTap;
 
   /// Animation file to be shown
-  final String animation;
+  final LottieAnimation animation;
+
+  /// Initial animation ran when created
+  final LottieAnimationType initialAnimation;
 
   @override
   State<PuzzleButtonBase> createState() => _PuzzleButtonBaseState();
@@ -28,14 +34,19 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
 
+  late LottieAnimationType currentAnimation;
+
   @override
   void initState() {
     super.initState();
+    currentAnimation = widget.initialAnimation;
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
-      upperBound: 0.20,
+      duration: globalAnimationDuration * 3,
+      lowerBound: widget.animation.lowerBoundByType(currentAnimation),
+      upperBound: widget.animation.upperBoundByType(currentAnimation),
     );
+
     _controller.forward();
   }
 
@@ -51,7 +62,7 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
       onTap: widget.onTap,
       child: Container(
         child: Lottie.asset(
-          widget.animation,
+          widget.animation.lottieFile,
           animate: false,
           controller: _controller,
           delegates: LottieDelegates(

@@ -47,7 +47,7 @@ enum LottieAnimationType {
 /// These are related to times in milliseconds
 class Bounds {
   /// Main constructor
-  Bounds(this.lower, this.upper)
+  const Bounds(this.lower, this.upper)
       : assert(lower < upper, 'Needs to be lower < upper ');
 
   /// Lower bound of the animation in milliseconds
@@ -58,7 +58,7 @@ class Bounds {
 }
 
 /// Help extension to parse the full animation bound to a fraction to be used in
-/// [Lottie] definition of an animation
+/// Lottie definition of an animation
 extension BoundsExtension on Bounds {
   /// Calculates the fractional of the bound given the max possible value with
   /// what type of bound it has required
@@ -75,15 +75,15 @@ extension BoundsExtension on Bounds {
 /// Base class for the definition of all animations
 abstract class LottieAnimation {
   /// Main constructor
-  LottieAnimation({
+  const LottieAnimation({
     required this.iin,
     required this.out,
-    required this.lottie,
+    required this.lottieFile,
     required this.maxUpperBound,
   });
 
   /// File that has the animation
-  final String lottie;
+  final String lottieFile;
 
   /// The 'In' animation bounds in milliseconds
   /// 'in' is a reserved word 😔
@@ -123,7 +123,7 @@ abstract class LottieAnimation {
 /// argument 'isPrimary' will define what kind of animation to show
 class LottieButtonAnimation extends LottieAnimation {
   /// Main constructor
-  LottieButtonAnimation({
+  const LottieButtonAnimation({
     required Bounds iin,
     required Bounds out,
     required this.hoverIn,
@@ -135,7 +135,7 @@ class LottieButtonAnimation extends LottieAnimation {
           iin: iin,
           out: out,
           maxUpperBound: max,
-          lottie: isPrimary
+          lottieFile: isPrimary
               ? lottieButtonPrimaryAnimationFile
               : lottieButtonSecondaryAnimationFile,
         );
@@ -189,7 +189,7 @@ class LottieButtonAnimation extends LottieAnimation {
 /// Animation of the Puzzle Tile
 class LottieTilePuzzleAnimation extends LottieAnimation {
   /// Main constructor
-  LottieTilePuzzleAnimation({
+  const LottieTilePuzzleAnimation({
     required Bounds iin,
     required Bounds out,
     required this.correct,
@@ -200,7 +200,7 @@ class LottieTilePuzzleAnimation extends LottieAnimation {
   }) : super(
           iin: iin,
           out: out,
-          lottie: lottieTileAnimationFile,
+          lottieFile: lottieTileAnimationFile,
           maxUpperBound: max,
         );
 
@@ -257,7 +257,7 @@ class LottieTilePuzzleAnimation extends LottieAnimation {
 /// Animation of the Puzzle Tile Hint
 class LottieTileHintAnimation extends LottieAnimation {
   /// Main constructor
-  LottieTileHintAnimation({
+  const LottieTileHintAnimation({
     required Bounds iin,
     required Bounds out,
     required this.correctOut,
@@ -267,7 +267,7 @@ class LottieTileHintAnimation extends LottieAnimation {
   }) : super(
           iin: iin,
           out: out,
-          lottie: lottieTileHintAnimationFile,
+          lottieFile: lottieTileHintAnimationFile,
           maxUpperBound: max,
         );
 
@@ -318,7 +318,7 @@ class LottieTileHintAnimation extends LottieAnimation {
 /// Animation of the Star Small
 class LottieStarSmallAnimation extends LottieAnimation {
   /// Main constructor
-  LottieStarSmallAnimation({
+  const LottieStarSmallAnimation({
     required Bounds iin,
     required Bounds out,
     required this.correct,
@@ -327,7 +327,7 @@ class LottieStarSmallAnimation extends LottieAnimation {
   }) : super(
           iin: iin,
           out: out,
-          lottie: lottieStarAnimationFile,
+          lottieFile: lottieStarAnimationFile,
           maxUpperBound: max,
         );
 
@@ -376,19 +376,15 @@ class LottieStarSmallAnimation extends LottieAnimation {
 ///
 class LottieResultAnimation extends LottieAnimation {
   /// Main constructor
-  LottieResultAnimation({
+  const LottieResultAnimation({
     required Bounds iin,
     required Bounds out,
-    required int result,
     required double max,
-  })  : assert(
-          result >= 0 && result < 4,
-          'Result Animation only exist 4 of them between from 0 through 3',
-        ),
-        super(
+    required String file,
+  }) : super(
           iin: iin,
           out: out,
-          lottie: lottieResultAnimations[result],
+          lottieFile: file,
           maxUpperBound: max,
         );
 
@@ -425,7 +421,7 @@ class LottieResultAnimation extends LottieAnimation {
 /// All Lottie animations
 class LottieAnimations {
   /// Button primary
-  static final primaryButton = LottieButtonAnimation(
+  static const primaryButton = LottieButtonAnimation(
     iin: Bounds(0, 1000),
     hoverIn: Bounds(1000, 2000),
     pressed: Bounds(2000, 3000),
@@ -436,7 +432,7 @@ class LottieAnimations {
   );
 
   /// Button secondary
-  static final secondaryButton = LottieButtonAnimation(
+  static const secondaryButton = LottieButtonAnimation(
     iin: Bounds(0, 1000),
     hoverIn: Bounds(1000, 2000),
     pressed: Bounds(2000, 3000),
@@ -447,7 +443,7 @@ class LottieAnimations {
   );
 
   /// Tile puzzle
-  static final tilePuzzle = LottieTilePuzzleAnimation(
+  static const tilePuzzle = LottieTilePuzzleAnimation(
     iin: Bounds(0, 1000),
     correct: Bounds(1000, 2000),
     correctOut: Bounds(2000, 3000),
@@ -459,16 +455,16 @@ class LottieAnimations {
 
   /// Tile Hint
   static final tileHint = LottieTileHintAnimation(
-    iin: Bounds(0, 1000),
-    out: Bounds(1000, 2000),
-    correctOut: Bounds(3000, 4000),
-    correctIn: Bounds(4000, 5000),
-    correct: Bounds(5000, 6000),
+    iin: const Bounds(0, 1000),
+    out: const Bounds(1000, 2000),
+    correctOut: const Bounds(3000, 4000),
+    correctIn: const Bounds(4000, 5000),
+    correct: const Bounds(5000, 6000),
     max: 6000,
   );
 
   /// Start Small
-  static final starSmall = LottieStarSmallAnimation(
+  static const starSmall = LottieStarSmallAnimation(
     iin: Bounds(0, 1000),
     out: Bounds(1000, 2000),
     correct: Bounds(3000, 4000),
@@ -478,33 +474,33 @@ class LottieAnimations {
 
   /// Result 0 used in the final board
   static final result0 = LottieResultAnimation(
-    iin: Bounds(0, 300),
-    out: Bounds(300, 400),
-    result: 0,
+    iin: const Bounds(0, 300),
+    out: const Bounds(300, 400),
     max: 400,
+    file: lottieResultAnimations[0],
   );
 
   /// Result 0 used in the final board
   static final result1 = LottieResultAnimation(
-    iin: Bounds(0, 300),
-    out: Bounds(300, 400),
-    result: 1,
+    iin: const Bounds(0, 300),
+    out: const Bounds(300, 400),
     max: 400,
+    file: lottieResultAnimations[1],
   );
 
   /// Result 0 used in the final board
   static final result2 = LottieResultAnimation(
-    iin: Bounds(0, 300),
-    out: Bounds(300, 400),
-    result: 2,
+    iin: const Bounds(0, 300),
+    out: const Bounds(300, 400),
     max: 400,
+    file: lottieResultAnimations[2],
   );
 
   /// Result 0 used in the final board
   static final result3 = LottieResultAnimation(
-    iin: Bounds(0, 300),
-    out: Bounds(300, 400),
-    result: 3,
+    iin: const Bounds(0, 300),
+    out: const Bounds(300, 400),
     max: 400,
+    file: lottieResultAnimations[3],
   );
 }

@@ -15,7 +15,7 @@ class PuzzleEmptyTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xffE7E7E7),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
     );
