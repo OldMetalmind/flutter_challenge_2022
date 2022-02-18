@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 import 'package:selector/simple/widgets/puzzle_button_primary.dart';
 import 'package:selector/simple/widgets/puzzle_button_secondary.dart';
+import 'package:selector/simple/widgets/puzzle_empty_tile.dart';
 import 'package:selector/simple/widgets/puzzle_letter_tile.dart';
 
 /// First page that the user lands on when opening the app
@@ -42,7 +44,7 @@ class MainLogo extends StatelessWidget {
   const MainLogo({Key? key}) : super(key: key);
 
   /// Words presented as a logo
-  static const String name = 'SE LECTOR';
+  static const String name = 'SE_LECTOR';
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +59,26 @@ class MainLogo extends StatelessWidget {
         child: GridView.count(
           crossAxisCount: 3,
           children: [
-            ...name
-                .split('')
-                .map<Widget>(
-                  (letter) => PuzzleLetterTile(letter),
-                )
-                .toList()
+            ...name.split('').asMap().entries.map<Widget>(
+              (entry) {
+                Widget tile;
+                if (entry.value == '_') {
+                  return const PuzzleEmptyTile();
+                } else if (entry.key > 2) {
+                  tile = PuzzleLetterTile(
+                    entry.value,
+                    initialAnimation: LottieAnimationType.correct,
+                  );
+                } else {
+                  tile = PuzzleLetterTile(entry.value);
+                }
+
+                return Transform.scale(
+                  scale: 2,
+                  child: tile,
+                );
+              },
+            ).toList()
           ],
         ),
       ),

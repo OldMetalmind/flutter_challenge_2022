@@ -58,6 +58,10 @@ class _AppState extends State<App> {
     'assets/animations/button_secondary.json',
     'assets/animations/star_small.json',
     'assets/animations/tile_hint.json',
+    'assets/animations/result_0.json',
+    'assets/animations/result_1.json',
+    'assets/animations/result_2.json',
+    'assets/animations/result_3.json',
   ];
 
   late final PlatformHelper _platformHelper;
@@ -157,10 +161,7 @@ class _AppState extends State<App> {
       }
 
       for (final animation in animationAssets) {
-        precacheImage(
-          Image.asset(animation).image,
-          context,
-        );
+        prefetchToMemory(animation);
       }
     });
   }

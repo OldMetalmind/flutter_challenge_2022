@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:selector/assets/constants.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 
 /// Main Widget that handles the letter tile for the Puzzle
 /// Depending on the status will present the respective animation
@@ -10,6 +11,7 @@ class PuzzleLetterTile extends StatefulWidget {
     this.letter, {
     Key? key,
     this.animation = lottieTileAnimationFile,
+    this.initialAnimation = LottieAnimationType.iin,
   }) : super(key: key);
 
   /// Lottie Animation associated with this widget
@@ -18,28 +20,33 @@ class PuzzleLetterTile extends StatefulWidget {
   /// Letter shown with this tile
   final String letter;
 
+  /// Initial animation run when this Tile is created
+  final LottieAnimationType initialAnimation;
+
   @override
   State<PuzzleLetterTile> createState() => _PuzzleLetterTileState();
 }
 
 class _PuzzleLetterTileState extends State<PuzzleLetterTile>
     with SingleTickerProviderStateMixin {
+  final LottieTilePuzzleAnimation bounds = LottieAnimations.tilePuzzle;
+
   late AnimationController _controller;
+
+  late LottieAnimationType currentAnimation;
 
   @override
   void initState() {
     super.initState();
+    currentAnimation = widget.initialAnimation;
+
     _controller = AnimationController(
       vsync: this,
       duration: globalAnimationDuration,
-      // lowerBound: widget.animation.bounds().first,
-      // upperBound: widget.animation.bounds().last,
+      lowerBound: bounds.lowerBoundByType(currentAnimation),
+      upperBound: bounds.upperBoundByType(currentAnimation),
     );
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        // _controller.reset();
-      }
-    });
+    _controller.forward();
   }
 
   @override

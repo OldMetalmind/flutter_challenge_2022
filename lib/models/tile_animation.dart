@@ -1,5 +1,5 @@
 import 'package:selector/assets/constants.dart';
-import 'package:selector/helpers/animation_helper.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 import 'package:selector/models/tile.dart';
 
 /// Model assistant for animation
@@ -16,7 +16,7 @@ class TileAnimation {
         );
 
   /// What is the state of this tile
-  LottieAnimationTypes animation;
+  LottieAnimationType animation;
 
   /// File used in all tile animations
   static const String file = lottieTileAnimationFile;
@@ -24,19 +24,19 @@ class TileAnimation {
   /// Getter of lottie animation file
   String get animationFile => file;
 
-  static LottieAnimationTypes _determineAnimation(Tile? tapped, Tile? space) {
+  static LottieAnimationType _determineAnimation(Tile? tapped, Tile? space) {
     assert(space?.isWhitespace ?? false, 'Space should be the whitespace Tile');
 
     if (tapped != null && space != null) {
       if (tapped.currentPosition.x < space.currentPosition.x) {
-        return LottieAnimationTypes.slideHorizontal;
+        return LottieAnimationType.slideHorizontal;
       }
 
       if (tapped.currentPosition.y < space.currentPosition.y) {
-        return LottieAnimationTypes.slideVertical;
+        return LottieAnimationType.slideVertical;
       }
     }
 
-    return LottieAnimationTypes.iin;
+    return LottieAnimationType.iin;
   }
 }

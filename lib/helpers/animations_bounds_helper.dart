@@ -1,7 +1,16 @@
 import 'package:selector/assets/constants.dart';
 
+/// Types of bounds that the animation has
+enum LottieBoundType {
+  /// Lower bounds of the animation
+  lower,
+
+  /// Upper bounds of the animation
+  upper,
+}
+
 /// Types of animation that exist
-enum LottieAnimationTypes {
+enum LottieAnimationType {
   /// enter in scene
   iin,
 
@@ -38,13 +47,29 @@ enum LottieAnimationTypes {
 /// These are related to times in milliseconds
 class Bounds {
   /// Main constructor
-  Bounds(this.lower, this.upper);
+  Bounds(this.lower, this.upper)
+      : assert(lower < upper, 'Needs to be lower < upper ');
 
   /// Lower bound of the animation in milliseconds
   final double lower;
 
   /// Upper bound of the animation in milliseconds
   final double upper;
+}
+
+/// Help extension to parse the full animation bound to a fraction to be used in
+/// [Lottie] definition of an animation
+extension BoundsExtension on Bounds {
+  /// Calculates the fractional of the bound given the max possible value with
+  /// what type of bound it has required
+  double toFractional(double max, LottieBoundType type) {
+    switch (type) {
+      case LottieBoundType.lower:
+        return lower / max;
+      case LottieBoundType.upper:
+        return upper / max;
+    }
+  }
 }
 
 /// Base class for the definition of all animations
@@ -54,6 +79,7 @@ abstract class LottieAnimation {
     required this.iin,
     required this.out,
     required this.lottie,
+    required this.maxUpperBound,
   });
 
   /// File that has the animation
@@ -66,8 +92,28 @@ abstract class LottieAnimation {
   /// The 'Out' animation bounds in milliseconds
   final Bounds out;
 
+  /// What is the maximum upper bound for this animation
+  ///
+  /// Used to calculate the bound animation to the value between 0 and 1.
+  final double maxUpperBound;
+
   /// Returns the Bound for the animation
-  Bounds getBoundByAnimationType(LottieAnimationTypes type);
+  double boundsByType(
+    LottieAnimationType type,
+    LottieBoundType boundType,
+  );
+
+  /// Returns the lower bound
+  double lowerBoundByType(LottieAnimationType type) => boundsByType(
+        type,
+        LottieBoundType.lower,
+      );
+
+  /// Returns the lower bound
+  double upperBoundByType(LottieAnimationType type) => boundsByType(
+        type,
+        LottieBoundType.upper,
+      );
 }
 
 /// Animation of Buttons
@@ -79,14 +125,16 @@ class LottieButtonAnimation extends LottieAnimation {
   /// Main constructor
   LottieButtonAnimation({
     required Bounds iin,
+    required Bounds out,
     required this.hoverIn,
     required this.pressed,
     required this.hoverOut,
-    required Bounds out,
     required bool isPrimary,
+    required double max,
   }) : super(
           iin: iin,
           out: out,
+          maxUpperBound: max,
           lottie: isPrimary
               ? lottieButtonPrimaryAnimationFile
               : lottieButtonSecondaryAnimationFile,
@@ -102,24 +150,38 @@ class LottieButtonAnimation extends LottieAnimation {
   final Bounds hoverOut;
 
   @override
-  Bounds getBoundByAnimationType(LottieAnimationTypes type) {
+  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+    Bounds bounds;
+
     switch (type) {
-      case LottieAnimationTypes.iin:
-        return iin;
-      case LottieAnimationTypes.out:
-        return out;
-      case LottieAnimationTypes.pressed:
-        return pressed;
-      case LottieAnimationTypes.hoverIn:
-        return hoverIn;
-      case LottieAnimationTypes.hoverOut:
-        return hoverOut;
-      case LottieAnimationTypes.correct:
-      case LottieAnimationTypes.correctOut:
-      case LottieAnimationTypes.correctIn:
-      case LottieAnimationTypes.slideHorizontal:
-      case LottieAnimationTypes.slideVertical:
+      case LottieAnimationType.iin:
+        bounds = iin;
+        break;
+      case LottieAnimationType.out:
+        bounds = out;
+        break;
+      case LottieAnimationType.pressed:
+        bounds = pressed;
+        break;
+      case LottieAnimationType.hoverIn:
+        bounds = hoverIn;
+        break;
+      case LottieAnimationType.hoverOut:
+        bounds = hoverOut;
+        break;
+      case LottieAnimationType.correct:
+      case LottieAnimationType.correctOut:
+      case LottieAnimationType.correctIn:
+      case LottieAnimationType.slideHorizontal:
+      case LottieAnimationType.slideVertical:
         throw Exception('Animation has no animation for this type');
+    }
+
+    switch (boundType) {
+      case LottieBoundType.lower:
+        return bounds.lower / maxUpperBound;
+      case LottieBoundType.upper:
+        return bounds.upper / maxUpperBound;
     }
   }
 }
@@ -131,16 +193,22 @@ class LottieTilePuzzleAnimation extends LottieAnimation {
     required Bounds iin,
     required Bounds out,
     required this.correct,
+    required this.correctOut,
     required this.slideHorizontal,
     required this.slideVertical,
+    required double max,
   }) : super(
           iin: iin,
           out: out,
           lottie: lottieTileAnimationFile,
+          maxUpperBound: max,
         );
 
   /// Bounds for animation when is correct in milliseconds
   final Bounds correct;
+
+  /// Bounds for animation when is moving out correct in milliseconds
+  final Bounds correctOut;
 
   /// Bounds for animation when slides horizontally in milliseconds
   final Bounds slideHorizontal;
@@ -148,26 +216,41 @@ class LottieTilePuzzleAnimation extends LottieAnimation {
   /// Bounds for animation when slides vertically in milliseconds
   final Bounds slideVertical;
   @override
-  Bounds getBoundByAnimationType(LottieAnimationTypes type) {
+  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+    Bounds bounds;
     switch (type) {
-      case LottieAnimationTypes.iin:
-        return iin;
-      case LottieAnimationTypes.out:
-        return out;
-      case LottieAnimationTypes.correct:
-        return correct;
-      case LottieAnimationTypes.slideHorizontal:
-        return slideHorizontal;
-      case LottieAnimationTypes.slideVertical:
-        return slideVertical;
+      case LottieAnimationType.iin:
+        bounds = iin;
+        break;
+      case LottieAnimationType.out:
+        bounds = out;
+        break;
+      case LottieAnimationType.correct:
+        bounds = correct;
+        break;
+      case LottieAnimationType.correctOut:
+        bounds = correctOut;
+        break;
+      case LottieAnimationType.slideHorizontal:
+        bounds = slideHorizontal;
+        break;
+      case LottieAnimationType.slideVertical:
+        bounds = slideVertical;
+        break;
 
-      case LottieAnimationTypes.correctOut:
-      case LottieAnimationTypes.correctIn:
-      case LottieAnimationTypes.pressed:
-      case LottieAnimationTypes.hoverIn:
-      case LottieAnimationTypes.hoverOut:
+      case LottieAnimationType.correctIn:
+      case LottieAnimationType.pressed:
+      case LottieAnimationType.hoverIn:
+      case LottieAnimationType.hoverOut:
         throw Exception('Animation has no animation for this type');
     }
+
+    final value = bounds.toFractional(maxUpperBound, boundType);
+    assert(
+      value < 1 && value >= 0,
+      'Bound has invalid fractional value, needs to be [0,1[',
+    );
+    return value;
   }
 }
 
@@ -180,10 +263,12 @@ class LottieTileHintAnimation extends LottieAnimation {
     required this.correctOut,
     required this.correctIn,
     required this.correct,
+    required double max,
   }) : super(
           iin: iin,
           out: out,
           lottie: lottieTileHintAnimationFile,
+          maxUpperBound: max,
         );
 
   /// Bounds for animation hint is correct in milliseconds
@@ -196,25 +281,37 @@ class LottieTileHintAnimation extends LottieAnimation {
   final Bounds correctIn;
 
   @override
-  Bounds getBoundByAnimationType(LottieAnimationTypes type) {
+  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+    Bounds bounds;
     switch (type) {
-      case LottieAnimationTypes.iin:
-        return iin;
-      case LottieAnimationTypes.out:
-        return out;
-      case LottieAnimationTypes.correct:
-        return correct;
-      case LottieAnimationTypes.correctOut:
-        return correctOut;
-      case LottieAnimationTypes.correctIn:
-        return correctIn;
-      case LottieAnimationTypes.pressed:
-      case LottieAnimationTypes.hoverIn:
-      case LottieAnimationTypes.hoverOut:
-      case LottieAnimationTypes.slideHorizontal:
-      case LottieAnimationTypes.slideVertical:
+      case LottieAnimationType.iin:
+        bounds = iin;
+        break;
+      case LottieAnimationType.out:
+        bounds = out;
+        break;
+      case LottieAnimationType.correct:
+        bounds = correct;
+        break;
+      case LottieAnimationType.correctOut:
+        bounds = correctOut;
+        break;
+      case LottieAnimationType.correctIn:
+        bounds = correctIn;
+        break;
+      case LottieAnimationType.pressed:
+      case LottieAnimationType.hoverIn:
+      case LottieAnimationType.hoverOut:
+      case LottieAnimationType.slideHorizontal:
+      case LottieAnimationType.slideVertical:
         throw Exception('Animation has no animation for this type');
     }
+    final value = bounds.toFractional(maxUpperBound, boundType);
+    assert(
+      value < 1 && value >= 0,
+      'Bound has invalid fractional value, needs to be [0,1[',
+    );
+    return value;
   }
 }
 
@@ -226,10 +323,12 @@ class LottieStarSmallAnimation extends LottieAnimation {
     required Bounds out,
     required this.correct,
     required this.correctOut,
+    required double max,
   }) : super(
           iin: iin,
           out: out,
           lottie: lottieStarAnimationFile,
+          maxUpperBound: max,
         );
 
   /// Bounds for animation marked level as done in milliseconds
@@ -238,24 +337,35 @@ class LottieStarSmallAnimation extends LottieAnimation {
   /// Bounds for animation animation !correct in milliseconds
   final Bounds correctOut;
   @override
-  Bounds getBoundByAnimationType(LottieAnimationTypes type) {
+  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+    Bounds bounds;
     switch (type) {
-      case LottieAnimationTypes.iin:
-        return iin;
-      case LottieAnimationTypes.out:
-        return out;
-      case LottieAnimationTypes.correct:
-        return correct;
-      case LottieAnimationTypes.correctOut:
-        return correctOut;
-      case LottieAnimationTypes.pressed:
-      case LottieAnimationTypes.hoverIn:
-      case LottieAnimationTypes.hoverOut:
-      case LottieAnimationTypes.correctIn:
-      case LottieAnimationTypes.slideHorizontal:
-      case LottieAnimationTypes.slideVertical:
+      case LottieAnimationType.iin:
+        bounds = iin;
+        break;
+      case LottieAnimationType.out:
+        bounds = out;
+        break;
+      case LottieAnimationType.correct:
+        bounds = correct;
+        break;
+      case LottieAnimationType.correctOut:
+        bounds = correctOut;
+        break;
+      case LottieAnimationType.pressed:
+      case LottieAnimationType.hoverIn:
+      case LottieAnimationType.hoverOut:
+      case LottieAnimationType.correctIn:
+      case LottieAnimationType.slideHorizontal:
+      case LottieAnimationType.slideVertical:
         throw Exception('Animation has no animation for this type');
     }
+    final value = bounds.toFractional(maxUpperBound, boundType);
+    assert(
+      value < 1 && value >= 0,
+      'Bound has invalid fractional value, needs to be [0,1[',
+    );
+    return value;
   }
 }
 
@@ -270,6 +380,7 @@ class LottieResultAnimation extends LottieAnimation {
     required Bounds iin,
     required Bounds out,
     required int result,
+    required double max,
   })  : assert(
           result >= 0 && result < 4,
           'Result Animation only exist 4 of them between from 0 through 3',
@@ -278,24 +389,36 @@ class LottieResultAnimation extends LottieAnimation {
           iin: iin,
           out: out,
           lottie: lottieResultAnimations[result],
+          maxUpperBound: max,
         );
+
   @override
-  Bounds getBoundByAnimationType(LottieAnimationTypes type) {
+  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+    Bounds bounds;
     switch (type) {
-      case LottieAnimationTypes.iin:
-        return iin;
-      case LottieAnimationTypes.out:
-        return out;
-      case LottieAnimationTypes.pressed:
-      case LottieAnimationTypes.hoverIn:
-      case LottieAnimationTypes.hoverOut:
-      case LottieAnimationTypes.correct:
-      case LottieAnimationTypes.correctOut:
-      case LottieAnimationTypes.correctIn:
-      case LottieAnimationTypes.slideHorizontal:
-      case LottieAnimationTypes.slideVertical:
+      case LottieAnimationType.iin:
+        bounds = iin;
+        break;
+      case LottieAnimationType.out:
+        bounds = out;
+        break;
+      case LottieAnimationType.pressed:
+      case LottieAnimationType.hoverIn:
+      case LottieAnimationType.hoverOut:
+      case LottieAnimationType.correct:
+      case LottieAnimationType.correctOut:
+      case LottieAnimationType.correctIn:
+      case LottieAnimationType.slideHorizontal:
+      case LottieAnimationType.slideVertical:
         throw Exception('Animation has no animation for this type');
     }
+
+    final value = bounds.toFractional(maxUpperBound, boundType);
+    assert(
+      value < 1 && value >= 0,
+      'Bound has invalid fractional value, needs to be [0,1[',
+    );
+    return value;
   }
 }
 
@@ -309,6 +432,7 @@ class LottieAnimations {
     hoverOut: Bounds(3000, 4000),
     out: Bounds(4000, 5000),
     isPrimary: true,
+    max: 5000,
   );
 
   /// Button secondary
@@ -319,15 +443,18 @@ class LottieAnimations {
     hoverOut: Bounds(3000, 4000),
     out: Bounds(4000, 5000),
     isPrimary: false,
+    max: 5000,
   );
 
   /// Tile puzzle
   static final tilePuzzle = LottieTilePuzzleAnimation(
     iin: Bounds(0, 1000),
-    correct: Bounds(2000, 3000),
+    correct: Bounds(1000, 2000),
+    correctOut: Bounds(2000, 3000),
     slideHorizontal: Bounds(4000, 5000),
     slideVertical: Bounds(5000, 6000),
     out: Bounds(6000, 7000),
+    max: 7000,
   );
 
   /// Tile Hint
@@ -337,6 +464,7 @@ class LottieAnimations {
     correctOut: Bounds(3000, 4000),
     correctIn: Bounds(4000, 5000),
     correct: Bounds(5000, 6000),
+    max: 6000,
   );
 
   /// Start Small
@@ -345,6 +473,7 @@ class LottieAnimations {
     out: Bounds(1000, 2000),
     correct: Bounds(3000, 4000),
     correctOut: Bounds(4000, 5000),
+    max: 5000,
   );
 
   /// Result 0 used in the final board
@@ -352,6 +481,7 @@ class LottieAnimations {
     iin: Bounds(0, 300),
     out: Bounds(300, 400),
     result: 0,
+    max: 400,
   );
 
   /// Result 0 used in the final board
@@ -359,6 +489,7 @@ class LottieAnimations {
     iin: Bounds(0, 300),
     out: Bounds(300, 400),
     result: 1,
+    max: 400,
   );
 
   /// Result 0 used in the final board
@@ -366,6 +497,7 @@ class LottieAnimations {
     iin: Bounds(0, 300),
     out: Bounds(300, 400),
     result: 2,
+    max: 400,
   );
 
   /// Result 0 used in the final board
@@ -373,5 +505,6 @@ class LottieAnimations {
     iin: Bounds(0, 300),
     out: Bounds(300, 400),
     result: 3,
+    max: 400,
   );
 }
