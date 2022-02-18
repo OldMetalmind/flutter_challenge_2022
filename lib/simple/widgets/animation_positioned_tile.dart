@@ -61,14 +61,12 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
     _currentAnimation = widget.initialAnimation;
 
     _controller = AnimationController(
-      duration: globalAnimationDuration,
-      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
-      upperBound: widget.animation.upperBoundByType(_currentAnimation),
+      duration: globalTileMovementAnimationDuration,
       vsync: this,
     );
 
     _controllerLottie = AnimationController(
-      duration: globalTileAnimationDuration,
+      duration: globalTileMovementAnimationDuration,
       vsync: this,
       lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
       upperBound: widget.animation.upperBoundByType(_currentAnimation),
@@ -134,6 +132,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                 scale: 2.5,
                 child: Lottie.asset(
                   widget.animation.lottieFile,
+                  frameRate: FrameRate.max,
                   controller: _controllerLottie,
                   delegates: LottieDelegates(
                     textStyle: (lottie) {

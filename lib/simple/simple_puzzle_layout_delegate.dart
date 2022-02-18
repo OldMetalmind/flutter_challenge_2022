@@ -456,6 +456,7 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
         child: Lottie.asset(
           widget.animation.lottieFile,
           animate: false,
+          frameRate: FrameRate.max,
           controller: _controllerLottie,
           delegates: LottieDelegates(
             text: (initialText) => widget.tile.letter,

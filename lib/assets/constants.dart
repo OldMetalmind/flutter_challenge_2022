@@ -5,7 +5,7 @@ const globalAnimationSpeed = 1.0;
 const globalAnimationDuration = Duration(milliseconds: 1000);
 
 /// Duration of the tile movement animation
-const globalTileAnimationDuration = Duration(milliseconds: 300);
+const globalTileMovementAnimationDuration = Duration(milliseconds: 300);
 
 /// Maximum Lottie Animation the Lottie file (in Seconds)
 const globalLottieMaxLength = 4.64;

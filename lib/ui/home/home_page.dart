@@ -14,24 +14,26 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            const MainLogo(),
-            const SizedBox(height: 72),
-            PuzzleButtonPrimary(
-              text: 'PLAY NOW',
-              onTap: () {
-                Navigator.pushNamed(context, '/game');
-              },
-            ),
-            const SizedBox(height: 18),
-            PuzzleButtonSecondary(
-              text: 'HOW TO PLAY',
-              onTap: () {},
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 100),
+              const MainLogo(),
+              const SizedBox(height: 72),
+              PuzzleButtonPrimary(
+                text: 'PLAY NOW',
+                onTap: () {
+                  Navigator.pushNamed(context, '/game');
+                },
+              ),
+              const SizedBox(height: 18),
+              PuzzleButtonSecondary(
+                text: 'HOW TO PLAY',
+                onTap: () {},
+              )
+            ],
+          ),
         ),
       ),
     );

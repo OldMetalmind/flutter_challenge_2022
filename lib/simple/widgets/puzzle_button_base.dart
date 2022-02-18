@@ -64,6 +64,7 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
         child: Lottie.asset(
           widget.animation.lottieFile,
           animate: false,
+          frameRate: FrameRate.max,
           controller: _controller,
           delegates: LottieDelegates(
             text: (initialText) => widget.text,

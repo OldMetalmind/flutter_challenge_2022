@@ -42,6 +42,7 @@ class _PuzzleHintState extends State<PuzzleHint> with TickerProviderStateMixin {
       child: Lottie.asset(
         'assets/animations/tile_hint.json',
         animate: false,
+        frameRate: FrameRate.max,
         controller: _controller,
         delegates: LottieDelegates(
           text: (initialText) => widget.letter,

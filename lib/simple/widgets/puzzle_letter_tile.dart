@@ -60,6 +60,7 @@ class _PuzzleLetterTileState extends State<PuzzleLetterTile>
     return Lottie.asset(
       widget.animation,
       animate: false,
+      frameRate: FrameRate.max,
       controller: _controller,
       delegates: LottieDelegates(
         text: (initialText) => widget.letter,
