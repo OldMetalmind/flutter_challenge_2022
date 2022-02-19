@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:selector/assets/constants.dart';
 import 'package:selector/game/bloc/game_bloc.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 
 /// Row of stars representing the current level of the puzze
 class Stars extends StatelessWidget {
@@ -22,7 +25,8 @@ class Stars extends StatelessWidget {
             ...List.generate(
               numberOfStages,
               (index) => Star(
-                active: index <= (stage - state.initialStage),
+                active: index <= (stage - state.initialStage - 1),
+                animation: LottieAnimations.starSmall,
               ),
             )
           ],
@@ -32,41 +36,66 @@ class Stars extends StatelessWidget {
   }
 }
 
-///
-class Star extends StatelessWidget {
-  ///
-  const Star({Key? key, required this.active}) : super(key: key);
+/// Star Widget with reactive animation
+class Star extends StatefulWidget {
+  /// Main Constructor
+  const Star({
+    Key? key,
+    required this.active,
+    required this.animation,
+    this.initialAnimation = LottieAnimationType.iin,
+  }) : super(key: key);
 
   /// True case the Star is active
   final bool active;
 
+  /// Animation file to be shown
+  final LottieAnimation animation;
+
+  /// Initial animation ran when created
+  ///
+  /// Default: LottieAnimationType.iin
+  ///
+  final LottieAnimationType initialAnimation;
+
+  @override
+  State<Star> createState() => _StarState();
+}
+
+class _StarState extends State<Star> with TickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  late LottieAnimationType _currentAnimation;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.active) {
+      _animate(LottieAnimationType.correct);
+    } else {
+      _animate(widget.initialAnimation);
+    }
+  }
+
+  /// Animates this widget according with Animation Type and the default Lottie
+  /// animation
+  void _animate(LottieAnimationType type) {
+    _currentAnimation = type;
+    _animationController = AnimationController(
+      vsync: this,
+      duration: globalAnimationDuration * 3,
+      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
+      upperBound: widget.animation.upperBoundByType(_currentAnimation),
+    );
+    _animationController.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
-    const size = 100.0;
-    if (active) {
-      return Stack(
-        children: const [
-          Positioned(
-            top: 10,
-            child: Icon(
-              Icons.star,
-              color: Color(0xffE3A300),
-              size: size,
-            ),
-          ),
-          Icon(
-            Icons.star,
-            color: Color(0xffFFB906),
-            size: size,
-          ),
-        ],
-      );
-    }
-
-    return const Icon(
-      Icons.star_border_outlined,
-      color: Color(0xffD1D1D1),
-      size: size,
+    return Lottie.asset(
+      widget.animation.lottieFile,
+      animate: true,
+      frameRate: FrameRate.max,
+      controller: _animationController,
     );
   }
 }

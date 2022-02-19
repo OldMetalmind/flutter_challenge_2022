@@ -1,4 +1,5 @@
 import 'package:selector/assets/constants.dart';
+import 'package:selector/models/models.dart';
 
 /// Types of bounds that the animation has
 enum LottieBoundType {
@@ -40,36 +41,6 @@ enum LottieAnimationType {
 
   /// Sliding horizontal, only used in puzzle tile
   slideVertical,
-}
-
-/// Bounds of animation
-///
-/// These are related to times in milliseconds
-class Bounds {
-  /// Main constructor
-  const Bounds(this.lower, this.upper)
-      : assert(lower < upper, 'Needs to be lower < upper ');
-
-  /// Lower bound of the animation in milliseconds
-  final double lower;
-
-  /// Upper bound of the animation in milliseconds
-  final double upper;
-}
-
-/// Help extension to parse the full animation bound to a fraction to be used in
-/// Lottie definition of an animation
-extension BoundsExtension on Bounds {
-  /// Calculates the fractional of the bound given the max possible value with
-  /// what type of bound it has required
-  double toFractional(double max, LottieBoundType type) {
-    switch (type) {
-      case LottieBoundType.lower:
-        return lower / max;
-      case LottieBoundType.upper:
-        return upper / max;
-    }
-  }
 }
 
 /// Base class for the definition of all animations

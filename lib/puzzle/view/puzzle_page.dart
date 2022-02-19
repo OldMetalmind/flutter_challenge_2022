@@ -183,7 +183,6 @@ class _PuzzleState extends State<_Puzzle> {
                           if (gameState.easyMode) const WordTip(),
                           const SizedBox(height: 24),
                           const Stars(),
-
                           if (showNextStageButton)
                             PuzzleButtonPrimary(
                               text: 'Next Stage',
