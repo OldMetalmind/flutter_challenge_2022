@@ -10,6 +10,7 @@ import 'package:selector/models/models.dart';
 import 'package:selector/puzzle/puzzle.dart';
 import 'package:selector/simple/simple.dart';
 import 'package:selector/simple/widgets/puzzle_button_primary.dart';
+import 'package:selector/simple/widgets/puzzle_button_secondary.dart';
 import 'package:selector/simple/widgets/puzzle_word_title.dart';
 import 'package:selector/simple/widgets/stars.dart';
 import 'package:selector/simple/widgets/word_tip.dart';
@@ -183,9 +184,12 @@ class _PuzzleState extends State<_Puzzle> {
                           if (gameState.easyMode) const WordTip(),
                           const SizedBox(height: 24),
                           const Stars(),
+                          const PuzzleSections(),
+
                           if (showNextStageButton)
                             PuzzleButtonPrimary(
-                              text: 'Next Stage',
+                              //TODO(FB) Move to IntL,
+                              text: 'Next',
                               onTap: () {
                                 setState(() {
                                   showNextStageButton = !showNextStageButton;
@@ -202,7 +206,13 @@ class _PuzzleState extends State<_Puzzle> {
                                     );
                               },
                             ),
-                          const PuzzleSections(),
+                          if (!showNextStageButton)
+                            PuzzleButtonSecondary(
+                              text: 'I Quit',
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
                           //const DemoAnimations(),
                         ],
                       ),

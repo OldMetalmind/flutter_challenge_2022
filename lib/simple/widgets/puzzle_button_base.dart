@@ -84,22 +84,20 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
             _animate(LottieAnimationType.hoverOut);
           });
         },
-        child: Container(
-          child: Lottie.asset(
-            widget.animation.lottieFile,
-            animate: true,
-            frameRate: FrameRate.max,
-            controller: _animationController,
-            delegates: LottieDelegates(
-              text: (initialText) => widget.text,
-              textStyle: (lottie) {
-                return const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Rubik',
-                  color: Color(0xff6B6B6B),
-                );
-              },
-            ),
+        child: Lottie.asset(
+          widget.animation.lottieFile,
+          animate: true,
+          frameRate: FrameRate.max,
+          controller: _animationController,
+          delegates: LottieDelegates(
+            text: (initialText) => widget.text.toUpperCase(),
+            textStyle: (lottie) {
+              return const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Rubik',
+                color: Color(0xff6B6B6B),
+              );
+            },
           ),
         ),
       ),
