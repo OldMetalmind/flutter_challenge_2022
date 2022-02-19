@@ -11,10 +11,10 @@ class PuzzleEmptyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(36),
+      padding: const EdgeInsets.all(15),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xffE7E7E7),
+          color: const Color(0xffE7E7E7).withOpacity(0.20),
           borderRadius: BorderRadius.circular(30),
         ),
       ),

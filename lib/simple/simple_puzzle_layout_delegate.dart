@@ -10,6 +10,7 @@ import 'package:selector/models/models.dart';
 import 'package:selector/puzzle/puzzle.dart';
 import 'package:selector/simple/simple.dart';
 import 'package:selector/simple/widgets/animation_positioned_tile.dart';
+import 'package:selector/simple/widgets/puzzle_empty_tile.dart';
 import 'package:selector/theme/theme.dart';
 import 'package:selector/typography/typography.dart';
 
@@ -288,8 +289,9 @@ class SimplePuzzleBoard extends StatefulWidget {
 class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
   @override
   Widget build(BuildContext context) {
-    final lastTappedTile = context.read<PuzzleBloc>().state.lastTappedTile;
-    final spaceTile = context.read<PuzzleBloc>().state.previousSpace;
+    final puzzleState = context.read<PuzzleBloc>().state;
+    final lastTappedTile = puzzleState.lastTappedTile;
+    final spaceTile = puzzleState.previousSpace;
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -322,8 +324,17 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
           }
         }
 
+        final backgroundTiles = GridView.count(
+          crossAxisCount: puzzleState.puzzle.getDimension(),
+          children: List.generate(
+            puzzleState.puzzle.tiles.length,
+            (index) => const PuzzleEmptyTile(),
+          ),
+        );
+
         return Stack(
           children: [
+            backgroundTiles,
             ...squares,
             if (lastTappedTile != null)
               AnimateTappedTile(
