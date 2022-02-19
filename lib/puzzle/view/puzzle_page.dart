@@ -10,6 +10,7 @@ import 'package:selector/models/models.dart';
 import 'package:selector/puzzle/puzzle.dart';
 import 'package:selector/simple/simple.dart';
 import 'package:selector/simple/widgets/puzzle_button_primary.dart';
+import 'package:selector/simple/widgets/puzzle_word_title.dart';
 import 'package:selector/simple/widgets/stars.dart';
 import 'package:selector/simple/widgets/word_tip.dart';
 import 'package:selector/theme/theme.dart';
@@ -177,14 +178,7 @@ class _PuzzleState extends State<_Puzzle> {
                       padding: const EdgeInsets.only(top: 48),
                       child: Column(
                         children: [
-                          const Text(
-                            'Find the word',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 30,
-                              color: Color(0xFF949494),
-                            ),
-                          ),
+                          const PuzzleWordTitle(),
                           const SizedBox(height: 16),
                           if (gameState.easyMode) const WordTip(),
                           const SizedBox(height: 24),
