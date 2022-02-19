@@ -47,10 +47,18 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
   @override
   void initState() {
     super.initState();
-    animate(widget.initialAnimation);
+    _animate(widget.initialAnimation);
   }
 
-  void animate(LottieAnimationType type) {
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  /// Animates this widget according with Animation Type and the default Lottie
+  /// animation
+  void _animate(LottieAnimationType type) {
     _currentAnimation = type;
     _animationController = AnimationController(
       vsync: this,
@@ -62,24 +70,18 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
   }
 
   @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onTap,
       child: MouseRegion(
         onEnter: (event) {
           setState(() {
-            animate(LottieAnimationType.hoverIn);
+            _animate(LottieAnimationType.hoverIn);
           });
         },
         onExit: (event) {
           setState(() {
-            animate(LottieAnimationType.hoverOut);
+            _animate(LottieAnimationType.hoverOut);
           });
         },
         child: Container(

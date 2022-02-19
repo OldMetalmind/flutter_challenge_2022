@@ -454,12 +454,12 @@ class LottieAnimations {
   );
 
   /// Tile Hint
-  static final tileHint = LottieTileHintAnimation(
-    iin: const Bounds(0, 1000),
-    out: const Bounds(1000, 2000),
-    correctOut: const Bounds(3000, 4000),
-    correctIn: const Bounds(4000, 5000),
-    correct: const Bounds(5000, 6000),
+  static const tileHint = LottieTileHintAnimation(
+    iin: Bounds(0, 1000),
+    out: Bounds(1000, 2000),
+    correctOut: Bounds(3000, 4000),
+    correctIn: Bounds(4000, 5000),
+    correct: Bounds(5000, 6000),
     max: 6000,
   );
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:selector/assets/constants.dart';
+import 'package:selector/helpers/animations_bounds_helper.dart';
 
 /// Hint letter
 class PuzzleHint extends StatefulWidget {
@@ -7,53 +9,72 @@ class PuzzleHint extends StatefulWidget {
   const PuzzleHint({
     Key? key,
     required this.letter,
+    required this.animation,
+    this.initialAnimation = LottieAnimationType.iin,
   }) : super(key: key);
 
   /// Letter to be shown
   final String letter;
+
+  /// Animation file to be shown
+  final LottieAnimation animation;
+
+  /// Initial animation ran when created
+  ///
+  /// Default: LottieAnimationType.iin
+  ///
+  final LottieAnimationType initialAnimation;
 
   @override
   State<PuzzleHint> createState() => _PuzzleHintState();
 }
 
 class _PuzzleHintState extends State<PuzzleHint> with TickerProviderStateMixin {
-  late final AnimationController _controller;
+  late AnimationController _animationController;
+
+  late LottieAnimationType _currentAnimation;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-      upperBound: 0.18,
-    );
-    _controller.forward();
+    _animate(widget.initialAnimation);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _animationController.dispose();
     super.dispose();
+  }
+
+  /// Animates this widget according with Animation Type and the default Lottie
+  /// animation
+  void _animate(LottieAnimationType type) {
+    _currentAnimation = type;
+    _animationController = AnimationController(
+      vsync: this,
+      duration: globalAnimationDuration * 3,
+      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
+      upperBound: widget.animation.upperBoundByType(_currentAnimation),
+    );
+    _animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Lottie.asset(
-        'assets/animations/tile_hint.json',
-        animate: false,
-        frameRate: FrameRate.max,
-        controller: _controller,
-        delegates: LottieDelegates(
-          text: (initialText) => widget.letter,
-          textStyle: (lottie) {
-            return const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Rubik',
-              color: Color(0xff6B6B6B),
-            );
-          },
-        ),
+    return Lottie.asset(
+      widget.animation.lottieFile,
+      animate: true,
+      frameRate: FrameRate.max,
+      controller: _animationController,
+      delegates: LottieDelegates(
+        text: (initialText) => widget.letter,
+        textStyle: (font) {
+          return TextStyle(
+              fontWeight: FontWeight.w700, fontFamily: font.fontFamily);
+        },
+        values: [
+          ValueDelegate.color(['A'], value: const Color(0xff949494)),
+        ],
       ),
     );
   }
