@@ -5,13 +5,18 @@ import 'package:selector/helpers/animations_bounds_helper.dart';
 
 /// Base Button.
 class PuzzleButtonBase extends StatefulWidget {
-  /// ABC
+  /// const Main constructor
+  ///
+  /// text: Label of the button
+  /// onTap: action taken when clicking this button
+  /// animation: Lottie animation used with this widget
+  /// initialAnimation: What is the initial animation it should run
   const PuzzleButtonBase({
     Key? key,
     required this.text,
     required this.onTap,
     required this.animation,
-    required this.initialAnimation,
+    this.initialAnimation = LottieAnimationType.iin,
   }) : super(key: key);
 
   /// Text that is shown
@@ -24,6 +29,9 @@ class PuzzleButtonBase extends StatefulWidget {
   final LottieAnimation animation;
 
   /// Initial animation ran when created
+  ///
+  /// Default: LottieAnimationType.iin
+  ///
   final LottieAnimationType initialAnimation;
 
   @override
@@ -32,27 +40,30 @@ class PuzzleButtonBase extends StatefulWidget {
 
 class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
     with TickerProviderStateMixin {
-  late final AnimationController _controller;
+  late AnimationController _animationController;
 
-  late LottieAnimationType currentAnimation;
+  late LottieAnimationType _currentAnimation;
 
   @override
   void initState() {
     super.initState();
-    currentAnimation = widget.initialAnimation;
-    _controller = AnimationController(
+    animate(widget.initialAnimation);
+  }
+
+  void animate(LottieAnimationType type) {
+    _currentAnimation = type;
+    _animationController = AnimationController(
       vsync: this,
       duration: globalAnimationDuration * 3,
-      lowerBound: widget.animation.lowerBoundByType(currentAnimation),
-      upperBound: widget.animation.upperBoundByType(currentAnimation),
+      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
+      upperBound: widget.animation.upperBoundByType(_currentAnimation),
     );
-
-    _controller.forward();
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -60,21 +71,33 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onTap,
-      child: Container(
-        child: Lottie.asset(
-          widget.animation.lottieFile,
-          animate: false,
-          frameRate: FrameRate.max,
-          controller: _controller,
-          delegates: LottieDelegates(
-            text: (initialText) => widget.text,
-            textStyle: (lottie) {
-              return const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Rubik',
-                color: Color(0xff6B6B6B),
-              );
-            },
+      child: MouseRegion(
+        onEnter: (event) {
+          setState(() {
+            animate(LottieAnimationType.hoverIn);
+          });
+        },
+        onExit: (event) {
+          setState(() {
+            animate(LottieAnimationType.hoverOut);
+          });
+        },
+        child: Container(
+          child: Lottie.asset(
+            widget.animation.lottieFile,
+            animate: true,
+            frameRate: FrameRate.max,
+            controller: _animationController,
+            delegates: LottieDelegates(
+              text: (initialText) => widget.text,
+              textStyle: (lottie) {
+                return const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Rubik',
+                  color: Color(0xff6B6B6B),
+                );
+              },
+            ),
           ),
         ),
       ),

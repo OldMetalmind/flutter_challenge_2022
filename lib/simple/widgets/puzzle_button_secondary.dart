@@ -9,12 +9,10 @@ class PuzzleButtonSecondary extends PuzzleButtonBase {
     Key? key,
     required String text,
     required VoidCallback onTap,
-    LottieAnimationType initialAnimation = LottieAnimationType.iin,
   }) : super(
           key: key,
           text: text,
           onTap: onTap,
-          initialAnimation: initialAnimation,
           animation: LottieAnimations.secondaryButton,
         );
 }
