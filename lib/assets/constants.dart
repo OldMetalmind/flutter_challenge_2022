@@ -4,6 +4,9 @@ const globalAnimationSpeed = 1.0;
 /// Duration of All animations (in Milliseconds)
 const globalAnimationDuration = Duration(milliseconds: 1000);
 
+/// Duration of All animations (in Milliseconds)
+const globalAnimationDurationSlower = Duration(milliseconds: 3000);
+
 /// Duration of the tile movement animation
 const globalTileMovementAnimationDuration = Duration(milliseconds: 300);
 

@@ -25,7 +25,7 @@ class Stars extends StatelessWidget {
             ...List.generate(
               numberOfStages,
               (index) => Star(
-                active: index <= (stage - state.initialStage - 1),
+                active: index <= (stage - state.initialStage),
                 animation: LottieAnimations.starSmall,
               ),
             )
@@ -82,7 +82,7 @@ class _StarState extends State<Star> with TickerProviderStateMixin {
     _currentAnimation = type;
     _animationController = AnimationController(
       vsync: this,
-      duration: globalAnimationDuration * 3,
+      duration: globalAnimationDurationSlower,
       lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
       upperBound: widget.animation.upperBoundByType(_currentAnimation),
     );

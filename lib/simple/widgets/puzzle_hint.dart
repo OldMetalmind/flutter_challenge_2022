@@ -52,7 +52,7 @@ class _PuzzleHintState extends State<PuzzleHint> with TickerProviderStateMixin {
     _currentAnimation = type;
     _animationController = AnimationController(
       vsync: this,
-      duration: globalAnimationDuration * 3,
+      duration: globalAnimationDurationSlower,
       lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
       upperBound: widget.animation.upperBoundByType(_currentAnimation),
     );
