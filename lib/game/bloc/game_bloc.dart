@@ -34,5 +34,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         ),
       );
     });
+
+    on<UpdateHardModeEvent>((event, emit) {
+      emit(
+        state.copyWith(
+          current: state.currentStage,
+          isHard: event.value,
+        ),
+      );
+    });
   }
 }

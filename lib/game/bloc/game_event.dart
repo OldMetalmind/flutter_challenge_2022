@@ -25,3 +25,21 @@ class FinishedGameEvent extends GameEvent {
   @override
   List<Object?> get props => [];
 }
+
+/// Activate and inactivate the hard mode.
+///
+/// Hard Mode set to True means it doesn't show the word tip
+class UpdateHardModeEvent extends GameEvent {
+  /// Main event
+  ///
+  /// Default value is false
+  const UpdateHardModeEvent({
+    required this.value,
+  });
+
+  /// Updated value of hard mode is true or false
+  final bool value;
+
+  @override
+  List<Object?> get props => [value];
+}

@@ -4,7 +4,7 @@ part of 'game_bloc.dart';
 abstract class GameState extends Equatable {
   /// Simple Constructor
   const GameState({
-    this.easyMode = true,
+    this.hardMode = false,
     this.initialStage = 3,
     this.numberOfStages = 3,
     this.currentStage = 3,
@@ -15,9 +15,9 @@ abstract class GameState extends Equatable {
 
   /// If the player is in easy mode, aka shows the word to be found;
   ///
-  /// Defaults to true
+  /// Defaults to false
   ///
-  final bool easyMode;
+  final bool hardMode;
 
   /// In what stage does the player starts
   ///
@@ -48,17 +48,23 @@ abstract class GameState extends Equatable {
   /// When the current stage is complete and ready for next stage
   final bool stageComplete;
 
+  /// Helper getter to make code more readable and obvious
+  /// if hard mode is activated
+  bool get isEasyModeActivated => !hardMode;
+
   /// Copy the current stage to a new object
   StageGameState copyWith({
     required int current,
     String? word,
     bool? isComplete,
+    bool? isHard,
   }) {
     return StageGameState(
       current,
       word ?? _getStageWord(current),
       isCompleted: isComplete ?? complete,
       words: gameWords,
+      hardMode: isHard ?? hardMode,
     );
   }
 
@@ -81,7 +87,7 @@ abstract class GameState extends Equatable {
 
   @override
   List<Object?> get props => [
-        easyMode,
+        hardMode,
         initialStage,
         numberOfStages,
         currentStage,
@@ -137,12 +143,14 @@ class StageGameState extends GameState {
     int currentStage,
     this.word, {
     bool isCompleted = false,
+    bool hardMode = false,
     required Map<int, String> words,
   }) : super(
           currentStage: currentStage,
           complete: isCompleted,
           stageComplete: false,
           gameWords: words,
+          hardMode: hardMode,
         );
 
   /// Word that solves the current puzzle

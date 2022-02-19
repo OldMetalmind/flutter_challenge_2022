@@ -5,12 +5,20 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:selector/app/app.dart';
 import 'package:selector/bootstrap.dart';
+import 'package:selector/game/bloc/game_bloc.dart';
 
-var logger = Logger();
+/// Global logger
+Logger logger = Logger();
 
 void main() {
-  bootstrap(() => const App());
+  bootstrap(
+    () => BlocProvider(
+      create: (context) => GameBloc(),
+      child: const App(),
+    ),
+  );
 }

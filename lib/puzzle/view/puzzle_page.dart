@@ -63,9 +63,6 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (_) => AudioControlBloc(),
         ),
-        BlocProvider(
-          create: (_) => GameBloc(),
-        )
       ],
       child: const PuzzleView(),
     );
@@ -181,7 +178,7 @@ class _PuzzleState extends State<_Puzzle> {
                         children: [
                           const PuzzleWordTitle(),
                           const SizedBox(height: 16),
-                          if (gameState.easyMode) const WordTip(),
+                          if (gameState.isEasyModeActivated) const WordTip(),
                           const SizedBox(height: 24),
                           const Stars(),
                           const PuzzleSections(),
