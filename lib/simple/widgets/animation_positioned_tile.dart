@@ -129,7 +129,7 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                 ),
               ),
               child: Transform.scale(
-                scale: 2.5,
+                scale: 1,
                 child: Lottie.asset(
                   widget.animation.lottieFile,
                   frameRate: FrameRate.max,
