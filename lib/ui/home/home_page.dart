@@ -24,14 +24,14 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 100),
               const MainLogo(),
               const SizedBox(height: 72),
+              PuzzleHardModeCheckbox(
+                value: context.read<GameBloc>().state.hardMode,
+              ),
               PuzzleButtonPrimary(
                 text: 'PLAY NOW',
                 onTap: () {
                   Navigator.pushNamed(context, '/game');
                 },
-              ),
-              PuzzleHardModeCheckbox(
-                value: context.read<GameBloc>().state.hardMode,
               ),
               const SizedBox(height: 18),
               PuzzleButtonSecondary(
@@ -52,7 +52,7 @@ class MainLogo extends StatelessWidget {
   const MainLogo({Key? key}) : super(key: key);
 
   /// Words presented as a logo
-  static const String name = 'SE_LECTOR';
+  static const String name = 'SE_LETTER';
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,7 @@ class MainLogo extends StatelessWidget {
                   }
 
                   return Transform.scale(
-                    scale: 2,
+                    scale: 1,
                     child: tile,
                   );
                 },

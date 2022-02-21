@@ -28,24 +28,28 @@ class _PuzzleHardModeCheckboxState extends State<PuzzleHardModeCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('Hard mode'),
-        Checkbox(
-          value: _value,
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                _value = value;
-                context.read<GameBloc>().add(
-                      UpdateHardModeEvent(value: _value),
-                    );
-              });
-            }
-          },
-        ),
-      ],
+    return Tooltip(
+      //TODO(FB) Move to IntL
+      message: "With hard mode activated, you don't see the word tip",
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Hard mode'),
+          Checkbox(
+            value: _value,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _value = value;
+                  context.read<GameBloc>().add(
+                        UpdateHardModeEvent(value: _value),
+                      );
+                });
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
