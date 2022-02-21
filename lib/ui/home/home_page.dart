@@ -88,10 +88,7 @@ class MainLogo extends StatelessWidget {
                     tile = PuzzleLetterTile(entry.value);
                   }
 
-                  return Transform.scale(
-                    scale: 1,
-                    child: tile,
-                  );
+                  return tile;
                 },
               ).toList()
             ],

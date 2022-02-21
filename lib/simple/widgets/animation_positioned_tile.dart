@@ -128,22 +128,22 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
                   curve: Curves.linear,
                 ),
               ),
-              child: Transform.scale(
-                scale: 1,
-                child: Lottie.asset(
-                  widget.animation.lottieFile,
-                  frameRate: FrameRate.max,
-                  controller: _controllerLottie,
-                  delegates: LottieDelegates(
-                    textStyle: (lottie) {
-                      return const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'Rubik',
-                        color: Color(0xff6B6B6B),
-                      );
-                    },
-                    text: (initialText) => widget.tile?.letter ?? '',
-                  ),
+              child: Lottie.asset(
+                widget.animation.lottieFile,
+                frameRate: FrameRate.max,
+                fit: BoxFit.contain,
+                height: 100,
+                width: 100,
+                controller: _controllerLottie,
+                delegates: LottieDelegates(
+                  textStyle: (lottie) {
+                    return const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Rubik',
+                      color: Color(0xff6B6B6B),
+                    );
+                  },
+                  text: (initialText) => widget.tile?.letter ?? '',
                 ),
               ),
             ),
