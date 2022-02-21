@@ -462,23 +462,23 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
                 TileTapped(widget.tile),
               )
           : null,
-      child: Transform.scale(
-        scale: 2.5,
-        child: Lottie.asset(
-          widget.animation.lottieFile,
-          animate: false,
-          frameRate: FrameRate.max,
-          controller: _controllerLottie,
-          delegates: LottieDelegates(
-            text: (initialText) => widget.tile.letter,
-            textStyle: (lottie) {
-              return const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Rubik',
-                color: Color(0xff6B6B6B),
-              );
-            },
-          ),
+      child: Lottie.asset(
+        widget.animation.lottieFile,
+        animate: false,
+        fit: BoxFit.fill,
+        height: 200,
+        width: 200,
+        frameRate: FrameRate.max,
+        controller: _controllerLottie,
+        delegates: LottieDelegates(
+          text: (initialText) => widget.tile.letter,
+          textStyle: (lottie) {
+            return const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Rubik',
+              color: Color(0xff6B6B6B),
+            );
+          },
         ),
       ),
     );
