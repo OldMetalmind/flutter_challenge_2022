@@ -60,6 +60,9 @@ class _PuzzleLetterTileState extends State<PuzzleLetterTile>
     return Lottie.asset(
       widget.animation,
       animate: false,
+      height: 100,
+      width: 100,
+      fit: BoxFit.fill,
       frameRate: FrameRate.max,
       controller: _controller,
       delegates: LottieDelegates(
@@ -68,9 +71,14 @@ class _PuzzleLetterTileState extends State<PuzzleLetterTile>
           return const TextStyle(
             fontWeight: FontWeight.w700,
             fontFamily: 'Rubik',
-            color: Color(0xff6B6B6B),
           );
         },
+        values: [
+          ValueDelegate.color(
+            ['A'],
+            value: const Color(0xffFFFFFF),
+          ),
+        ],
       ),
     );
   }

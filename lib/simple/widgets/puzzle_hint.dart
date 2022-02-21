@@ -70,7 +70,9 @@ class _PuzzleHintState extends State<PuzzleHint> with TickerProviderStateMixin {
         text: (initialText) => widget.letter,
         textStyle: (font) {
           return TextStyle(
-              fontWeight: FontWeight.w700, fontFamily: font.fontFamily);
+            fontWeight: FontWeight.w700,
+            fontFamily: font.fontFamily,
+          );
         },
         values: [
           ValueDelegate.color(['A'], value: const Color(0xff949494)),

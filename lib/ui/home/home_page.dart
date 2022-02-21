@@ -27,6 +27,7 @@ class HomePage extends StatelessWidget {
               PuzzleHardModeCheckbox(
                 value: context.read<GameBloc>().state.hardMode,
               ),
+              const SizedBox(height: 18),
               PuzzleButtonPrimary(
                 text: 'PLAY NOW',
                 onTap: () {
