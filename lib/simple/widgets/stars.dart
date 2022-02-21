@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:selector/assets/constants.dart';
-import 'package:selector/game/bloc/game_bloc.dart';
-import 'package:selector/helpers/animations_bounds_helper.dart';
+import 'package:seletter/assets/constants.dart';
+import 'package:seletter/game/bloc/game_bloc.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
 
 /// Row of stars representing the current level of the puzze
 class Stars extends StatelessWidget {

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:selector/dashatar/dashatar.dart';
+import 'package:seletter/dashatar/dashatar.dart';
 
 /// The animation builder of [DashatarShareDialog].
 class DashatarShareDialogAnimatedBuilder extends StatelessWidget {

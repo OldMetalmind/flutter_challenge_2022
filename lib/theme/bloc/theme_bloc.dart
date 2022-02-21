@@ -2,8 +2,8 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:selector/simple/simple.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/simple/simple.dart';
+import 'package:seletter/theme/theme.dart';
 
 part 'theme_event.dart';
 part 'theme_state.dart';

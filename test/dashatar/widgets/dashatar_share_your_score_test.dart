@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:selector/audio_control/audio_control.dart';
-import 'package:selector/dashatar/dashatar.dart';
+import 'package:seletter/audio_control/audio_control.dart';
+import 'package:seletter/dashatar/dashatar.dart';
 
 import '../../helpers/helpers.dart';
 

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:selector/audio_control/audio_control.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/helpers/helpers.dart';
-import 'package:selector/models/models.dart';
-import 'package:selector/puzzle/puzzle.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/audio_control/audio_control.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/helpers/helpers.dart';
+import 'package:seletter/models/models.dart';
+import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/theme/theme.dart';
 
 /// {@template puzzle_keyboard_handler}
 /// A widget that listens to the keyboard events and moves puzzle tiles

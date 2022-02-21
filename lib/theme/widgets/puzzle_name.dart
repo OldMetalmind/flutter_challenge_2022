@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/theme/theme.dart';
-import 'package:selector/typography/typography.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/theme/theme.dart';
+import 'package:seletter/typography/typography.dart';
 
 /// {@template puzzle_name}
 /// Displays the name of the current puzzle theme.

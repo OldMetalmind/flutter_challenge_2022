@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selector/game/bloc/game_bloc.dart';
-import 'package:selector/helpers/animations_bounds_helper.dart';
-import 'package:selector/simple/widgets/puzzle_hint.dart';
+import 'package:seletter/game/bloc/game_bloc.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
+import 'package:seletter/simple/widgets/puzzle_hint.dart';
 
 /// Shows the Word that the player needs to find
 class WordTip extends StatelessWidget {

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:selector/helpers/helpers.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/helpers/helpers.dart';
+import 'package:seletter/theme/theme.dart';
 
 void main() {
   group('showAppDialog', () {

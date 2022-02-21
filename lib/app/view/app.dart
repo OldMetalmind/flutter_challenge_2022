@@ -13,10 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:selector/helpers/helpers.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/puzzle/puzzle.dart';
-import 'package:selector/ui/home/home_page.dart';
+import 'package:seletter/helpers/helpers.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/ui/home/home_page.dart';
 
 class App extends StatefulWidget {
   const App({Key? key, ValueGetter<PlatformHelper>? platformHelperFactory})

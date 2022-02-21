@@ -1,5 +1,5 @@
-import 'package:selector/helpers/animations_bounds_helper.dart';
-import 'package:selector/models/tile.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
+import 'package:seletter/models/tile.dart';
 
 LottieAnimationType determineAnimation(Tile? tapped, Tile? space) {
   assert(space?.isWhitespace ?? false, 'Space should be the whitespace Tile');

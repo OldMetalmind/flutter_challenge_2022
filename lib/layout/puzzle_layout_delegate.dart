@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:selector/models/models.dart';
-import 'package:selector/puzzle/puzzle.dart';
+import 'package:seletter/models/models.dart';
+import 'package:seletter/puzzle/puzzle.dart';
 
 /// {@template puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI.

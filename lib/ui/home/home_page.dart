@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-import 'package:selector/game/bloc/game_bloc.dart';
-import 'package:selector/helpers/animations_bounds_helper.dart';
-import 'package:selector/simple/widgets/puzzle_button_primary.dart';
-import 'package:selector/simple/widgets/puzzle_button_secondary.dart';
-import 'package:selector/simple/widgets/puzzle_empty_tile.dart';
-import 'package:selector/simple/widgets/puzzle_hard_mode_checkbox.dart';
-import 'package:selector/simple/widgets/puzzle_letter_tile.dart';
+import 'package:seletter/game/bloc/game_bloc.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
+import 'package:seletter/simple/widgets/puzzle_button_primary.dart';
+import 'package:seletter/simple/widgets/puzzle_button_secondary.dart';
+import 'package:seletter/simple/widgets/puzzle_empty_tile.dart';
+import 'package:seletter/simple/widgets/puzzle_hard_mode_checkbox.dart';
+import 'package:seletter/simple/widgets/puzzle_letter_tile.dart';
 
 /// First page that the user lands on when opening the app
 class HomePage extends StatelessWidget {
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-/// Main Logo of the app SELECTOR
+/// Main Logo of the app seletter
 class MainLogo extends StatelessWidget {
   ///
   const MainLogo({Key? key}) : super(key: key);

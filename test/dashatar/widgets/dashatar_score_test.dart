@@ -4,10 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/puzzle/puzzle.dart';
-import 'package:selector/theme/theme.dart';
-import 'package:selector/timer/timer.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/theme/theme.dart';
+import 'package:seletter/timer/timer.dart';
 
 import '../../helpers/helpers.dart';
 

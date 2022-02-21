@@ -9,8 +9,8 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:selector/app/app.dart';
-import 'package:selector/puzzle/puzzle.dart';
+import 'package:seletter/app/app.dart';
+import 'package:seletter/puzzle/puzzle.dart';
 
 import '../../helpers/helpers.dart';
 

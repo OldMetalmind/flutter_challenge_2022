@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selector/audio_control/audio_control.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/audio_control/audio_control.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/theme/theme.dart';
 
 /// {@template audio_control}
 /// Displays and allows to update the current audio status of the puzzle.

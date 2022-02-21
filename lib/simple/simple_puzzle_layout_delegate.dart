@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:selector/assets/constants.dart';
-import 'package:selector/colors/colors.dart';
-import 'package:selector/helpers/animations_bounds_helper.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/models/models.dart';
-import 'package:selector/puzzle/puzzle.dart';
-import 'package:selector/simple/simple.dart';
-import 'package:selector/simple/widgets/animation_positioned_tile.dart';
-import 'package:selector/simple/widgets/puzzle_empty_tile.dart';
-import 'package:selector/theme/theme.dart';
-import 'package:selector/typography/typography.dart';
+import 'package:seletter/assets/constants.dart';
+import 'package:seletter/colors/colors.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/models/models.dart';
+import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/simple/simple.dart';
+import 'package:seletter/simple/widgets/animation_positioned_tile.dart';
+import 'package:seletter/simple/widgets/puzzle_empty_tile.dart';
+import 'package:seletter/theme/theme.dart';
+import 'package:seletter/typography/typography.dart';
 
 /// {@template simple_puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI

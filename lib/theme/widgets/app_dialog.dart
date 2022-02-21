@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:selector/colors/colors.dart';
-import 'package:selector/layout/layout.dart';
+import 'package:seletter/colors/colors.dart';
+import 'package:seletter/layout/layout.dart';
 
 /// {@template app_dialog}
 /// Displays a full screen dialog on a small display and

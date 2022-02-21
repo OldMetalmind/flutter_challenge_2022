@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:universal_platform/universal_platform.dart';
 import 'package:selector/helpers/helpers.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 void main() {
   group('getPlatformHelper', () {

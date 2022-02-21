@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:selector/layout/layout.dart';
+import 'package:seletter/layout/layout.dart';
 
 /// {@template responsive_gap}
 /// A wrapper around [Gap] that renders a [small], [medium]

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gap/gap.dart';
-import 'package:selector/layout/layout.dart';
+import 'package:seletter/layout/layout.dart';
 
 import '../helpers/helpers.dart';
 

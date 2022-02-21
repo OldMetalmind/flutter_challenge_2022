@@ -2,7 +2,7 @@
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:selector/dashatar/dashatar.dart';
+import 'package:seletter/dashatar/dashatar.dart';
 
 import '../../helpers/helpers.dart';
 

@@ -1,5 +1,5 @@
-import 'package:selector/assets/constants.dart';
-import 'package:selector/models/models.dart';
+import 'package:seletter/assets/constants.dart';
+import 'package:seletter/models/models.dart';
 
 /// Types of bounds that the animation has
 enum LottieBoundType {

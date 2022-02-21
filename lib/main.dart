@@ -7,9 +7,9 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
-import 'package:selector/app/app.dart';
-import 'package:selector/bootstrap.dart';
-import 'package:selector/game/bloc/game_bloc.dart';
+import 'package:seletter/app/app.dart';
+import 'package:seletter/bootstrap.dart';
+import 'package:seletter/game/bloc/game_bloc.dart';
 
 /// Global logger
 Logger logger = Logger();

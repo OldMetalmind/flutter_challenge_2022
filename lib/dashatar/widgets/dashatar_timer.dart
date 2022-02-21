@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:selector/colors/colors.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/theme/theme.dart';
-import 'package:selector/timer/timer.dart';
-import 'package:selector/typography/typography.dart';
+import 'package:seletter/colors/colors.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/theme/theme.dart';
+import 'package:seletter/timer/timer.dart';
+import 'package:seletter/typography/typography.dart';
 
 /// {@template dashatar_timer}
 /// Displays how many seconds elapsed since starting the puzzle.

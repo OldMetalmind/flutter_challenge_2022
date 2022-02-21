@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:selector/audio_control/audio_control.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/helpers/helpers.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/puzzle/puzzle.dart';
-import 'package:selector/timer/timer.dart';
-import 'package:selector/typography/typography.dart';
+import 'package:seletter/audio_control/audio_control.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/helpers/helpers.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/timer/timer.dart';
+import 'package:seletter/typography/typography.dart';
 
 /// {@template dashatar_countdown}
 /// Displays the countdown before the puzzle is started.

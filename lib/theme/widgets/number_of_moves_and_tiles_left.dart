@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/theme/theme.dart';
-import 'package:selector/typography/typography.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/theme/theme.dart';
+import 'package:seletter/typography/typography.dart';
 
 /// {@template number_of_moves_and_tiles_left}
 /// Displays how many moves have been made on the current puzzle

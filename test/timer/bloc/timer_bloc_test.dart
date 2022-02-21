@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:selector/timer/timer.dart';
+import 'package:seletter/timer/timer.dart';
 
 import '../../helpers/helpers.dart';
 
@@ -30,7 +30,10 @@ void main() {
         final bloc = TimerBloc(ticker: ticker)..add(TimerStarted());
         await bloc.stream.first;
 
-        streamController..add(1)..add(2)..add(3);
+        streamController
+          ..add(1)
+          ..add(2)
+          ..add(3);
 
         await expectLater(
           bloc.stream,

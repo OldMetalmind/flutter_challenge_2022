@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter_test/flutter_test.dart';
-import 'package:selector/timer/timer.dart';
+import 'package:seletter/timer/timer.dart';
 
 void main() {
   const elaspsedSeconds = 1;

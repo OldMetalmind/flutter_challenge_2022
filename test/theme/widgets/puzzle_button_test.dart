@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:selector/colors/colors.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/colors/colors.dart';
+import 'package:seletter/theme/theme.dart';
 
 import '../../helpers/helpers.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:selector/assets/constants.dart';
-import 'package:selector/helpers/animations_bounds_helper.dart';
+import 'package:seletter/assets/constants.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
 
 /// Hint letter
 class PuzzleHint extends StatefulWidget {

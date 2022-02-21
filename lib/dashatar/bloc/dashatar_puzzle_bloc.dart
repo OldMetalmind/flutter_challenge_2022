@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:selector/models/models.dart';
+import 'package:seletter/models/models.dart';
 
 part 'dashatar_puzzle_event.dart';
 part 'dashatar_puzzle_state.dart';
@@ -16,7 +16,7 @@ class DashatarPuzzleBloc
   DashatarPuzzleBloc({
     required this.secondsToBegin,
     required Ticker ticker,
-  })   : _ticker = ticker,
+  })  : _ticker = ticker,
         super(DashatarPuzzleState(secondsToBegin: secondsToBegin)) {
     on<DashatarCountdownStarted>(_onCountdownStarted);
     on<DashatarCountdownTicked>(_onCountdownTicked);

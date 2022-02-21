@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:selector/models/models.dart';
+import 'package:seletter/models/models.dart';
 
 /// {@template tile}
 /// Model for a puzzle tile.

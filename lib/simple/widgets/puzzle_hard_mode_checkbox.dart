@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-import 'package:selector/game/bloc/game_bloc.dart';
+import 'package:seletter/game/bloc/game_bloc.dart';
 
 /// Checkbox to activate the hard mode of this game
 class PuzzleHardModeCheckbox extends StatefulWidget {

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:selector/audio_control/audio_control.dart';
+import 'package:seletter/audio_control/audio_control.dart';
 
 void main() {
   group('AudioControlEvent', () {

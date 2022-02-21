@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:selector/colors/colors.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/simple/simple.dart';
-import 'package:selector/theme/themes/themes.dart';
+import 'package:seletter/colors/colors.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/simple/simple.dart';
+import 'package:seletter/theme/themes/themes.dart';
 
 /// {@template simple_theme}
 /// The simple puzzle theme.

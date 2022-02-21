@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:selector/audio_control/audio_control.dart';
+import 'package:seletter/audio_control/audio_control.dart';
 
 import '../../helpers/helpers.dart';
 

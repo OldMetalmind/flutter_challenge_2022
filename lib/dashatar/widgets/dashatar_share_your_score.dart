@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:selector/colors/colors.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/typography/typography.dart';
+import 'package:seletter/colors/colors.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/typography/typography.dart';
 
 /// {@template dashatar_share_your_score}
 /// Displays buttons to share a score of the completed puzzle.

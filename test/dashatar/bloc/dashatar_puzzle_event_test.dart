@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:selector/dashatar/dashatar.dart';
+import 'package:seletter/dashatar/dashatar.dart';
 
 void main() {
   group('DashatarPuzzleEvent', () {

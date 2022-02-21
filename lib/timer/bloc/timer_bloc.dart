@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:selector/models/models.dart';
+import 'package:seletter/models/models.dart';
 
 part 'timer_event.dart';
 part 'timer_state.dart';

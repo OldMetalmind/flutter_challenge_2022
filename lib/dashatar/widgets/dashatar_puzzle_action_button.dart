@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:selector/assets/constants.dart';
-import 'package:selector/audio_control/audio_control.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/helpers/helpers.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/puzzle/puzzle.dart';
-import 'package:selector/theme/theme.dart';
-import 'package:selector/timer/timer.dart';
+import 'package:seletter/assets/constants.dart';
+import 'package:seletter/audio_control/audio_control.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/helpers/helpers.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/theme/theme.dart';
+import 'package:seletter/timer/timer.dart';
 
 /// {@template dashatar_puzzle_action_button}
 /// Displays the action button to start or shuffle the puzzle

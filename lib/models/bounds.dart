@@ -1,4 +1,4 @@
-import 'package:selector/helpers/animations_bounds_helper.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
 
 /// Bounds of animation
 ///

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:selector/dashatar/dashatar.dart';
+import 'package:seletter/dashatar/dashatar.dart';
 
 part 'dashatar_theme_event.dart';
 part 'dashatar_theme_state.dart';

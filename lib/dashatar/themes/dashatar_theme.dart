@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
-import 'package:selector/colors/colors.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/models/models.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/colors/colors.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/models/models.dart';
+import 'package:seletter/theme/theme.dart';
 
 /// {@template dashatar_theme}
 /// The dashatar puzzle theme.

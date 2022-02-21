@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/theme/theme.dart';
 
 /// Displays the [AppDialog] above the current contents of the app.
 Future<T?> showAppDialog<T>({

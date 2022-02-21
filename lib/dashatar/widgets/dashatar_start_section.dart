@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/l10n/l10n.dart';
-import 'package:selector/layout/layout.dart';
-import 'package:selector/puzzle/puzzle.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/l10n/l10n.dart';
+import 'package:seletter/layout/layout.dart';
+import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/theme/theme.dart';
 
 /// {@template dashatar_start_section}
 /// Displays the start section of the puzzle based on [state].

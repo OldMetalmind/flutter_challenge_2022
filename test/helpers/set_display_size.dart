@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:selector/layout/layout.dart';
+import 'package:seletter/layout/layout.dart';
 
 extension PuzzleWidgetTester on WidgetTester {
   void setDisplaySize(Size size) {

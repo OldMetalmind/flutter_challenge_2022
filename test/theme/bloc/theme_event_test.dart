@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:selector/dashatar/dashatar.dart';
-import 'package:selector/simple/simple.dart';
-import 'package:selector/theme/theme.dart';
+import 'package:seletter/dashatar/dashatar.dart';
+import 'package:seletter/simple/simple.dart';
+import 'package:seletter/theme/theme.dart';
 
 void main() {
   group('ThemeEvent', () {

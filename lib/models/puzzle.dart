@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:selector/models/models.dart';
+import 'package:seletter/models/models.dart';
 
 // A 3x3 puzzle board visualization:
 //

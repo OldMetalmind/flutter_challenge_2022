@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:selector/assets/words.dart';
+import 'package:seletter/assets/words.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
