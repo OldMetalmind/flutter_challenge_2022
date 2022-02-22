@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/src/provider.dart';
+import 'package:seletter/assets/constants.dart';
 import 'package:seletter/game/bloc/game_bloc.dart';
 import 'package:seletter/helpers/animations_bounds_helper.dart';
 import 'package:seletter/simple/widgets/puzzle_button_primary.dart';
@@ -22,7 +24,9 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 100),
-              const MainLogo(),
+              const MainLogoLottie(
+                animation: LottieAnimations.introLogo,
+              ),
               const SizedBox(height: 72),
               PuzzleHardModeCheckbox(
                 value: context.read<GameBloc>().state.hardMode,
@@ -47,9 +51,60 @@ class HomePage extends StatelessWidget {
   }
 }
 
+/// Main logo for the app Seletter with Lottie animation
+class MainLogoLottie extends StatefulWidget {
+  /// Main constructor
+  const MainLogoLottie({Key? key, required this.animation}) : super(key: key);
+
+  /// Animation file to be shown
+  final LottieAnimation animation;
+
+  @override
+  State<MainLogoLottie> createState() => _MainLogoLottieState();
+}
+
+class _MainLogoLottieState extends State<MainLogoLottie>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animate();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  /// Animates this widget according with Animation Type and the default Lottie
+  /// animation
+  void _animate() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: globalAnimationDurationSlower,
+    );
+    _animationController.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Lottie.asset(
+      widget.animation.lottieFile,
+      animate: true,
+      frameRate: FrameRate.max,
+      controller: _animationController,
+    );
+  }
+}
+
 /// Main Logo of the app seletter
+@Deprecated('Use MainLogoLottie instead')
 class MainLogo extends StatelessWidget {
-  ///
+  /// Default constructor with Key
+  @Deprecated('Deprecated constructor')
   const MainLogo({Key? key}) : super(key: key);
 
   /// Words presented as a logo

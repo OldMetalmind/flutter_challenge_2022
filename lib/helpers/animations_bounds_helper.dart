@@ -87,6 +87,40 @@ abstract class LottieAnimation {
       );
 }
 
+/// Simple animation running in loop
+///
+class LottieSimpleAnimation extends LottieAnimation {
+  /// Main Constructor
+  const LottieSimpleAnimation({
+    required Bounds iin,
+    required Bounds out,
+    required double max,
+    required String file,
+  }) : super(
+          out: out,
+          iin: iin,
+          lottieFile: file,
+          maxUpperBound: max,
+        );
+
+  @override
+  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+    switch (type) {
+      case LottieAnimationType.iin:
+      case LottieAnimationType.out:
+      case LottieAnimationType.pressed:
+      case LottieAnimationType.hoverIn:
+      case LottieAnimationType.hoverOut:
+      case LottieAnimationType.correct:
+      case LottieAnimationType.correctOut:
+      case LottieAnimationType.correctIn:
+      case LottieAnimationType.slideHorizontal:
+      case LottieAnimationType.slideVertical:
+        throw Exception('Animation has no animation for this type');
+    }
+  }
+}
+
 /// Animation of Buttons
 ///
 /// Buttons there are only 2 : Primary and Secondary
@@ -473,5 +507,21 @@ class LottieAnimations {
     out: const Bounds(300, 400),
     max: 400,
     file: lottieResultAnimations[3],
+  );
+
+  /// Intro Logo animation
+  static const introLogo = LottieSimpleAnimation(
+    iin: Bounds(0, 1000),
+    out: Bounds(1000, 2000),
+    max: 2000,
+    file: lottieMainLogoAnimationFile,
+  );
+
+  /// Tutorial animation
+  static const tutorial = LottieSimpleAnimation(
+    iin: Bounds(0, 1000),
+    out: Bounds(1000, 2000),
+    max: 2000,
+    file: lottieTutorialAnimationFile,
   );
 }

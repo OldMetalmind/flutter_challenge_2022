@@ -62,6 +62,8 @@ class _AppState extends State<App> {
     'assets/animations/result_1.json',
     'assets/animations/result_2.json',
     'assets/animations/result_3.json',
+    'assets/animations/tutorial.json',
+    'assets/animations/logo_intro.json',
   ];
 
   late final PlatformHelper _platformHelper;

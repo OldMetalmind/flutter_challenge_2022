@@ -30,6 +30,12 @@ const lottieStarAnimationFile = 'assets/animations/star_small.json';
 /// File with all Tile Hint animations in sequence
 const lottieTileHintAnimationFile = 'assets/animations/tile_hint.json';
 
+/// File with the animation to be shown in the tutorial
+const lottieTutorialAnimationFile = 'assets/animations/tutorial.json';
+
+/// File with the animation to be as a main logo
+const lottieMainLogoAnimationFile = 'assets/animations/logo_intro.json';
+
 /// Files with all animations for each kind of result
 const lottieResultAnimations = [
   'assets/animations/result_0.json',

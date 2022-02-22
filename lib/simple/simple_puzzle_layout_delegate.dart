@@ -405,7 +405,7 @@ class SimplePuzzleTile extends StatefulWidget {
 
 class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     with TickerProviderStateMixin {
-  late final AnimationController _controllerLottie;
+  late AnimationController _controllerLottie;
 
   late LottieAnimationType _currentAnimation;
 

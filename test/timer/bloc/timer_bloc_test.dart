@@ -30,10 +30,7 @@ void main() {
         final bloc = TimerBloc(ticker: ticker)..add(TimerStarted());
         await bloc.stream.first;
 
-        streamController
-          ..add(1)
-          ..add(2)
-          ..add(3);
+        streamController..add(1)..add(2)..add(3);
 
         await expectLater(
           bloc.stream,

@@ -44,12 +44,7 @@ void main() {
           ),
         );
 
-        streamController
-          ..add(1)
-          ..add(2)
-          ..add(3)
-          ..add(4)
-          ..add(5);
+        streamController..add(1)..add(2)..add(3)..add(4)..add(5);
 
         await expectLater(
           bloc.stream,
