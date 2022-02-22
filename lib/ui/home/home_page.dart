@@ -9,6 +9,7 @@ import 'package:seletter/simple/widgets/puzzle_button_secondary.dart';
 import 'package:seletter/simple/widgets/puzzle_empty_tile.dart';
 import 'package:seletter/simple/widgets/puzzle_hard_mode_checkbox.dart';
 import 'package:seletter/simple/widgets/puzzle_letter_tile.dart';
+import 'package:seletter/simple/widgets/puzzle_tutorial.dart';
 
 /// First page that the user lands on when opening the app
 class HomePage extends StatelessWidget {
@@ -41,12 +42,64 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 18),
               PuzzleButtonSecondary(
                 text: 'HOW TO PLAY',
-                onTap: () {},
+                onTap: () {
+                  /// Show Dialog
+                  showTutorial(context);
+                },
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  /// Show how to play
+  void showTutorial(BuildContext context) {
+    showDialog<Container>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xffEFEFEF),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            PuzzleButtonSecondary(
+              text: 'CLOSE',
+              onTap: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Text(
+                'HOW TO PLAY',
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  color: Color(0xff94949494),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 40),
+              Text(
+                'Slide the tiles to find the word vertically or horizontally',
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  color: Color(0xff94949494),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 40),
+              PuzzleTutorial(
+                animation: LottieAnimations.tutorial,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -96,6 +149,11 @@ class _MainLogoLottieState extends State<MainLogoLottie>
       animate: true,
       frameRate: FrameRate.max,
       controller: _animationController,
+      delegates: LottieDelegates(
+        values: [
+          ValueDelegate.color(['A'], value: const Color(0xffFFFFFF)),
+        ],
+      ),
     );
   }
 }
