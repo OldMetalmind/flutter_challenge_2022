@@ -45,13 +45,6 @@ class DashatarStartSection extends StatelessWidget {
           medium: 16,
           large: 32,
         ),
-        NumberOfMovesAndTilesLeft(
-          key: numberOfMovesAndTilesLeftKey,
-          numberOfMoves: state.numberOfMoves,
-          numberOfTilesLeft: status == DashatarPuzzleStatus.started
-              ? state.numberOfTilesLeft
-              : state.puzzle.tiles.length - 1,
-        ),
         const ResponsiveGap(
           small: 8,
           medium: 18,

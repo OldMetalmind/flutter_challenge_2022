@@ -65,20 +65,6 @@ class Puzzle extends Equatable {
     );
   }
 
-  /// Gets the number of tiles that are currently in their correct position.
-  int getNumberOfCorrectTiles() {
-    final whitespaceTile = getWhitespaceTile();
-    var numberOfCorrectTiles = 0;
-    for (final tile in tiles) {
-      if (tile != whitespaceTile && tile.correctPosition != null) {
-        if (tile.currentPosition == tile.correctPosition) {
-          numberOfCorrectTiles++;
-        }
-      }
-    }
-    return numberOfCorrectTiles;
-  }
-
   /// Determines if the puzzle is completed. By determining if the words is
   /// correctly positioned
   bool isComplete(Map<int, String> stageWords) {

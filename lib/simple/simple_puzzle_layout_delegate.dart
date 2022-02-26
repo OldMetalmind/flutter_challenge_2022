@@ -335,7 +335,6 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
         return Stack(
           children: [
             backgroundTiles,
-            ...squares,
             if (lastTappedTile != null)
               AnimateTappedTile(
                 tile: lastTappedTile,
@@ -344,6 +343,7 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 spaceTile: spaceTile,
                 animationListener: () {},
               ),
+            ...squares,
           ],
         );
       },

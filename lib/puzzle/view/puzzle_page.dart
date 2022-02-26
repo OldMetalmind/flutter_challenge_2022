@@ -148,19 +148,12 @@ class _PuzzleState extends State<_Puzzle> {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
-    return BlocConsumer<GameBloc, GameState>(
-      listenWhen: (previous, current) {
-        return previous.currentStage != current.currentStage ||
-            previous.stageComplete != current.stageComplete;
-      },
-      listener: (context, state) {
-        if (!state.complete) {
-          showNextStageButton = state.stageComplete;
-        }
-      },
+    return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) =>
-          previous.currentStage != current.currentStage,
+          previous.currentStage != current.currentStage ||
+          previous.stageComplete != current.stageComplete,
       builder: (context, gameState) {
+        showNextStageButton = gameState.stageComplete;
         return LayoutBuilder(
           builder: (context, constraints) {
             return Stack(

@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:seletter/assets/alphabet.dart';
 import 'package:seletter/assets/words.dart';
+import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 
 part 'puzzle_event.dart';
@@ -34,7 +35,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
-        numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
     );
   }
@@ -47,7 +47,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
-        numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
     );
   }
@@ -58,13 +57,21 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       if (state.puzzle.isTileMovable(tappedTile)) {
         final mutablePuzzle = Puzzle(tiles: [...state.puzzle.tiles]);
         final puzzle = mutablePuzzle.moveTiles(tappedTile, []);
+        logger.wtf(
+          '''
+gameWords:$_gameWords 
+
+±±±±±±±
+
+ puzzle: $puzzle
+''',
+        );
         if (puzzle.isComplete(_gameWords)) {
           emit(
             state.copyWith(
               puzzle: puzzle.sort(),
               puzzleStatus: PuzzleStatus.complete,
               tileMovementStatus: TileMovementStatus.moved,
-              numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
               numberOfMoves: state.numberOfMoves + 1,
               lastTappedTile: tappedTile,
             ),
@@ -74,7 +81,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
             state.copyWith(
               puzzle: puzzle.sort(),
               tileMovementStatus: TileMovementStatus.moved,
-              numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
               numberOfMoves: state.numberOfMoves + 1,
               lastTappedTile: tappedTile,
               previousSpace: state.puzzle.getWhitespaceTile(),
@@ -98,7 +104,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
-        numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
     );
   }
@@ -144,7 +149,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     if (shuffle) {
       // Assign the tiles new current positions until the puzzle is solvable and
       // zero tiles are in their correct position.
-      while (!puzzle.isSolvable() || puzzle.getNumberOfCorrectTiles() != 0) {
+      while (!puzzle.isSolvable()) {
         currentPositions.shuffle(random);
         tiles = _getTileListFromPositions(
           size,
@@ -182,7 +187,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
           assert(_gameWords[size] != null, 'There is always a word');
           final tile = Tile(
             value: i,
-            correctPosition: correctPositions[i - 1],
             currentPosition: currentPositions[i - 1],
             letter: _gameWords[size]?[i - 1] ?? '',
           );
