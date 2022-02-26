@@ -195,7 +195,7 @@ gameWords:$_gameWords
           final tile = Tile(
             value: i,
             currentPosition: currentPositions[i - 1],
-            letter: alphabet[i],
+            letter: alphabet[Random().nextInt(alphabet.length)],
           );
           tiles.add(tile);
         }
