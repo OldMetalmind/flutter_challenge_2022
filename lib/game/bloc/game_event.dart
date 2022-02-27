@@ -43,3 +43,12 @@ class UpdateHardModeEvent extends GameEvent {
   @override
   List<Object?> get props => [value];
 }
+
+/// Resets the game completely as a fresh start
+class GameResetEvent extends GameEvent {
+  /// Main constructor
+  const GameResetEvent();
+
+  @override
+  List<Object?> get props => [];
+}

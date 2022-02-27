@@ -148,70 +148,90 @@ class _PuzzleState extends State<_Puzzle> {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
-    return BlocBuilder<GameBloc, GameState>(
-      buildWhen: (previous, current) =>
-          previous.currentStage != current.currentStage ||
-          previous.stageComplete != current.stageComplete,
-      builder: (context, gameState) {
-        showNextStageButton = gameState.stageComplete;
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return Stack(
-              children: [
-                if (theme is SimpleTheme)
-                  theme.layoutDelegate.backgroundBuilder(state),
-                SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 48),
-                      child: Column(
-                        children: [
-                          const PuzzleWordTitle(),
-                          const SizedBox(height: 16),
-                          if (gameState.isEasyModeActivated) const WordTip(),
-                          const SizedBox(height: 24),
-                          const Stars(),
-                          const PuzzleSections(),
+    final puzzleIncomplete =
+        context.select((PuzzleBloc bloc) => bloc.state.puzzleStatus) ==
+            PuzzleStatus.incomplete;
 
-                          if (showNextStageButton)
-                            PuzzleButtonPrimary(
-                              //TODO(FB) Move to IntL,
-                              text: 'Next',
-                              onTap: () {
-                                setState(() {
-                                  showNextStageButton = !showNextStageButton;
-                                });
+    return BlocBuilder<PuzzleBloc, PuzzleState>(
+      buildWhen: (previous, current) {
+        return previous.puzzleStatus != current.puzzleStatus;
+      },
+      builder: (context, puzzleState) {
+        return BlocBuilder<GameBloc, GameState>(
+          buildWhen: (previous, current) {
+            return previous.currentStage != current.currentStage;
+          },
+          builder: (context, gameState) {
+            showNextStageButton =
+                puzzleState.puzzleStatus == PuzzleStatus.complete;
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return Stack(
+                  children: [
+                    if (theme is SimpleTheme)
+                      theme.layoutDelegate.backgroundBuilder(state),
+                    SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 48),
+                          child: Column(
+                            children: [
+                              const PuzzleWordTitle(),
+                              const SizedBox(height: 16),
+                              if (gameState.isEasyModeActivated)
+                                const WordTip(),
+                              const SizedBox(height: 24),
+                              const Stars(),
+                              const PuzzleSections(),
 
-                                context.read<GameBloc>().add(
-                                      NextStageGameEvent(),
-                                    );
+                              if (showNextStageButton)
+                                PuzzleButtonPrimary(
+                                  //TODO(FB) Move to IntL,
+                                  text: 'Next',
+                                  onTap: () {
+                                    setState(() {
+                                      showNextStageButton =
+                                          !showNextStageButton;
+                                    });
 
-                                context.read<PuzzleBloc>().add(
-                                      PuzzleNextStageEvent(
-                                        gameState.currentStage,
-                                      ),
-                                    );
-                              },
-                            ),
-                          if (!showNextStageButton)
-                            PuzzleButtonSecondary(
-                              text: 'I Quit',
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          //const DemoAnimations(),
-                        ],
+                                    context.read<GameBloc>().add(
+                                          NextStageGameEvent(),
+                                        );
+
+                                    context.read<PuzzleBloc>().add(
+                                          PuzzleNextStageEvent(
+                                            gameState.currentStage,
+                                          ),
+                                        );
+                                  },
+                                ),
+                              if (!showNextStageButton)
+                                PuzzleButtonSecondary(
+                                  text: 'I Quit',
+                                  onTap: () {
+                                    context
+                                        .read<GameBloc>()
+                                        .add(const GameResetEvent());
+                                    context
+                                        .read<PuzzleBloc>()
+                                        .add(const PuzzleReset());
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              //const DemoAnimations(),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                if (theme is! SimpleTheme)
-                  theme.layoutDelegate.backgroundBuilder(state),
-              ],
+                    if (theme is! SimpleTheme)
+                      theme.layoutDelegate.backgroundBuilder(state),
+                  ],
+                );
+              },
             );
           },
         );

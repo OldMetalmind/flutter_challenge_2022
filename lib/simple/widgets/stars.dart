@@ -14,8 +14,7 @@ class Stars extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) =>
-          previous.currentStage != current.currentStage ||
-          previous.stageComplete != current.stageComplete,
+          previous.currentStage != current.currentStage,
       builder: (context, state) {
         final stage = state.currentStage;
         final numberOfStages = state.numberOfStages;

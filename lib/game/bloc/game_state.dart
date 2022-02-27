@@ -10,7 +10,6 @@ abstract class GameState extends Equatable {
     this.currentStage = 3,
     required this.gameWords,
     this.complete = false,
-    this.stageComplete = false,
   });
 
   /// If the player is in easy mode, aka shows the word to be found;
@@ -44,9 +43,6 @@ abstract class GameState extends Equatable {
 
   /// Determines if player completed the final level
   final bool complete;
-
-  /// When the current stage is complete and ready for next stage
-  final bool stageComplete;
 
   /// Helper getter to make code more readable and obvious
   /// if hard mode is activated
@@ -102,7 +98,6 @@ class GameInitial extends GameState {
   GameInitial()
       : super(
           gameWords: randomizeStageWords(), // Grabs the
-          stageComplete: false,
         );
 
   /// Randomize what will be the words that the player needs to find
@@ -130,7 +125,6 @@ class StageCompleteState extends GameState {
     Map<int, String> words,
     int current,
   ) : super(
-          stageComplete: true,
           gameWords: words,
           currentStage: current,
         );
@@ -148,7 +142,6 @@ class StageGameState extends GameState {
   }) : super(
           currentStage: currentStage,
           complete: isCompleted,
-          stageComplete: false,
           gameWords: words,
           hardMode: hardMode,
         );

@@ -6,7 +6,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:seletter/assets/alphabet.dart';
 import 'package:seletter/assets/words.dart';
-import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 
 part 'puzzle_event.dart';
@@ -14,7 +13,9 @@ part 'puzzle_state.dart';
 
 class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   PuzzleBloc(this._size, this._gameWords, {this.random})
-      : super(const PuzzleState()) {
+      : super(
+          const PuzzleState(),
+        ) {
     on<PuzzleInitialized>(_onPuzzleInitialized);
     on<TileTapped>(_onTileTapped);
     on<PuzzleReset>(_onPuzzleReset);
@@ -52,20 +53,12 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   void _onTileTapped(TileTapped event, Emitter<PuzzleState> emit) {
+    //logger.wtf('tile: ${event.tile}');
     final tappedTile = event.tile;
     if (state.puzzleStatus == PuzzleStatus.incomplete) {
       if (state.puzzle.isTileMovable(tappedTile)) {
         final mutablePuzzle = Puzzle(tiles: [...state.puzzle.tiles]);
         final puzzle = mutablePuzzle.moveTiles(tappedTile, []);
-        logger.wtf(
-          '''
-gameWords:$_gameWords 
-
-±±±±±±±
-
- puzzle: $puzzle
-''',
-        );
         if (puzzle.isComplete(_gameWords)) {
           emit(
             state.copyWith(

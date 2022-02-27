@@ -43,5 +43,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         ),
       );
     });
+
+    on<GameResetEvent>((event, emit) {
+      emit(
+        state.copyWith(
+          current: state.initialStage,
+        ),
+      );
+    });
   }
 }

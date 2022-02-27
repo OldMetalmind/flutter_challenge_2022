@@ -13,8 +13,7 @@ class WordTip extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) =>
-          previous.currentStage != current.currentStage ||
-          previous.stageComplete != current.stageComplete,
+          previous.currentStage != current.currentStage,
       builder: (context, state) {
         final word = context.watch<GameBloc>().state.getCurrentWord();
         final tip =

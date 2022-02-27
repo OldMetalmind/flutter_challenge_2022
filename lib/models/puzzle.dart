@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 
 // A 3x3 puzzle board visualization:
@@ -70,35 +71,41 @@ class Puzzle extends Equatable {
   bool isComplete(Map<int, String> stageWords) {
     final size = getDimension();
     final word = stageWords[size];
+    logger.wtf('size: $size ~~~~ word: $word');
 
-    // Horizontal check
-    for (var y = 0; y < size; y++) {
-      final row = tiles.getRange(y * size, (y * size) + size);
+    var horizontal = StringBuffer();
+    var vertical = StringBuffer();
 
-      final rowWord =
-          row.fold<String>('', (current, tile) => current + tile.letter);
-
-      if (word == rowWord) {
+    // Horizontal
+    for (var y = 1; y <= size; y++) {
+      for (var x = 1; x <= size; x++) {
+        horizontal.write(getLetterByPosition(x, y));
+      }
+      if (horizontal.toString() == word) {
         return true;
       }
+      horizontal.clear();
     }
 
-    // Vertical Check
-    for (var x = 0; x < size; x++) {
-      final column = <String>[];
-      for (var i = x; i < tiles.length; i += size) {
-        column.add(tiles[i].letter);
+    // Vertical
+    for (var x = 1; x <= size; x++) {
+      for (var y = 1; y <= size; y++) {
+        vertical.write(getLetterByPosition(x, y));
       }
-
-      final columnWord =
-          column.fold<String>('', (current, letter) => '$current$letter');
-
-      if (word == columnWord) {
+      if (vertical.toString() == word) {
         return true;
       }
+      vertical.clear();
     }
 
     return false;
+  }
+
+  /// Given certain position coordinates, return the letter in that position
+  String getLetterByPosition(int x, int y) {
+    return tiles
+        .firstWhere((t) => t.currentPosition.x == x && t.currentPosition.y == y)
+        .letter;
   }
 
   /// Determines if the tapped tile can move in the direction of the whitespace
@@ -206,8 +213,6 @@ class Puzzle extends Equatable {
   ///
   // Recursively stores a list of all tiles that need to be moved and passes the
   // list to _swapTiles to individually swap them.
-  //
-  // Filipe: Now it only moves if the tile is next to the whitespace.
   Puzzle moveTiles(Tile tile, List<Tile> tilesToSwap) {
     final whitespaceTile = getWhitespaceTile();
     final deltaX = whitespaceTile.currentPosition.x - tile.currentPosition.x;
