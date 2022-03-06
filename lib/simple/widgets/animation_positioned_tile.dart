@@ -38,7 +38,7 @@ class AnimateTappedTile extends StatefulWidget {
   final LottieTilePuzzleAnimation animation;
 
   /// Initial Animation ran
-  final LottieAnimationType initialAnimation;
+  final LottieAnimationType? initialAnimation;
 
   @override
   State<AnimateTappedTile> createState() => _AnimateTappedTileState();
@@ -53,30 +53,32 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
   late final AnimationController _controller;
   late final AnimationController _controllerLottie;
 
-  late LottieAnimationType _currentAnimation;
+  late LottieAnimationType? _currentAnimation;
 
   @override
   void initState() {
     super.initState();
-    _currentAnimation = widget.initialAnimation;
+    _currentAnimation = widget.initialAnimation ?? LottieAnimationType.iin;
 
     _controller = AnimationController(
       duration: globalTileMovementAnimationDuration,
       vsync: this,
     );
 
-    _controllerLottie = AnimationController(
-      duration: globalTileMovementAnimationDuration,
-      vsync: this,
-      lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
-      upperBound: widget.animation.upperBoundByType(_currentAnimation),
-    )..addStatusListener(
-        (status) {
-          if (status == AnimationStatus.completed) {
-            widget.animationListener.call();
-          }
-        },
-      );
+    if (_currentAnimation != null) {
+      _controllerLottie = AnimationController(
+        duration: globalTileMovementAnimationDuration,
+        vsync: this,
+        lowerBound: widget.animation.lowerBoundByType(_currentAnimation),
+        upperBound: widget.animation.upperBoundByType(_currentAnimation),
+      )..addStatusListener(
+          (status) {
+            if (status == AnimationStatus.completed) {
+              widget.animationListener.call();
+            }
+          },
+        );
+    }
 
     _controller.forward();
     _controllerLottie

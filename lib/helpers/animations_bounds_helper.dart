@@ -70,18 +70,18 @@ abstract class LottieAnimation {
 
   /// Returns the Bound for the animation
   double boundsByType(
-    LottieAnimationType type,
+    LottieAnimationType? type,
     LottieBoundType boundType,
   );
 
   /// Returns the lower bound
-  double lowerBoundByType(LottieAnimationType type) => boundsByType(
+  double lowerBoundByType(LottieAnimationType? type) => boundsByType(
         type,
         LottieBoundType.lower,
       );
 
   /// Returns the lower bound
-  double upperBoundByType(LottieAnimationType type) => boundsByType(
+  double upperBoundByType(LottieAnimationType? type) => boundsByType(
         type,
         LottieBoundType.upper,
       );
@@ -104,8 +104,9 @@ class LottieSimpleAnimation extends LottieAnimation {
         );
 
   @override
-  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+  double boundsByType(LottieAnimationType? type, LottieBoundType boundType) {
     switch (type) {
+      case null:
       case LottieAnimationType.iin:
       case LottieAnimationType.out:
       case LottieAnimationType.pressed:
@@ -155,7 +156,7 @@ class LottieButtonAnimation extends LottieAnimation {
   final Bounds hoverOut;
 
   @override
-  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+  double boundsByType(LottieAnimationType? type, LottieBoundType boundType) {
     Bounds bounds;
 
     switch (type) {
@@ -174,6 +175,7 @@ class LottieButtonAnimation extends LottieAnimation {
       case LottieAnimationType.hoverOut:
         bounds = hoverOut;
         break;
+      case null:
       case LottieAnimationType.correct:
       case LottieAnimationType.correctOut:
       case LottieAnimationType.correctIn:
@@ -221,7 +223,7 @@ class LottieTilePuzzleAnimation extends LottieAnimation {
   /// Bounds for animation when slides vertically in milliseconds
   final Bounds slideVertical;
   @override
-  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+  double boundsByType(LottieAnimationType? type, LottieBoundType boundType) {
     Bounds bounds;
     switch (type) {
       case LottieAnimationType.iin:
@@ -243,6 +245,7 @@ class LottieTilePuzzleAnimation extends LottieAnimation {
         bounds = slideVertical;
         break;
 
+      case null:
       case LottieAnimationType.correctIn:
       case LottieAnimationType.pressed:
       case LottieAnimationType.hoverIn:
@@ -286,7 +289,7 @@ class LottieTileHintAnimation extends LottieAnimation {
   final Bounds correctIn;
 
   @override
-  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+  double boundsByType(LottieAnimationType? type, LottieBoundType boundType) {
     Bounds bounds;
     switch (type) {
       case LottieAnimationType.iin:
@@ -304,6 +307,7 @@ class LottieTileHintAnimation extends LottieAnimation {
       case LottieAnimationType.correctIn:
         bounds = correctIn;
         break;
+      case null:
       case LottieAnimationType.pressed:
       case LottieAnimationType.hoverIn:
       case LottieAnimationType.hoverOut:
@@ -342,7 +346,7 @@ class LottieStarSmallAnimation extends LottieAnimation {
   /// Bounds for animation animation !correct in milliseconds
   final Bounds correctOut;
   @override
-  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+  double boundsByType(LottieAnimationType? type, LottieBoundType boundType) {
     Bounds bounds;
     switch (type) {
       case LottieAnimationType.iin:
@@ -357,6 +361,7 @@ class LottieStarSmallAnimation extends LottieAnimation {
       case LottieAnimationType.correctOut:
         bounds = correctOut;
         break;
+      case null:
       case LottieAnimationType.pressed:
       case LottieAnimationType.hoverIn:
       case LottieAnimationType.hoverOut:
@@ -394,7 +399,7 @@ class LottieResultAnimation extends LottieAnimation {
         );
 
   @override
-  double boundsByType(LottieAnimationType type, LottieBoundType boundType) {
+  double boundsByType(LottieAnimationType? type, LottieBoundType boundType) {
     Bounds bounds;
     switch (type) {
       case LottieAnimationType.iin:
@@ -403,6 +408,7 @@ class LottieResultAnimation extends LottieAnimation {
       case LottieAnimationType.out:
         bounds = out;
         break;
+      case null:
       case LottieAnimationType.pressed:
       case LottieAnimationType.hoverIn:
       case LottieAnimationType.hoverOut:

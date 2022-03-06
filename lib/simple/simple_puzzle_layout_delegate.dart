@@ -332,6 +332,10 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
           ),
         );
 
+        // Vertical or Horizontal
+        final animation =
+            puzzleState.puzzle.getAnimationToRunOnTile(lastTappedTile);
+
         return Stack(
           children: [
             backgroundTiles,
@@ -342,6 +346,7 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 squareSize: constraints.biggest.width / widget.size,
                 spaceTile: spaceTile,
                 animationListener: () {},
+                initialAnimation: animation,
               ),
             ...squares,
           ],

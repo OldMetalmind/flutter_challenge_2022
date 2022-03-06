@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+import 'package:seletter/helpers/animations_bounds_helper.dart';
 import 'package:seletter/models/models.dart';
 
 // A 3x3 puzzle board visualization:
@@ -260,6 +261,20 @@ class Puzzle extends Equatable {
         return tileA.currentPosition.compareTo(tileB.currentPosition);
       });
     return Puzzle(tiles: sortedTiles);
+  }
+
+  /// Returns the animation that the tapped tile should run.
+  LottieAnimationType? getAnimationToRunOnTile(Tile? tappedTile) {
+    final whiteSpace = getWhitespaceTile();
+    if (tappedTile == null) {
+      return null;
+    } else if (tappedTile.currentPosition.x == whiteSpace.currentPosition.x) {
+      return LottieAnimationType.slideHorizontal;
+    } else if (tappedTile.currentPosition.y == whiteSpace.currentPosition.y) {
+      return LottieAnimationType.slideVertical;
+    }
+
+    return null;
   }
 
   @override
