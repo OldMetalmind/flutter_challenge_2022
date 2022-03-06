@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 
 // A 3x3 puzzle board visualization:
@@ -71,10 +70,9 @@ class Puzzle extends Equatable {
   bool isComplete(Map<int, String> stageWords) {
     final size = getDimension();
     final word = stageWords[size];
-    logger.wtf('size: $size ~~~~ word: $word');
 
-    var horizontal = StringBuffer();
-    var vertical = StringBuffer();
+    final horizontal = StringBuffer();
+    final vertical = StringBuffer();
 
     // Horizontal
     for (var y = 1; y <= size; y++) {

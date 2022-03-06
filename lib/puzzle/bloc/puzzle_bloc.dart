@@ -53,7 +53,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   void _onTileTapped(TileTapped event, Emitter<PuzzleState> emit) {
-    //logger.wtf('tile: ${event.tile}');
     final tappedTile = event.tile;
     if (state.puzzleStatus == PuzzleStatus.incomplete) {
       if (state.puzzle.isTileMovable(tappedTile)) {
