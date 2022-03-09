@@ -1,11 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:seletter/audio_control/audio_control.dart';
 import 'package:seletter/dashatar/dashatar.dart';
-import 'package:seletter/helpers/helpers.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/layout/layout.dart';
 import 'package:seletter/puzzle/puzzle.dart';
@@ -19,77 +14,49 @@ class DashatarCountdown extends StatefulWidget {
   /// {@macro dashatar_countdown}
   const DashatarCountdown({
     Key? key,
-    AudioPlayerFactory? audioPlayer,
-  })  : _audioPlayerFactory = audioPlayer ?? getAudioPlayer,
-        super(key: key);
-
-  final AudioPlayerFactory _audioPlayerFactory;
+  }) : super(key: key);
 
   @override
   State<DashatarCountdown> createState() => _DashatarCountdownState();
 }
 
 class _DashatarCountdownState extends State<DashatarCountdown> {
-  late final AudioPlayer _audioPlayer;
-
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = widget._audioPlayerFactory()
-      ..setAsset('assets/audio/shuffle.mp3');
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return AudioControlListener(
-      audioPlayer: _audioPlayer,
-      child: BlocListener<DashatarPuzzleBloc, DashatarPuzzleState>(
-        listener: (context, state) {
-          if (!state.isCountdownRunning) {
-            return;
-          }
+    return BlocListener<DashatarPuzzleBloc, DashatarPuzzleState>(
+      listener: (context, state) {
+        if (!state.isCountdownRunning) {
+          return;
+        }
 
-          // Play the shuffle sound when the countdown from 3 to 1 begins.
-          if (state.secondsToBegin == 3) {
-            unawaited(_audioPlayer.replay());
-          }
+        // Start the puzzle timer when the countdown finishes.
+        if (state.status == DashatarPuzzleStatus.started) {
+          context.read<TimerBloc>().add(const TimerStarted());
+        }
 
-          // Start the puzzle timer when the countdown finishes.
-          if (state.status == DashatarPuzzleStatus.started) {
-            context.read<TimerBloc>().add(const TimerStarted());
-          }
+        // Shuffle the puzzle on every countdown tick.
+        if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
+          context.read<PuzzleBloc>().add(const PuzzleReset());
+        }
+      },
+      child: ResponsiveLayoutBuilder(
+        small: (_, __) => const SizedBox(),
+        medium: (_, __) => const SizedBox(),
+        large: (_, __) => BlocBuilder<DashatarPuzzleBloc, DashatarPuzzleState>(
+          builder: (context, state) {
+            if (!state.isCountdownRunning || state.secondsToBegin > 3) {
+              return const SizedBox();
+            }
 
-          // Shuffle the puzzle on every countdown tick.
-          if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
-            context.read<PuzzleBloc>().add(const PuzzleReset());
-          }
-        },
-        child: ResponsiveLayoutBuilder(
-          small: (_, __) => const SizedBox(),
-          medium: (_, __) => const SizedBox(),
-          large: (_, __) =>
-              BlocBuilder<DashatarPuzzleBloc, DashatarPuzzleState>(
-            builder: (context, state) {
-              if (!state.isCountdownRunning || state.secondsToBegin > 3) {
-                return const SizedBox();
-              }
-
-              if (state.secondsToBegin > 0) {
-                return DashatarCountdownSecondsToBegin(
-                  key: ValueKey(state.secondsToBegin),
-                  secondsToBegin: state.secondsToBegin,
-                );
-              } else {
-                return const DashatarCountdownGo();
-              }
-            },
-          ),
+            if (state.secondsToBegin > 0) {
+              return DashatarCountdownSecondsToBegin(
+                key: ValueKey(state.secondsToBegin),
+                secondsToBegin: state.secondsToBegin,
+              );
+            } else {
+              return const DashatarCountdownGo();
+            }
+          },
         ),
       ),
     );

@@ -78,12 +78,12 @@ class _AnimateTappedTileState extends State<AnimateTappedTile>
             }
           },
         );
-    }
 
-    _controller.forward();
-    _controllerLottie
-      ..reset()
-      ..forward();
+      _controller.forward();
+      _controllerLottie
+        ..reset()
+        ..forward();
+    }
   }
 
   @override

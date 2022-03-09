@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:seletter/audio_control/audio_control.dart';
 import 'package:seletter/dashatar/dashatar.dart';
 import 'package:seletter/game/bloc/game_bloc.dart';
 import 'package:seletter/l10n/l10n.dart';
@@ -59,9 +57,6 @@ class PuzzlePage extends StatelessWidget {
           create: (_) => TimerBloc(
             ticker: const Ticker(),
           ),
-        ),
-        BlocProvider(
-          create: (_) => AudioControlBloc(),
         ),
       ],
       child: const PuzzleView(),
@@ -393,21 +388,6 @@ class PuzzleMenu extends StatelessWidget {
             themeIndex: index,
           ),
         ),
-        ResponsiveLayoutBuilder(
-          small: (_, child) => const SizedBox(),
-          medium: (_, child) => child!,
-          large: (_, child) => child!,
-          child: (currentSize) {
-            return Row(
-              children: [
-                const Gap(44),
-                AudioControl(
-                  key: audioControlKey,
-                )
-              ],
-            );
-          },
-        ),
       ],
     );
   }
@@ -539,9 +519,3 @@ final puzzleTitleKey = GlobalKey(debugLabel: 'puzzle_title');
 /// when changing a theme.
 final numberOfMovesAndTilesLeftKey =
     GlobalKey(debugLabel: 'number_of_moves_and_tiles_left');
-
-/// The global key of [AudioControl].
-///
-/// Used to animate the transition of [AudioControl]
-/// when changing a theme.
-final audioControlKey = GlobalKey(debugLabel: 'audio_control');

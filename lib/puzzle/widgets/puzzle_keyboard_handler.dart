@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:seletter/audio_control/audio_control.dart';
 import 'package:seletter/dashatar/dashatar.dart';
-import 'package:seletter/helpers/helpers.dart';
 import 'package:seletter/models/models.dart';
 import 'package:seletter/puzzle/puzzle.dart';
 import 'package:seletter/theme/theme.dart';
@@ -20,16 +15,12 @@ class PuzzleKeyboardHandler extends StatefulWidget {
   const PuzzleKeyboardHandler({
     Key? key,
     required this.child,
-    AudioPlayerFactory? audioPlayer,
-  })  : _audioPlayerFactory = audioPlayer ?? getAudioPlayer,
-        super(key: key);
+  }) : super(key: key);
 
   /// The widget below this widget in the tree.
   ///
   /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
-
-  final AudioPlayerFactory _audioPlayerFactory;
 
   @override
   State createState() => _PuzzleKeyboardHandlerState();
@@ -38,22 +29,6 @@ class PuzzleKeyboardHandler extends StatefulWidget {
 class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   // The node used to request the keyboard focus.
   final FocusNode _focusNode = FocusNode();
-
-  late final AudioPlayer _audioPlayer;
-
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = widget._audioPlayerFactory()
-      ..setAsset('assets/audio/tile_move.mp3');
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    _focusNode.dispose();
-    super.dispose();
-  }
 
   void _handleKeyEvent(RawKeyEvent event) {
     final theme = context.read<ThemeBloc>().state.theme;
@@ -81,26 +56,22 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
       if (tile != null) {
         context.read<PuzzleBloc>().add(TileTapped(tile));
-        unawaited(_audioPlayer.replay());
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return AudioControlListener(
-      audioPlayer: _audioPlayer,
-      child: RawKeyboardListener(
-        focusNode: _focusNode,
-        onKey: _handleKeyEvent,
-        child: Builder(
-          builder: (context) {
-            if (!_focusNode.hasFocus) {
-              FocusScope.of(context).requestFocus(_focusNode);
-            }
-            return widget.child;
-          },
-        ),
+    return RawKeyboardListener(
+      focusNode: _focusNode,
+      onKey: _handleKeyEvent,
+      child: Builder(
+        builder: (context) {
+          if (!_focusNode.hasFocus) {
+            FocusScope.of(context).requestFocus(_focusNode);
+          }
+          return widget.child;
+        },
       ),
     );
   }

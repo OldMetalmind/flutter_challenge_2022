@@ -1,9 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:seletter/audio_control/audio_control.dart';
 import 'package:seletter/helpers/helpers.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/typography/typography.dart';
@@ -82,9 +78,7 @@ class DashatarShareButton extends StatefulWidget {
     required this.title,
     required this.icon,
     required this.color,
-    AudioPlayerFactory? audioPlayer,
-  })  : _audioPlayerFactory = audioPlayer ?? getAudioPlayer,
-        super(key: key);
+  }) : super(key: key);
 
   /// Called when the button is tapped or otherwise activated.
   final VoidCallback onPressed;
@@ -98,74 +92,53 @@ class DashatarShareButton extends StatefulWidget {
   /// The color of this button.
   final Color color;
 
-  final AudioPlayerFactory _audioPlayerFactory;
-
   @override
   State<DashatarShareButton> createState() => _DashatarShareButtonState();
 }
 
 class _DashatarShareButtonState extends State<DashatarShareButton> {
-  late final AudioPlayer _audioPlayer;
-
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = widget._audioPlayerFactory()
-      ..setAsset('assets/audio/click.mp3');
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return AudioControlListener(
-      audioPlayer: _audioPlayer,
-      child: Container(
-        height: 56,
-        decoration: BoxDecoration(
-          border: Border.all(color: widget.color),
-          borderRadius: BorderRadius.circular(32),
+    return Container(
+      height: 56,
+      decoration: BoxDecoration(
+        border: Border.all(color: widget.color),
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          primary: widget.color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+          ),
+          backgroundColor: Colors.transparent,
         ),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-            primary: widget.color,
-            shape: RoundedRectangleBorder(
+        onPressed: () async {
+          widget.onPressed();
+        },
+        child: Row(
+          children: [
+            const Gap(12),
+            ClipRRect(
               borderRadius: BorderRadius.circular(32),
+              child: Container(
+                alignment: Alignment.center,
+                width: 32,
+                height: 32,
+                color: widget.color,
+                child: widget.icon,
+              ),
             ),
-            backgroundColor: Colors.transparent,
-          ),
-          onPressed: () async {
-            widget.onPressed();
-            unawaited(_audioPlayer.replay());
-          },
-          child: Row(
-            children: [
-              const Gap(12),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(32),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 32,
-                  height: 32,
-                  color: widget.color,
-                  child: widget.icon,
-                ),
+            const Gap(10),
+            Text(
+              widget.title,
+              style: PuzzleTextStyle.headline5.copyWith(
+                color: widget.color,
               ),
-              const Gap(10),
-              Text(
-                widget.title,
-                style: PuzzleTextStyle.headline5.copyWith(
-                  color: widget.color,
-                ),
-              ),
-              const Gap(24),
-            ],
-          ),
+            ),
+            const Gap(24),
+          ],
         ),
       ),
     );
