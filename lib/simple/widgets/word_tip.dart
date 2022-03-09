@@ -43,6 +43,7 @@ class WordLetter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PuzzleHint(
+      key: UniqueKey(),
       letter: letter,
       animation: LottieAnimations.tileHint,
     );

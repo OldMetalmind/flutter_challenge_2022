@@ -24,6 +24,7 @@ class Stars extends StatelessWidget {
             ...List.generate(
               numberOfStages,
               (index) => Star(
+                key: UniqueKey(),
                 active: index <= (stage - state.initialStage),
                 animation: LottieAnimations.starSmall,
               ),
