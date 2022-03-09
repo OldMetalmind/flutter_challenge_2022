@@ -14,8 +14,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:seletter/helpers/helpers.dart';
+import 'package:seletter/helpers/navigator_helper.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/puzzle/puzzle.dart';
+import 'package:seletter/ui/finish/finish_page.dart';
 import 'package:seletter/ui/home/home_page.dart';
 
 class App extends StatefulWidget {
@@ -208,10 +210,11 @@ class _AppState extends State<App> {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      initialRoute: '/',
+      initialRoute: pageHome,
       routes: {
-        '/': (context) => const HomePage(),
-        '/game': (context) => const PuzzlePage(),
+        pageHome: (context) => const HomePage(),
+        pageGame: (context) => const PuzzlePage(),
+        pageFinish: (context) => const FinishPage(),
       },
     );
   }

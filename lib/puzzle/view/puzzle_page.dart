@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:seletter/dashatar/dashatar.dart';
 import 'package:seletter/game/bloc/game_bloc.dart';
+import 'package:seletter/helpers/navigator_helper.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/layout/layout.dart';
 import 'package:seletter/models/models.dart';
@@ -174,7 +175,7 @@ class _PuzzleState extends State<_Puzzle> {
                           padding: const EdgeInsets.only(top: 48),
                           child: Column(
                             children: [
-                              const PuzzleWordTitle(),
+                              const PuzzleWordTitle('Find the word'),
                               const SizedBox(height: 16),
                               if (gameState.isEasyModeActivated)
                                 const WordTip(),
@@ -208,12 +209,12 @@ class _PuzzleState extends State<_Puzzle> {
                                   text: 'I Quit',
                                   onTap: () {
                                     context
-                                        .read<GameBloc>()
-                                        .add(const GameResetEvent());
-                                    context
                                         .read<PuzzleBloc>()
                                         .add(const PuzzleReset());
-                                    Navigator.pop(context);
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      pageFinish,
+                                    );
                                   },
                                 ),
                               //const DemoAnimations(),

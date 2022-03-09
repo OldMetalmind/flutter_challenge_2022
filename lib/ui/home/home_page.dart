@@ -4,6 +4,7 @@ import 'package:provider/src/provider.dart';
 import 'package:seletter/assets/constants.dart';
 import 'package:seletter/game/bloc/game_bloc.dart';
 import 'package:seletter/helpers/animations_bounds_helper.dart';
+import 'package:seletter/helpers/navigator_helper.dart';
 import 'package:seletter/simple/widgets/puzzle_button_primary.dart';
 import 'package:seletter/simple/widgets/puzzle_button_secondary.dart';
 import 'package:seletter/simple/widgets/puzzle_empty_tile.dart';
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
               PuzzleButtonPrimary(
                 text: 'PLAY NOW',
                 onTap: () {
-                  Navigator.pushNamed(context, '/game');
+                  Navigator.pushNamed(context, pageGame);
                 },
               ),
               const SizedBox(height: 18),
