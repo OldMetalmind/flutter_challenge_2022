@@ -71,33 +71,36 @@ class _PuzzleButtonBaseState extends State<PuzzleButtonBase>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: MouseRegion(
-        onEnter: (event) {
-          setState(() {
-            _animate(LottieAnimationType.hoverIn);
-          });
-        },
-        onExit: (event) {
-          setState(() {
-            _animate(LottieAnimationType.hoverOut);
-          });
-        },
-        child: Lottie.asset(
-          widget.animation.lottieFile,
-          animate: true,
-          frameRate: FrameRate.max,
-          controller: _animationController,
-          delegates: LottieDelegates(
-            text: (initialText) => widget.text.toUpperCase(),
-            textStyle: (lottie) {
-              return const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Rubik',
-                color: Color(0xff6B6B6B),
-              );
-            },
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: MouseRegion(
+          onEnter: (event) {
+            setState(() {
+              _animate(LottieAnimationType.hoverIn);
+            });
+          },
+          onExit: (event) {
+            setState(() {
+              _animate(LottieAnimationType.hoverOut);
+            });
+          },
+          child: Lottie.asset(
+            widget.animation.lottieFile,
+            animate: true,
+            frameRate: FrameRate.max,
+            controller: _animationController,
+            delegates: LottieDelegates(
+              text: (initialText) => widget.text.toUpperCase(),
+              textStyle: (lottie) {
+                return const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Rubik',
+                  color: Color(0xff6B6B6B),
+                );
+              },
+            ),
           ),
         ),
       ),
