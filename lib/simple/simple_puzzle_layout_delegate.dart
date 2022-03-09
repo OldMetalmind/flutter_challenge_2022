@@ -341,6 +341,7 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
             backgroundTiles,
             if (lastTappedTile != null)
               AnimateTappedTile(
+                key: UniqueKey(),
                 tile: lastTappedTile,
                 position: lastTappedTile.currentPosition,
                 squareSize: constraints.biggest.width / widget.size,
