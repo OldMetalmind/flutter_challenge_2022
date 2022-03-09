@@ -328,7 +328,7 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
           crossAxisCount: puzzleState.puzzle.getDimension(),
           children: List.generate(
             puzzleState.puzzle.tiles.length,
-            (index) => const PuzzleEmptyTile(),
+            (index) => PuzzleEmptyTile(key: UniqueKey()),
           ),
         );
 

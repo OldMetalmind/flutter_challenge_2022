@@ -72,6 +72,7 @@ class _PuzzleHintState extends State<PuzzleHint> with TickerProviderStateMixin {
           return TextStyle(
             fontWeight: FontWeight.w700,
             fontFamily: font.fontFamily,
+            fontSize: 30,
           );
         },
         values: [
