@@ -36,7 +36,9 @@ import 'package:seletter/models/models.dart';
 /// {@endtemplate}
 class Puzzle extends Equatable {
   /// {@macro puzzle}
-  const Puzzle({required this.tiles});
+  const Puzzle({
+    required this.tiles,
+  });
 
   /// List of [Tile]s representing the puzzle's current arrangement.
   final List<Tile> tiles;
@@ -64,6 +66,11 @@ class Puzzle extends Equatable {
           tile.currentPosition.y ==
               whitespaceTile.currentPosition.y + relativeOffset.dy,
     );
+  }
+
+  /// Get the positions with the correct word
+  List<Position> getCorrectPositions(Map<int, String> stageWords) {
+    return [];
   }
 
   /// Determines if the puzzle is completed. By determining if the words is

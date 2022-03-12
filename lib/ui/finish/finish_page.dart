@@ -7,7 +7,7 @@ import 'package:seletter/simple/widgets/puzzle_word_title.dart';
 import 'package:seletter/simple/widgets/stars.dart';
 import 'package:seletter/ui/finish/finish_completed_words.dart';
 
-/// Page the user sees when he sucessfully finish a game
+/// Page the user sees when he successfully finish a game
 class FinishPage extends StatelessWidget {
   /// Main constructor
   const FinishPage({Key? key}) : super(key: key);

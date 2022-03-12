@@ -82,7 +82,7 @@ abstract class GameState extends Equatable {
   }
 
   /// Determines if the user has reach the final level
-  bool isGameFinished() => currentStage - initialStage == numberOfStages;
+  bool isGameFinished() => currentStage + 1 >= numberOfStages + initialStage;
 
   @override
   List<Object?> get props => [

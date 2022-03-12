@@ -5,6 +5,7 @@ import 'package:seletter/game/bloc/game_bloc.dart';
 import 'package:seletter/helpers/navigator_helper.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/layout/layout.dart';
+import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 import 'package:seletter/puzzle/puzzle.dart';
 import 'package:seletter/simple/simple.dart';
@@ -251,6 +252,8 @@ class _PuzzleState extends State<_Puzzle> {
   }
 
   bool isGameFinished(PuzzleState state, GameState gameState) {
+    logger.wtf(
+        'status: ${state.puzzleStatus}\n isGameFinished: ${gameState.isGameFinished()}');
     return state.puzzleStatus == PuzzleStatus.complete &&
         gameState.isGameFinished();
   }

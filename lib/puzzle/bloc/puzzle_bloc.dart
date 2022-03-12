@@ -61,7 +61,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         if (puzzle.isComplete(_gameWords)) {
           emit(
             state.copyWith(
-              puzzle: puzzle.sort(),
+              //puzzle: puzzle.sort(),
               puzzleStatus: PuzzleStatus.complete,
               tileMovementStatus: TileMovementStatus.moved,
               numberOfMoves: state.numberOfMoves + 1,

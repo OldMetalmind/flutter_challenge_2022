@@ -340,6 +340,10 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
           children: [
             backgroundTiles,
             ...squares,
+            if (puzzleState.puzzleStatus == PuzzleStatus.complete)
+              Container(
+                color: Colors.green,
+              ),
             if (lastTappedTile != null &&
                 puzzleState.puzzleStatus == PuzzleStatus.incomplete)
               AnimateTappedTile(
