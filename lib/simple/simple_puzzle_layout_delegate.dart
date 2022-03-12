@@ -339,7 +339,9 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
         return Stack(
           children: [
             backgroundTiles,
-            if (lastTappedTile != null)
+            ...squares,
+            if (lastTappedTile != null &&
+                puzzleState.puzzleStatus == PuzzleStatus.incomplete)
               AnimateTappedTile(
                 key: UniqueKey(),
                 tile: lastTappedTile,
@@ -349,7 +351,6 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 animationListener: () {},
                 initialAnimation: animation,
               ),
-            ...squares,
           ],
         );
       },

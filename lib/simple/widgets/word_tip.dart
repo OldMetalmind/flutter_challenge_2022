@@ -16,6 +16,9 @@ class WordTip extends StatelessWidget {
           previous.currentStage != current.currentStage,
       builder: (context, state) {
         final word = context.watch<GameBloc>().state.getCurrentWord();
+        if (word == null) {
+          return Container();
+        }
         final tip =
             word.split('').map((letter) => WordLetter(letter: letter)).toList();
         return Row(

@@ -54,7 +54,10 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
         tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(1, 0));
       }
 
-      if (tile != null) {
+      final state = context.read<PuzzleBloc>().state;
+      final isIncomplete = state.puzzleStatus == PuzzleStatus.incomplete;
+
+      if (tile != null && isIncomplete) {
         context.read<PuzzleBloc>().add(TileTapped(tile));
       }
     }

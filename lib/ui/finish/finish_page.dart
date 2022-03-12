@@ -26,7 +26,7 @@ class FinishPage extends StatelessWidget {
                 );
               } else {
                 return const _FinishPageContent(
-                  title: "You didn't all the words!",
+                  title: "You didn't found all the words!",
                   subtitle: 'Try again with the next set of words.',
                 );
               }

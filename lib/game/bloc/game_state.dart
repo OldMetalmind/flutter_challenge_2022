@@ -76,9 +76,9 @@ abstract class GameState extends Equatable {
   String _getStageWord(int current) => gameWords[current] ?? '';
 
   /// Returns the word that is the goal for the current puzzle
-  String getCurrentWord() {
-    assert(gameWords[currentStage] != null, 'Should always exist a word');
-    return gameWords[currentStage] ?? '';
+  String? getCurrentWord() {
+    //assert(gameWords[currentStage] != null, 'Should always exist a word');
+    return gameWords[currentStage];
   }
 
   /// Determines if the user has reach the final level
