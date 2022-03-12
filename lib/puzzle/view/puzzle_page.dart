@@ -254,7 +254,7 @@ class _PuzzleState extends State<_Puzzle> {
 
   bool isGameFinished(PuzzleState state, GameState gameState) {
     return state.puzzleStatus == PuzzleStatus.complete &&
-        gameState.currentStage == gameState.numberOfStages;
+        gameState.isGameFinished();
   }
 }
 
