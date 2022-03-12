@@ -31,7 +31,7 @@ class Stars extends StatelessWidget {
               numberOfStages,
               (index) => Star(
                 key: UniqueKey(),
-                active: index <= (stage - state.initialStage),
+                active: index < (stage - state.initialStage),
                 animation: LottieAnimations.starSmall,
                 scale: scale,
               ),
