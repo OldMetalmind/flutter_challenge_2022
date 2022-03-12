@@ -17,7 +17,7 @@ class FinishCompletedWords extends StatelessWidget {
           children: [
             ...state.gameWords.entries.map<Widget>(
               (entry) {
-                final wasFound = entry.key < state.currentStage;
+                final wasFound = entry.key <= state.currentStage;
                 final word = entry.value;
                 return _FinishCompletedWord(
                   word: word,

@@ -25,13 +25,9 @@ class FinishPage extends StatelessWidget {
                   subtitle: 'You found all the words.',
                 );
               } else {
-                return Column(
-                  children: const [
-                    _FinishPageContent(
-                      title: "You didn't all the words!",
-                      subtitle: 'Try again with the next set of words.',
-                    ),
-                  ],
+                return const _FinishPageContent(
+                  title: "You didn't all the words!",
+                  subtitle: 'Try again with the next set of words.',
                 );
               }
             },
@@ -69,6 +65,7 @@ class _FinishPageContent extends StatelessWidget {
                     PuzzleWordTitle('Played in HardMode!'),
                   ],
                 ),
+              const SizedBox(height: 50),
               const FinishCompletedWords(),
               const SizedBox(height: 50),
               const Stars(

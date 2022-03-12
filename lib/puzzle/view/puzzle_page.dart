@@ -186,22 +186,20 @@ class _PuzzleState extends State<_Puzzle> {
                               if (showNextStageButton)
                                 PuzzleButtonPrimary(
                                   //TODO(FB) Move to IntL,
-                                  text: 'Next',
+                                  text: isGameFinished(state, gameState)
+                                      ? 'Finished!'
+                                      : 'Next',
                                   onTap: () {
                                     setState(() {
                                       showNextStageButton =
                                           !showNextStageButton;
                                     });
 
-                                    context.read<GameBloc>().add(
-                                          NextStageGameEvent(),
-                                        );
-
-                                    context.read<PuzzleBloc>().add(
-                                          PuzzleNextStageEvent(
-                                            gameState.currentStage,
-                                          ),
-                                        );
+                                    if (isGameFinished(state, gameState)) {
+                                      navigateToFinishPage(context);
+                                    } else {
+                                      navigateToNextStage(context, gameState);
+                                    }
                                   },
                                 ),
                               if (!showNextStageButton)
@@ -233,6 +231,30 @@ class _PuzzleState extends State<_Puzzle> {
         );
       },
     );
+  }
+
+  void navigateToNextStage(BuildContext context, GameState gameState) {
+    context.read<GameBloc>().add(
+          NextStageGameEvent(),
+        );
+
+    context.read<PuzzleBloc>().add(
+          PuzzleNextStageEvent(
+            gameState.currentStage,
+          ),
+        );
+  }
+
+  void navigateToFinishPage(BuildContext context) {
+    context.read<GameBloc>().add(
+          FinishedGameEvent(),
+        );
+    Navigator.pushReplacementNamed(context, pageFinish);
+  }
+
+  bool isGameFinished(PuzzleState state, GameState gameState) {
+    return state.puzzleStatus == PuzzleStatus.complete &&
+        gameState.currentStage == gameState.numberOfStages;
   }
 }
 
