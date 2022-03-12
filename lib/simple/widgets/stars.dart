@@ -8,7 +8,13 @@ import 'package:seletter/helpers/animations_bounds_helper.dart';
 /// Row of stars representing the current level of the puzze
 class Stars extends StatelessWidget {
   /// Default constructor
-  const Stars({Key? key}) : super(key: key);
+  const Stars({
+    Key? key,
+    this.scale,
+  }) : super(key: key);
+
+  /// When we want to set a different size than the default
+  final double? scale;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,7 @@ class Stars extends StatelessWidget {
                 key: UniqueKey(),
                 active: index <= (stage - state.initialStage),
                 animation: LottieAnimations.starSmall,
+                scale: scale,
               ),
             )
           ],
@@ -44,6 +51,7 @@ class Star extends StatefulWidget {
     required this.active,
     required this.animation,
     this.initialAnimation = LottieAnimationType.iin,
+    this.scale,
   }) : super(key: key);
 
   /// True case the Star is active
@@ -57,6 +65,9 @@ class Star extends StatefulWidget {
   /// Default: LottieAnimationType.iin
   ///
   final LottieAnimationType initialAnimation;
+
+  /// When we want to set a different size than the default
+  final double? scale;
 
   @override
   State<Star> createState() => _StarState();
@@ -91,11 +102,17 @@ class _StarState extends State<Star> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Lottie.asset(
-      widget.animation.lottieFile,
-      animate: true,
-      frameRate: FrameRate.max,
-      controller: _animationController,
+    return Padding(
+      padding: EdgeInsets.all(widget.scale == null ? 0 : 20),
+      child: Transform.scale(
+        scale: widget.scale ?? 1,
+        child: Lottie.asset(
+          widget.animation.lottieFile,
+          animate: true,
+          frameRate: FrameRate.max,
+          controller: _animationController,
+        ),
+      ),
     );
   }
 }

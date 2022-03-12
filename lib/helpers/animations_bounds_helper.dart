@@ -468,10 +468,10 @@ class LottieAnimations {
   static const tileHint = LottieTileHintAnimation(
     iin: Bounds(0, 1000),
     out: Bounds(1000, 2000),
-    correctOut: Bounds(3000, 4000),
-    correctIn: Bounds(4000, 5000),
-    correct: Bounds(5000, 6000),
-    max: 6000,
+    correct: Bounds(3000, 4000),
+    correctOut: Bounds(4000, 5000),
+    correctIn: Bounds(6000, 7000),
+    max: 7000,
   );
 
   /// Start Small
