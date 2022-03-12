@@ -66,7 +66,10 @@ abstract class GameState extends Equatable {
 
   /// Copy the current finished stage
   StageCompleteState copyStageCompleteState(int current) {
-    return StageCompleteState(gameWords, current);
+    return StageCompleteState(
+      gameWords,
+      current,
+    );
   }
 
   /// Get the current word for the puzzle

@@ -209,10 +209,8 @@ class _PuzzleState extends State<_Puzzle> {
                                     context
                                         .read<PuzzleBloc>()
                                         .add(const PuzzleReset());
-                                    Navigator.pushReplacementNamed(
-                                      context,
-                                      pageFinish,
-                                    );
+
+                                    PuzzleNavigator.navigateToFinish(context);
                                   },
                                 ),
                               //const DemoAnimations(),
@@ -249,7 +247,7 @@ class _PuzzleState extends State<_Puzzle> {
     context.read<GameBloc>().add(
           FinishedGameEvent(),
         );
-    Navigator.pushReplacementNamed(context, pageFinish);
+    PuzzleNavigator.navigateToFinish(context);
   }
 
   bool isGameFinished(PuzzleState state, GameState gameState) {

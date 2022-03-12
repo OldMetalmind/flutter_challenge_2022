@@ -76,7 +76,7 @@ class _FinishPageContent extends StatelessWidget {
                 text: 'Play Again',
                 onTap: () {
                   context.read<GameBloc>().add(const GameResetEvent());
-                  Navigator.pushReplacementNamed(context, pageHome);
+                  PuzzleNavigator.navigateToHome(context);
                 },
               ),
             ],

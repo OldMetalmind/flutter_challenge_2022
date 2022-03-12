@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
               PuzzleButtonPrimary(
                 text: 'PLAY NOW',
                 onTap: () {
-                  Navigator.pushNamed(context, pageGame);
+                  PuzzleNavigator.navigateToGame(context);
                 },
               ),
               const SizedBox(height: 18),
