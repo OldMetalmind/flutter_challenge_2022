@@ -6,7 +6,6 @@ import 'package:seletter/colors/colors.dart';
 import 'package:seletter/helpers/animations_bounds_helper.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/layout/layout.dart';
-import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 import 'package:seletter/puzzle/puzzle.dart';
 import 'package:seletter/simple/simple.dart';
@@ -452,15 +451,6 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
       end: 1,
     ).animate(_controllerOpacity);
     _controllerOpacity.forward();
-
-    if (widget.initialAnimation != LottieAnimationType.iin) {
-      logger.wtf(
-        '''
-      Correct Position
-      tile: ${widget.tile}
-       ''',
-      );
-    }
   }
 
   @override
