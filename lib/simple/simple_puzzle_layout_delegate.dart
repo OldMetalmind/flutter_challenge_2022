@@ -6,7 +6,6 @@ import 'package:seletter/colors/colors.dart';
 import 'package:seletter/helpers/animations_bounds_helper.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/layout/layout.dart';
-import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 import 'package:seletter/puzzle/puzzle.dart';
 import 'package:seletter/simple/simple.dart';
@@ -140,24 +139,44 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
 
   @override
   Widget tileBuilder(Tile tile, PuzzleState state) {
+    final correctPositions = state.correctPositions;
+    final hasBeenFound = correctPositions.contains(
+      Position(
+        x: tile.currentPosition.y,
+        y: tile.currentPosition.x,
+      ),
+    );
+    if (correctPositions.isNotEmpty) {
+      print('$hasBeenFound \t- ${tile.currentPosition} - $correctPositions ');
+    }
+
     return ResponsiveLayoutBuilder(
       small: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_small'),
         tile: tile,
         tileFontSize: _TileFontSize.small,
         state: state,
+        initialAnimation: hasBeenFound
+            ? LottieAnimationType.correctIn
+            : LottieAnimationType.iin,
       ),
       medium: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_medium'),
         tile: tile,
         tileFontSize: _TileFontSize.medium,
         state: state,
+        initialAnimation: hasBeenFound
+            ? LottieAnimationType.correct
+            : LottieAnimationType.iin,
       ),
       large: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_large'),
         tile: tile,
         tileFontSize: _TileFontSize.large,
         state: state,
+        initialAnimation: hasBeenFound
+            ? LottieAnimationType.correct
+            : LottieAnimationType.iin,
       ),
     );
   }
@@ -298,13 +317,7 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
       builder: (BuildContext context, BoxConstraints constraints) {
         final parentWidth = constraints.maxWidth;
         final tileWidth = parentWidth / widget.size;
-
         final squares = <Widget>[];
-
-        final correctPositions = puzzleState.correctPositions;
-        if (correctPositions.isNotEmpty) {
-          logger.w(puzzleState.correctPositions);
-        }
 
         var count = 0;
         final ite = widget.tiles.iterator;
@@ -428,8 +441,10 @@ class SimplePuzzleTile extends StatefulWidget {
 class _SimplePuzzleTileState extends State<SimplePuzzleTile>
     with TickerProviderStateMixin {
   late AnimationController _controllerLottie;
-
   late LottieAnimationType _currentAnimation;
+
+  late AnimationController _controllerOpacity;
+  late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
@@ -442,65 +457,66 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
       upperBound: widget.animation.upperBoundByType(_currentAnimation),
     );
     _controllerLottie.forward();
+
+    _controllerOpacity = AnimationController(
+      vsync: this,
+      duration: globalAnimationDuration,
+    );
+    _opacityAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(_controllerOpacity);
+    _controllerOpacity.forward();
   }
 
   @override
   void dispose() {
     _controllerLottie.dispose();
+    _controllerOpacity.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-
-    return TextButton(
-      style: TextButton.styleFrom(
-        primary: PuzzleColors.white,
-        textStyle: PuzzleTextStyle.headline2.copyWith(
-          fontSize: widget.tileFontSize,
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
+    return FadeTransition(
+      opacity: _opacityAnimation,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          primary: PuzzleColors.white,
+          textStyle: PuzzleTextStyle.headline2.copyWith(
+            fontSize: widget.tileFontSize,
           ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+        ).copyWith(
+          foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
         ),
-      ).copyWith(
-        foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
-        // backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-        //   (states) {
-        //     if (widget.tile.value == widget.state.lastTappedTile?.value) {
-        //       return theme.pressedColor;
-        //     } else if (states.contains(MaterialState.hovered)) {
-        //       return theme.hoverColor;
-        //     } else {
-        //       return theme.defaultColor;
-        //     }
-        //   },
-        // ),
-      ),
-      onPressed: widget.state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(
-                TileTapped(widget.tile),
-              )
-          : null,
-      child: Lottie.asset(
-        widget.animation.lottieFile,
-        animate: false,
-        fit: BoxFit.fill,
-        height: 200,
-        width: 200,
-        frameRate: FrameRate.max,
-        controller: _controllerLottie,
-        delegates: LottieDelegates(
-          text: (initialText) => widget.tile.letter,
-          textStyle: (lottie) {
-            return const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Rubik',
-              color: Color(0xff6B6B6B),
-            );
-          },
+        onPressed: widget.state.puzzleStatus == PuzzleStatus.incomplete
+            ? () => context.read<PuzzleBloc>().add(
+                  TileTapped(widget.tile),
+                )
+            : null,
+        child: Lottie.asset(
+          widget.animation.lottieFile,
+          animate: false,
+          fit: BoxFit.fill,
+          height: 200,
+          width: 200,
+          frameRate: FrameRate.max,
+          controller: _controllerLottie,
+          delegates: LottieDelegates(
+            text: (initialText) => widget.tile.letter,
+            textStyle: (lottie) {
+              return const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Rubik',
+                color: Color(0xff6B6B6B),
+              );
+            },
+          ),
         ),
       ),
     );
