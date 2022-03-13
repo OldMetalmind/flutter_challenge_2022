@@ -82,6 +82,17 @@ abstract class GameState extends Equatable {
     );
   }
 
+  StageGameState copySteps({
+    int? steps,
+  }) {
+    return StageGameState(
+      currentStage,
+      _getStageWord(currentStage),
+      words: gameWords,
+      totalSteps: steps ?? totalSteps,
+    );
+  }
+
   /// Get the current word for the puzzle
   String _getStageWord(int current) => gameWords[current] ?? '';
 

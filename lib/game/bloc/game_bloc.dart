@@ -55,5 +55,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         ),
       );
     });
+
+    on<GameSumUpSteps>((event, emit) {
+      final total = state.totalSteps + event.steps;
+      emit(
+        state.copySteps(
+          steps: total,
+        ),
+      );
+    });
   }
 }

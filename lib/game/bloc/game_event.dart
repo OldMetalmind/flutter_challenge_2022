@@ -58,3 +58,15 @@ class GameResetEvent extends GameEvent {
   @override
   List<Object?> get props => [];
 }
+
+/// Number of steps taken this stage
+class GameSumUpSteps extends GameEvent {
+  /// Main constructor
+  const GameSumUpSteps(this.steps);
+
+  /// Steps taken so far
+  final int steps;
+
+  @override
+  List<Object?> get props => [steps];
+}

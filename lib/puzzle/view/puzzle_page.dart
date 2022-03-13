@@ -206,10 +206,21 @@ class _PuzzleState extends State<_Puzzle> {
                                 PuzzleButtonSecondary(
                                   text: 'I Quit',
                                   onTap: () {
+                                    // Get steps taken so far and save
+                                    final steps = context
+                                        .read<PuzzleBloc>()
+                                        .state
+                                        .numberOfMoves;
+                                    context.read<GameBloc>().add(
+                                          GameSumUpSteps(steps),
+                                        );
+
+                                    // Reset the stage
                                     context
                                         .read<PuzzleBloc>()
                                         .add(const PuzzleReset());
 
+                                    // Navigate to finish page
                                     PuzzleNavigator.navigateToFinish(context);
                                   },
                                 ),
