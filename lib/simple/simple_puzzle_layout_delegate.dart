@@ -153,27 +153,27 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         tile: tile,
         tileFontSize: _TileFontSize.small,
         state: state,
-        initialAnimation: inCorrectPosition
-            ? LottieAnimationType.correct
-            : LottieAnimationType.iin,
+        // initialAnimation: inCorrectPosition
+        //     ? LottieAnimationType.correct
+        //     : LottieAnimationType.iin,
       ),
       medium: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_medium'),
         tile: tile,
         tileFontSize: _TileFontSize.medium,
         state: state,
-        initialAnimation: inCorrectPosition
-            ? LottieAnimationType.correct
-            : LottieAnimationType.iin,
+        // initialAnimation: inCorrectPosition
+        //     ? LottieAnimationType.correct
+        //     : LottieAnimationType.iin,
       ),
       large: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_large'),
         tile: tile,
         tileFontSize: _TileFontSize.large,
         state: state,
-        initialAnimation: inCorrectPosition
-            ? LottieAnimationType.correct
-            : LottieAnimationType.iin,
+        // initialAnimation: inCorrectPosition
+        //     ? LottieAnimationType.correct
+        //     : LottieAnimationType.iin,
       ),
     );
   }
