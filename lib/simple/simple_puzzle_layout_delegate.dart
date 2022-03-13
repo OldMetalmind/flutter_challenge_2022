@@ -6,6 +6,7 @@ import 'package:seletter/colors/colors.dart';
 import 'package:seletter/helpers/animations_bounds_helper.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/layout/layout.dart';
+import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 import 'package:seletter/puzzle/puzzle.dart';
 import 'package:seletter/simple/simple.dart';
@@ -142,14 +143,10 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
     final correctPositions = state.correctPositions;
     final inCorrectPosition = correctPositions.contains(
       Position(
-        x: tile.currentPosition.y,
-        y: tile.currentPosition.x,
+        x: tile.currentPosition.x,
+        y: tile.currentPosition.y,
       ),
     );
-    if (correctPositions.isNotEmpty) {
-      print(
-          '$inCorrectPosition \t- ${tile.currentPosition} - $correctPositions ');
-    }
 
     return ResponsiveLayoutBuilder(
       small: (_, __) => SimplePuzzleTile(
@@ -383,19 +380,6 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
       child: tile,
     );
   }
-
-  /// Shows the tile drawn on the screen
-  Widget tileSquareSuccess(int index, int y, int x, Widget tile, double width) {
-    return Positioned(
-      top: x * width,
-      left: y * width,
-      height: width,
-      width: width,
-      child: Container(
-        color: Colors.red,
-      ),
-    );
-  }
 }
 
 abstract class _TileFontSize {
@@ -468,6 +452,15 @@ class _SimplePuzzleTileState extends State<SimplePuzzleTile>
       end: 1,
     ).animate(_controllerOpacity);
     _controllerOpacity.forward();
+
+    if (widget.initialAnimation != LottieAnimationType.iin) {
+      logger.wtf(
+        '''
+      Correct Position
+      tile: ${widget.tile}
+       ''',
+      );
+    }
   }
 
   @override

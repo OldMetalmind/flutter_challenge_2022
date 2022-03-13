@@ -69,11 +69,6 @@ class Puzzle extends Equatable {
     );
   }
 
-  /// Get the positions with the correct word
-  List<Position> getCorrectPositions(Map<int, String> stageWords) {
-    return [];
-  }
-
   /// Determines if the puzzle is completed. By determining if the words is
   /// correctly positioned
   List<Position> isComplete(Map<int, String> stageWords) {

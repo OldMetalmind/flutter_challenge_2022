@@ -178,10 +178,11 @@ class _AppState extends State<App> {
       await http.get(Uri.parse('$localAssetsPrefix$filePath'));
       return;
     }
-    throw UnimplementedError(
-      'The function `prefetchToMemory` is not implemented '
-      'for platforms other than Web.',
-    );
+    // logger.i(
+    //   '''
+    //   The function `prefetchToMemory` is not implemented for platforms other than Web.
+    //   ''',
+    // );
   }
 
   @override
