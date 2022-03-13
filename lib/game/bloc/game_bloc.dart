@@ -21,8 +21,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     });
 
     on<StageCompleteGameEvent>((event, emit) {
+      final totalStepsSoFar = event.stepsTook + state.totalSteps;
       emit(
-        state.copyStageCompleteState(state.currentStage),
+        state.copyStageCompleteState(
+          state.currentStage,
+          totalStepsSoFar,
+        ),
       );
     });
 

@@ -16,6 +16,12 @@ class NextStageGameEvent extends GameEvent {
 
 /// When the current stage is finished and ready for next stage
 class StageCompleteGameEvent extends GameEvent {
+  /// Main constructor
+  const StageCompleteGameEvent(this.stepsTook);
+
+  /// How many steps it took to finish this stage
+  final int stepsTook;
+
   @override
   List<Object?> get props => [];
 }

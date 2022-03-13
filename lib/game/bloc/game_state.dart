@@ -10,6 +10,7 @@ abstract class GameState extends Equatable {
     this.currentStage = 3,
     required this.gameWords,
     this.complete = false,
+    this.totalSteps = 0,
   });
 
   /// If the player is in easy mode, aka shows the word to be found;
@@ -44,6 +45,9 @@ abstract class GameState extends Equatable {
   /// Determines if player completed the final level
   final bool complete;
 
+  /// Total number of steps taken
+  final int totalSteps;
+
   /// Helper getter to make code more readable and obvious
   /// if hard mode is activated
   bool get isEasyModeActivated => !hardMode;
@@ -54,6 +58,7 @@ abstract class GameState extends Equatable {
     String? word,
     bool? isComplete,
     bool? isHard,
+    int? totalSteps,
   }) {
     return StageGameState(
       current,
@@ -61,14 +66,19 @@ abstract class GameState extends Equatable {
       isCompleted: isComplete ?? complete,
       words: gameWords,
       hardMode: isHard ?? hardMode,
+      totalSteps: totalSteps ?? this.totalSteps,
     );
   }
 
   /// Copy the current finished stage
-  StageCompleteState copyStageCompleteState(int current) {
+  StageCompleteState copyStageCompleteState(
+    int current,
+    int totalSteps,
+  ) {
     return StageCompleteState(
       gameWords,
       current,
+      totalSteps,
     );
   }
 
@@ -127,9 +137,11 @@ class StageCompleteState extends GameState {
   const StageCompleteState(
     Map<int, String> words,
     int current,
+    int totalSteps,
   ) : super(
           gameWords: words,
           currentStage: current,
+          totalSteps: totalSteps,
         );
 }
 
@@ -142,11 +154,13 @@ class StageGameState extends GameState {
     bool isCompleted = false,
     bool hardMode = false,
     required Map<int, String> words,
+    int totalSteps = 0,
   }) : super(
           currentStage: currentStage,
           complete: isCompleted,
           gameWords: words,
           hardMode: hardMode,
+          totalSteps: totalSteps,
         );
 
   /// Word that solves the current puzzle

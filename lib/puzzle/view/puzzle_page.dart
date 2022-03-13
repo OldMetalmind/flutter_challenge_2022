@@ -346,7 +346,9 @@ class PuzzleBoard extends StatelessWidget {
             context.read<GameBloc>().add(FinishedGameEvent());
           } else if (state.puzzleStatus == PuzzleStatus.complete &&
               !gameFinished) {
-            context.read<GameBloc>().add(StageCompleteGameEvent());
+            context.read<GameBloc>().add(
+                  StageCompleteGameEvent(state.numberOfMoves),
+                );
           }
           if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.complete) {
             context.read<TimerBloc>().add(const TimerStopped());

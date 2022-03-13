@@ -58,13 +58,11 @@ class _FinishPageContent extends StatelessWidget {
             children: [
               PuzzleWordTitle(title),
               PuzzleWordTitle(subtitle),
-              if (state.hardMode)
-                Column(
-                  children: const [
-                    SizedBox(height: 20),
-                    PuzzleWordTitle('Played in HardMode!'),
-                  ],
-                ),
+              const SizedBox(height: 16),
+              _StepsTakenWidget(
+                totalSteps: state.totalSteps,
+                isHardMode: state.hardMode,
+              ),
               const SizedBox(height: 50),
               const FinishCompletedWords(),
               const SizedBox(height: 50),
@@ -83,6 +81,72 @@ class _FinishPageContent extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// Shows the total number of steps taken to complete the game and also if it
+/// was in hard mode!
+class _StepsTakenWidget extends StatelessWidget {
+  /// Main constructor
+  const _StepsTakenWidget({
+    Key? key,
+    required this.totalSteps,
+    this.isHardMode = false,
+  }) : super(key: key);
+
+  /// total steps needed to complete the game
+  final int totalSteps;
+
+  /// If game completed in hardmode
+  final bool isHardMode;
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: 'You took',
+        style: const TextStyle(
+          fontFamily: 'Rubik',
+          fontWeight: FontWeight.bold,
+          fontSize: 30,
+          color: Color(0xFF949494),
+        ),
+        children: [
+          TextSpan(
+            text: ' $totalSteps ',
+            style: const TextStyle(
+              fontFamily: 'Rubik',
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+              color: Color(0xFF49D737),
+            ),
+          ),
+          TextSpan(
+            text: 'steps',
+            style: getTextStyle(),
+          ),
+          if (isHardMode)
+            TextSpan(
+              text: ', on hard mode!',
+              style: getTextStyle(),
+            )
+          else
+            TextSpan(
+              text: '.',
+              style: getTextStyle(),
+            ),
+        ],
+      ),
+    );
+  }
+
+  TextStyle getTextStyle() {
+    return const TextStyle(
+      fontFamily: 'Rubik',
+      fontWeight: FontWeight.bold,
+      fontSize: 30,
+      color: Color(0xFF949494),
     );
   }
 }
