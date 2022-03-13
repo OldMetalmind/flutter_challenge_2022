@@ -6,6 +6,7 @@ import 'package:seletter/colors/colors.dart';
 import 'package:seletter/helpers/animations_bounds_helper.dart';
 import 'package:seletter/l10n/l10n.dart';
 import 'package:seletter/layout/layout.dart';
+import 'package:seletter/main.dart';
 import 'package:seletter/models/models.dart';
 import 'package:seletter/puzzle/puzzle.dart';
 import 'package:seletter/simple/simple.dart';
@@ -336,14 +337,14 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
         final animation =
             puzzleState.puzzle.getAnimationToRunOnTile(lastTappedTile);
 
+        logger.wtf(puzzleState.correctPositions);
+
         return Stack(
           children: [
             backgroundTiles,
             ...squares,
             if (puzzleState.puzzleStatus == PuzzleStatus.complete)
-              Container(
-                color: Colors.green,
-              ),
+              const SizedBox(),
             if (lastTappedTile != null &&
                 puzzleState.puzzleStatus == PuzzleStatus.incomplete)
               AnimateTappedTile(

@@ -14,6 +14,7 @@ class PuzzleState extends Equatable {
     this.numberOfMoves = 0,
     this.lastTappedTile,
     this.previousSpace,
+    this.correctPositions = const [],
   });
 
   /// [Puzzle] containing the current tile arrangement.
@@ -41,6 +42,9 @@ class PuzzleState extends Equatable {
   /// Previous location of the whiteSpace tile.
   final Tile? previousSpace;
 
+  /// When user finds the word, these are the position of the word letters
+  final List<Position> correctPositions;
+
   PuzzleState copyWith({
     Puzzle? puzzle,
     PuzzleStatus? puzzleStatus,
@@ -48,6 +52,7 @@ class PuzzleState extends Equatable {
     int? numberOfMoves,
     Tile? lastTappedTile,
     Tile? previousSpace,
+    List<Position>? correctPositions,
   }) {
     return PuzzleState(
       puzzle: puzzle ?? this.puzzle,
@@ -56,6 +61,7 @@ class PuzzleState extends Equatable {
       numberOfMoves: numberOfMoves ?? this.numberOfMoves,
       lastTappedTile: lastTappedTile ?? this.lastTappedTile,
       previousSpace: previousSpace ?? this.previousSpace,
+      correctPositions: correctPositions ?? this.correctPositions,
     );
   }
 

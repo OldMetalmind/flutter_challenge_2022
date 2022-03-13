@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:seletter/helpers/animations_bounds_helper.dart';
 import 'package:seletter/models/models.dart';
 
@@ -75,21 +76,26 @@ class Puzzle extends Equatable {
 
   /// Determines if the puzzle is completed. By determining if the words is
   /// correctly positioned
-  bool isComplete(Map<int, String> stageWords) {
+  List<Position> isComplete(Map<int, String> stageWords) {
     final size = getDimension();
     final word = stageWords[size];
 
     final horizontal = StringBuffer();
     final vertical = StringBuffer();
 
+    final correctPosition = <Position>[];
+
     // Horizontal
     for (var y = 1; y <= size; y++) {
       for (var x = 1; x <= size; x++) {
         horizontal.write(getLetterByPosition(x, y));
+        correctPosition.add(Position(x: x, y: y));
+
+        if (horizontal.toString() == word) {
+          return correctPosition;
+        }
       }
-      if (horizontal.toString() == word) {
-        return true;
-      }
+      correctPosition.clear();
       horizontal.clear();
     }
 
@@ -97,14 +103,17 @@ class Puzzle extends Equatable {
     for (var x = 1; x <= size; x++) {
       for (var y = 1; y <= size; y++) {
         vertical.write(getLetterByPosition(x, y));
+        correctPosition.add(Position(x: x, y: y));
+
+        if (vertical.toString() == word) {
+          return correctPosition;
+        }
       }
-      if (vertical.toString() == word) {
-        return true;
-      }
+      correctPosition.clear();
       vertical.clear();
     }
 
-    return false;
+    return <Position>[];
   }
 
   /// Given certain position coordinates, return the letter in that position
