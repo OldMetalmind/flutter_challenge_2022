@@ -140,14 +140,15 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
   @override
   Widget tileBuilder(Tile tile, PuzzleState state) {
     final correctPositions = state.correctPositions;
-    final hasBeenFound = correctPositions.contains(
+    final inCorrectPosition = correctPositions.contains(
       Position(
         x: tile.currentPosition.y,
         y: tile.currentPosition.x,
       ),
     );
     if (correctPositions.isNotEmpty) {
-      print('$hasBeenFound \t- ${tile.currentPosition} - $correctPositions ');
+      print(
+          '$inCorrectPosition \t- ${tile.currentPosition} - $correctPositions ');
     }
 
     return ResponsiveLayoutBuilder(
@@ -156,8 +157,8 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         tile: tile,
         tileFontSize: _TileFontSize.small,
         state: state,
-        initialAnimation: hasBeenFound
-            ? LottieAnimationType.correctIn
+        initialAnimation: inCorrectPosition
+            ? LottieAnimationType.correct
             : LottieAnimationType.iin,
       ),
       medium: (_, __) => SimplePuzzleTile(
@@ -165,7 +166,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         tile: tile,
         tileFontSize: _TileFontSize.medium,
         state: state,
-        initialAnimation: hasBeenFound
+        initialAnimation: inCorrectPosition
             ? LottieAnimationType.correct
             : LottieAnimationType.iin,
       ),
@@ -174,7 +175,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         tile: tile,
         tileFontSize: _TileFontSize.large,
         state: state,
-        initialAnimation: hasBeenFound
+        initialAnimation: inCorrectPosition
             ? LottieAnimationType.correct
             : LottieAnimationType.iin,
       ),
