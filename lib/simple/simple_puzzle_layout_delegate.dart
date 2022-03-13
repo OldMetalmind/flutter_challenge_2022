@@ -292,29 +292,29 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
   Widget build(BuildContext context) {
     final puzzleState = context.read<PuzzleBloc>().state;
     final lastTappedTile = puzzleState.lastTappedTile;
-    final spaceTile = puzzleState.previousSpace;
+    final previousSpace = puzzleState.previousSpace;
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final parentWidth = constraints.maxWidth;
+        final tileWidth = parentWidth / widget.size;
 
         final squares = <Widget>[];
+
+        final correctPositions = puzzleState.correctPositions;
+        if (correctPositions.isNotEmpty) {
+          logger.w(puzzleState.correctPositions);
+        }
 
         var count = 0;
         final ite = widget.tiles.iterator;
         final next = ite.moveNext(); // If I remove this will cause NPE
 
-        final whiteSpacePosition =
-            spaceTile?.currentPosition ?? const Position(x: -2, y: -2);
         for (var x = 0; x < widget.size; x++) {
           for (var y = 0; y < widget.size; y++) {
-            if (x == whiteSpacePosition.y - 1 &&
-                y == whiteSpacePosition.x - 1) {
-            } else {
-              squares.add(
-                tileSquare(count, x, y, ite.current, parentWidth / widget.size),
-              );
-            }
+            squares.add(
+              tileSquare(count, x, y, ite.current, tileWidth),
+            );
 
             if (next) {
               ite.moveNext();
@@ -337,14 +337,11 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
         final animation =
             puzzleState.puzzle.getAnimationToRunOnTile(lastTappedTile);
 
-        logger.wtf(puzzleState.correctPositions);
-
         return Stack(
+          fit: StackFit.expand,
           children: [
             backgroundTiles,
             ...squares,
-            if (puzzleState.puzzleStatus == PuzzleStatus.complete)
-              const SizedBox(),
             if (lastTappedTile != null &&
                 puzzleState.puzzleStatus == PuzzleStatus.incomplete)
               AnimateTappedTile(
@@ -352,7 +349,7 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
                 tile: lastTappedTile,
                 position: lastTappedTile.currentPosition,
                 squareSize: constraints.biggest.width / widget.size,
-                spaceTile: spaceTile,
+                spaceTile: previousSpace,
                 animationListener: () {},
                 initialAnimation: animation,
               ),
@@ -370,6 +367,19 @@ class _SimplePuzzleBoardState extends State<SimplePuzzleBoard> {
       height: width,
       width: width,
       child: tile,
+    );
+  }
+
+  /// Shows the tile drawn on the screen
+  Widget tileSquareSuccess(int index, int y, int x, Widget tile, double width) {
+    return Positioned(
+      top: x * width,
+      left: y * width,
+      height: width,
+      width: width,
+      child: Container(
+        color: Colors.red,
+      ),
     );
   }
 }

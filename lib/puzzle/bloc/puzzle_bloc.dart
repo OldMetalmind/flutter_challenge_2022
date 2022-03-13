@@ -62,7 +62,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         if (correctPositions.isNotEmpty) {
           emit(
             state.copyWith(
-              //puzzle: puzzle.sort(),
+              puzzle: puzzle.sort(),
               puzzleStatus: PuzzleStatus.complete,
               tileMovementStatus: TileMovementStatus.moved,
               numberOfMoves: state.numberOfMoves + 1,
