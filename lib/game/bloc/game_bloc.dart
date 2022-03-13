@@ -52,6 +52,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       emit(
         state.copyWith(
           current: state.initialStage,
+          totalSteps: 0,
         ),
       );
     });
